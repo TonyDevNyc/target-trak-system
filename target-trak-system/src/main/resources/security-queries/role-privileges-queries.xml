@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"> 
+
+<properties>
+	<entry key="getPrivilegesByRolesSql">
+	    <![CDATA[
+	     	SELECT rp.privilege_id, p.privilege_name
+				FROM target_trak_sec.role_privileges rp
+			INNER JOIN target_trak_sec.privileges p
+				ON rp.privilege_id = p.privilege_id
+			WHERE rp.role_id IN (:roleIdList)
+       ]]>
+	</entry>
+	<entry key="getPrivilegesByRoleIdSql">
+	    <![CDATA[
+	     	SELECT rp.privilege_id, p.privilege_name
+				FROM target_trak_sec.role_privileges rp
+			INNER JOIN target_trak_sec.privileges p
+				ON rp.privilege_id = p.privilege_id
+			WHERE rp.role_id = :roleId
+       ]]>
+	</entry>
+</properties>

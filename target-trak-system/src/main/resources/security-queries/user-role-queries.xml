@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<properties>
+	<entry key="selectUserRolesSql">
+	    <![CDATA[
+	      SELECT u.username, u.role_id, r.role_name 
+			FROM target_trak_sec.user_roles u 
+				INNER JOIN target_trak_sec.roles r 
+					ON u.role_id = r.role_id 
+		  WHERE u.username = :username
+       ]]>
+	</entry>
+	<entry key="blankSql">
+	    <![CDATA[
+	      
+       ]]>
+	</entry>
+</properties>

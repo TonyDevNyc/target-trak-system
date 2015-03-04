@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"> 
+
+<properties>
+	<entry key="selectMenuByPrivilegesSql">
+	    <![CDATA[
+	     	SELECT menu_id, parent_menu_id, text, display_order, item_id, icon_css, privilege_needed
+			FROM target_trak_sec.menu
+			WHERE privilege_needed IN (:privilegeIds)
+       ]]>
+	</entry>
+</properties>

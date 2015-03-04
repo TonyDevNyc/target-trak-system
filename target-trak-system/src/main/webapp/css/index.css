@@ -1,0 +1,15 @@
+#loading-parent {
+  position: absolute;
+  z-index:  20001;
+  height: 100%;
+  width: 100%;
+  padding-top: 50px;
+  text-align: center;
+}
+ 
+#loading-indicator {
+  font-size: large;
+  font-family: tahoma,arial,verdana,sans-serif;
+  text-align: center;
+  margin: 0 auto;
+}
