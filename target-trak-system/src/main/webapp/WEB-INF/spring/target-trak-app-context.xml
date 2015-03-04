@@ -44,7 +44,7 @@
  		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/target_trak_sec" />
 		<property name="username" value="root" />
-		<property name="password" value="lovelife29" />
+		<property name="password" value="Startw00n" />
 	</bean>
 
 	<util:properties id="userDetailQueries" location="classpath:/security-queries/user-detail-queries.xml" />
@@ -55,7 +55,7 @@
 	
 	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
-	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="securityDataSource" />
 	</bean>
 
