@@ -32,13 +32,13 @@ public class TargetTrakUserDetailsServiceImpl implements UserDetailsService {
 		if (StringUtils.isEmpty(username)) {
 			throw new UsernameNotFoundException("Username: [" + username + "] not found");
 		}
-
-		TargetTrakUser user = (TargetTrakUser) userDetailsDao.getUserByUsername(username);
+		
+		TargetTrakUser user = (TargetTrakUser) userDetailsDao.getUserByUsername(username.toLowerCase());
 		if (user == null) {
 			throw new UsernameNotFoundException("Username: [" + username + "] not found");
 		}
 
-		List<TargetTrakRole> roles = userRoleDao.getUserRoles(username);
+		List<TargetTrakRole> roles = userRoleDao.getUserRoles(username.toLowerCase());
 		user.setAuthorities(roles);
 
 		for (TargetTrakRole role : roles) {

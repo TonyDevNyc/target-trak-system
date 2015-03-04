@@ -35,10 +35,10 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 	}
 
 	@Override
-	public TargetTrakUser getUserByUsername(final String username) {
+	public TargetTrakUser getUserByUsername(String username) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		String sql = userDetailQueries.getProperty("selectUserByUsernameSql");
-		params.addValue("username", username);
+		params.addValue("username", username.toLowerCase());
 		TargetTrakUser user = null;
 
 		try {

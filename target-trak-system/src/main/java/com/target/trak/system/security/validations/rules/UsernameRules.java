@@ -37,7 +37,7 @@ public class UsernameRules {
 	}
 	
 	public SecurityValidationError usernameIsAlphabeticOnly(final String username) {
-		if (!username.matches("[a-zA-Z]+")) {
+		if (!username.matches("[a-z]+")) {
 			return new SecurityValidationError("username", "REGISTRATION_003");
 		}
 		return null;
