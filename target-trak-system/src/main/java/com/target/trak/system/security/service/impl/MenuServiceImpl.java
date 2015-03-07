@@ -1,7 +1,9 @@
 package com.target.trak.system.security.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.target.trak.system.security.dao.MenuDao;
 import com.target.trak.system.security.domain.TargetTrakMenu;
+import com.target.trak.system.security.dto.PrivilegeDto;
 import com.target.trak.system.security.dto.RoleDto;
 import com.target.trak.system.security.dto.UserDto;
 import com.target.trak.system.security.dto.menu.MenuDto;
@@ -52,9 +55,13 @@ public class MenuServiceImpl implements MenuService {
 	
 	private List<Long> buildPrivilegeList(List<RoleDto> roles) {
 		List<Long> privilegeIds = new ArrayList<Long>();
+		Map<Long, Long> map = new HashMap<Long, Long>();
 		for (RoleDto role : roles) {
-			privilegeIds.add(role.getRoleId());
+			for (PrivilegeDto privilege : role.getPrivileges()) {
+				map.put(privilege.getPrivilegeId(), privilege.getPrivilegeId());
+			}
 		}
+		privilegeIds.addAll(map.values());
 		return privilegeIds;
 	}
 

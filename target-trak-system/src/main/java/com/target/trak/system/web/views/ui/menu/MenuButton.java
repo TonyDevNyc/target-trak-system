@@ -1,6 +1,6 @@
 package com.target.trak.system.web.views.ui.menu;
 
-public class MenuButton {
+public class MenuButton implements Comparable<MenuButton> {
 
 	private String xtype;
 	private String text;
@@ -57,4 +57,8 @@ public class MenuButton {
 		this.displayOrder = displayOrder;
 	}
 
+	@Override
+	public int compareTo(MenuButton compareMenuButton) {
+		return this.displayOrder - compareMenuButton.getDisplayOrder();
+	}
 }

@@ -8,6 +8,4 @@ import com.target.trak.system.web.views.ui.menu.MenuButton;
 public interface MenuBuilder {
 
 	public List<MenuButton> buildUserMenu(final List<MenuDto> permissableMenuItems);
-	
-	public List<MenuButton> buildMockUserMenu(final List<MenuDto> permissableMenuItems);
 }
