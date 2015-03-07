@@ -12,7 +12,7 @@ private Logger logger = Logger.getLogger(getClass());
 	
 	private static final String HOMEPAGE = "index";
 	
-	@RequestMapping(value="/homepage.htm", method=RequestMethod.GET)
+	@RequestMapping(value="/index.htm", method=RequestMethod.GET)
 	public String showHomepage() {
 		logger.info("Forwarding authenticated user to homepage screen");
 		return HOMEPAGE;
