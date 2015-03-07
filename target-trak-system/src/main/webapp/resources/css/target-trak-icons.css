@@ -15,3 +15,21 @@
     width: 14px;
     background-image: url(../images/delete-icon.png) !important;
 }
+
+.icon-home {
+	width: 16px !important;
+    height: 16px !important;
+    background-image:url('/target-trak-system/resources/images/home-icon.png') !important;
+}
+
+.icon-user-profile {
+	width: 16px !important;
+    height: 16px !important;
+    background-image:url('/target-trak-system/resources/images/user-profile-icon.png') !important;
+}
+
+.icon-user-settings {
+	width: 16px !important;
+    height: 16px !important;
+    background-image:url('/target-trak-system/resources/images/user-settings-icon.png') !important;
+}
