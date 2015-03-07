@@ -24,12 +24,12 @@
 		
 		<form-login 
 			login-page="/sys/login.htm" 
-			default-target-url="/sys/homepage.htm" 
+			default-target-url="/sys/index.htm" 
 			always-use-default-target="true"
 			authentication-failure-url="/sys/login.htm?err=true" />
 		
 		<intercept-url pattern="/sys/buildUserMenu.json" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/sys/homepage.htm" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/sys/index.htm" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
 
 		<logout delete-cookies="JSESSIONID"/>
