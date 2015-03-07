@@ -4,18 +4,6 @@
     margin-right: 8px;
 }
 
-.edit-icon {
-    width: 16px !important;
-    height: 16px !important;
-    background-image: url(/target-trak-system/resources/images/edit-icon.png) !important;
-}
-
-.delete-icon {
-    height: 14px;
-    width: 14px;
-    background-image: url(../images/delete-icon.png) !important;
-}
-
 .icon-home {
 	width: 16px !important;
     height: 16px !important;
@@ -23,8 +11,8 @@
 }
 
 .icon-user-profile {
-	width: 16px !important;
-    height: 16px !important;
+	width: 18px !important;
+    height: 18px !important;
     background-image:url('/target-trak-system/resources/images/user-profile-icon.png') !important;
 }
 
@@ -32,4 +20,65 @@
 	width: 16px !important;
     height: 16px !important;
     background-image:url('/target-trak-system/resources/images/user-settings-icon.png') !important;
+}
+
+.icon-search {
+	width: 16px !important;
+    height: 16px !important;
+    background-image:url('/target-trak-system/resources/images/search-icon.png') !important;
+}
+
+
+.icon-matter {
+	width: 16px !important;
+    height: 16px !important;
+    background-image:url('/target-trak-system/resources/images/matter-icon.png') !important;
+}
+
+.icon-create-matter {
+	width: 16px !important;
+    height: 16px !important;
+    background-image:url('/target-trak-system/resources/images/matter-create-icon.png') !important;
+}
+
+.icon-gen-matter-aff {
+	width: 16px !important;
+    height: 16px !important;
+    background-image:url('/target-trak-system/resources/images/matter-generate-affidavit-icon.png') !important;
+}
+
+.icon-tasks {
+	width: 16px !important;
+    height: 16px !important;
+    background-image:url('/target-trak-system/resources/images/task-icon.png') !important;
+}
+
+.icon-reports {
+	width: 16px !important;
+    height: 16px !important;
+    background-image:url('/target-trak-system/resources/images/report-icon.png') !important;
+}
+
+.icon-billing {
+	width: 16px !important;
+    height: 16px !important;
+    background-image:url('/target-trak-system/resources/images/billing-icon.png') !important;
+}
+
+.icon-ref-data {
+	width: 16px !important;
+    height: 16px !important;
+    background-image:url('/target-trak-system/resources/images/ref-data-icon.png') !important;
+}
+
+.icon-sec-admin {
+	width: 16px !important;
+    height: 16px !important;
+    background-image:url('/target-trak-system/resources/images/security-icon.png') !important;
+}
+
+.icon-logout {
+	width: 16px !important;
+    height: 16px !important;
+    background-image:url('/target-trak-system/resources/images/logout-icon-red.png') !important;
 }
