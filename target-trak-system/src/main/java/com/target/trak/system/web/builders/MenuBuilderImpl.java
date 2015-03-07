@@ -53,7 +53,6 @@ public class MenuBuilderImpl implements MenuBuilder {
 			menuItem.setText(childMenu.getText());
 			menuItem.setItemId(childMenu.getItemId());
 			menuItem.setIconCls(childMenu.getIconCss());
-			menuItem.setHandler("this.handleAction");
 			childMenuItems.add(menuItem);
 		}
 		return childMenuItems;

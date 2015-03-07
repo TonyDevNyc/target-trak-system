@@ -5,7 +5,6 @@ public class MenuItem {
 	private String text;
 	private String iconCls;
 	private String itemId;
-	private String handler;
 
 	public String getText() {
 		return text;
@@ -30,13 +29,4 @@ public class MenuItem {
 	public void setItemId(String itemId) {
 		this.itemId = itemId;
 	}
-
-	public String getHandler() {
-		return handler;
-	}
-
-	public void setHandler(String handler) {
-		this.handler = handler;
-	}
-
 }
