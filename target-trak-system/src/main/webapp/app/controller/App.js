@@ -1,0 +1,96 @@
+Ext.define('TGT.controller.App', {
+    extend: 'TGT.controller.BaseController',
+    views: [ ],
+    refs: [
+        {
+            ref: 'Menu',
+            selector: '[xtype=menu.targettrakmenu]'
+        },
+        {
+            ref: 'CenterRegion',
+            selector: '[xtype=layout.centerregion]'
+        }
+    ],
+    
+    init: function() {
+        this.listen({
+            controller: {
+                '#App': {
+                    tokenchange: this.dispatch
+                }
+            },
+            component: {
+            	'menuitem#viewRefDataItem' : {
+					click : this.addHistory
+				},
+				'menuitem#createRefDataItem' : {
+					click : this.addHistory
+				},
+				'menuitem#searchRefDataItem' : {
+					click : this.addHistory
+				},
+				'menuitem#editRefDataItem' : {
+					click : this.addHistory
+				},
+				'menuitem#deleteRefDataItem' : {
+					click : this.addHistory
+				}
+            },
+            global: {},
+            store: {}  
+        });
+    },
+    
+	addHistory: function(item, e, opts) {
+	    var me = this,
+	    token = item.itemId;
+	    Ext.util.History.add(token);
+	    me.fireEvent('tokenchange', token);
+	},
+	
+	dispatch: function(token) {
+        var me = this, config;
+       
+        switch(token) {
+            case 'searchMatterItem':
+                config = {
+                    xtype: 'panel',
+                    title: 'Search Matter',
+                    html: 'Search for Matters'
+                };
+                break;
+            case 'createMatterItem':
+                config = {
+                    xtype: 'panel',
+                    title: 'Create Matter',
+                    html: 'Create Matters'
+                };
+                break;
+            case 'generateAffidavitItem':
+                config = {
+                    xtype: 'panel',
+                    title: 'Generate Affidavit',
+                    html: 'Generate Affidavits' 
+                };
+                break;
+            default: 
+            	config = {
+                    xtype: 'panel',
+                    title: 'Page Under Construction',
+                    html: 'Come back soon' 
+                };
+                break;
+        }
+        me.updateCenterRegion(config);
+    },
+    
+    updateCenterRegion: function(config) {
+        var me = this,
+        center = me.getCenterRegion();
+
+        // remove all existing content
+        center.removeAll( true );
+        // add new content
+        center.add( config );
+    }
+});

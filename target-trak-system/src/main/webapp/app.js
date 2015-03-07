@@ -8,9 +8,13 @@ Ext.application({
 	
 	views: ['Viewport'],
 	
-	requires: ['TGT.controller.TargetTrakMenuController', 'TGT.view.menu.TargetTrakMenu'],
+	requires: [
+	   'Ext.util.History',
+       'TGT.controller.TargetTrakMenuController', 
+       'TGT.view.menu.TargetTrakMenu'
+    ],
 	
-    controllers: ['TargetTrakMenuController'],
+    controllers: ['App', 'TargetTrakMenuController'],
 	
 	autoCreateViewport: true,
 	
@@ -43,5 +47,17 @@ Ext.application({
  
        task.delay(2000);
  
+       var me = this;
+       // init Ext.util.History on app launch; if there is a hash in the url,
+       // our controller will load the appropriate content
+       Ext.util.History.init(function(){
+           var hash = document.location.hash;
+           me.getAppController().fireEvent( 'tokenchange', hash.replace( '#', '' ) );
+       });
+       // add change handler for Ext.util.History; when a change in the token
+       // occurs, this will fire our controller's event to load the appropriate content
+       Ext.util.History.on( 'change', function( token ){
+           me.getAppController().fireEvent( 'tokenchange', token );
+       });
     }
 });
