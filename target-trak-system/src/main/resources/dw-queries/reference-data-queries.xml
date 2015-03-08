@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"> 
+
+<properties>
+	<entry key="insertReferenceDataSql">
+	    <![CDATA[
+	     	INSERT INTO target_trak_dw.reference_data (reference_data_type, reference_data_label, reference_data_value, created_by, created_timestamp, last_updated_by, last_updated_timestamp)
+			VALUES (:referenceDataType, :referenceDataLabel, referenceDataValue, :createdBy, :createdTimestamp, :lastUpdatedBy, :lastUpdatedTimestamp)
+       ]]>
+	</entry>
+	<entry key="selectCountOfAllReferenceDataSql">
+	    <![CDATA[
+	     	SELECT COUNT(1) FROM target_trak_dw.reference_data
+       ]]>
+	</entry>
+	<entry key="baseReferenceDataPagingSql">
+	    <![CDATA[
+	     	SELECT id, referenceDataType, referenceDataLabel, referenceDataValue, createdBy, createdTimestamp, lastUpdatedBy, lastUpdatedTimestamp 
+	     	FROM target_trak_dw.reference_data 
+       ]]>
+	</entry>
+</properties>
