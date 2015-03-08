@@ -1,6 +1,6 @@
-package com.target.trak.system.domain;
+package com.target.trak.system.service.dto.referencedata;
 
-public class ReferenceDataSearchCriteria {
+public class ReferenceDataSearchCriteriaDto {
 
 	private String referenceDataType;
 	private String referenceDataLabel;
@@ -16,6 +16,14 @@ public class ReferenceDataSearchCriteria {
 
 	public void setReferenceDataType(String referenceDataType) {
 		this.referenceDataType = referenceDataType;
+	}
+
+	public String getReferenceDataLabel() {
+		return referenceDataLabel;
+	}
+
+	public void setReferenceDataLabel(String referenceDataLabel) {
+		this.referenceDataLabel = referenceDataLabel;
 	}
 
 	public int getStart() {
@@ -56,13 +64,5 @@ public class ReferenceDataSearchCriteria {
 
 	public void setSortDirection(String sortDirection) {
 		this.sortDirection = sortDirection;
-	}
-
-	public String getReferenceDataLabel() {
-		return referenceDataLabel;
-	}
-
-	public void setReferenceDataLabel(String referenceDataLabel) {
-		this.referenceDataLabel = referenceDataLabel;
 	}
 }

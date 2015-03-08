@@ -65,26 +65,27 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 	@Override
 	public List<ReferenceDataDomain> selectDefaultPaginatedReferenceData(final ReferenceDataSearchCriteria criteria) {
 		String sql = refDataQueryBuilder.buildDefaultReferenceDataPaginatedQuery(criteria);
-		//refDataTemplate.query(sql, paramSource, rowMapper)
-		return null;
+		return refDataTemplate.query(sql, new ReferenceDataDomainRowMapper());
 	}
 
 	@Override
 	public int selectDefaultReferenceDataCount(final ReferenceDataSearchCriteria criteria) {
-		
-		return 0;
+		String sql = referenceDataQueries.getProperty("baseReferenceDataPagingSql");
+		return refDataTemplate.queryForObject(sql, new MapSqlParameterSource(), Integer.class);
 	}
 
 	@Override
 	public List<ReferenceDataDomain> selectPaginatedReferenceDataBySearchCriteria(final ReferenceDataSearchCriteria criteria) {
-		
-		return null;
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		String sql = refDataQueryBuilder.buildSearchCriteriaReferenceDataPaginatedQuery(criteria, params);
+		return refDataTemplate.query(sql, params, new ReferenceDataDomainRowMapper());
 	}
 
 	@Override
 	public int selectReferenceDataBySearchCriteriaCount(final ReferenceDataSearchCriteria criteria) {
-		
-		return 0;
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		String sql = refDataQueryBuilder.buildSearchCriteriaReferenceDataCountQuery(criteria, params);
+		return refDataTemplate.queryForObject(sql, new MapSqlParameterSource(), Integer.class);
 	}
 	
 	private final class ReferenceDataDomainRowMapper implements RowMapper<ReferenceDataDomain> {
