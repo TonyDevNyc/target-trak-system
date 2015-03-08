@@ -15,7 +15,7 @@ import com.target.trak.system.security.service.ForgotPasswordService;
 import com.target.trak.system.security.validations.ForgotPasswordValidator;
 import com.target.trak.system.security.validations.SecurityValidationError;
 
-@Transactional(propagation=Propagation.REQUIRED, rollbackFor=TargetTrakSecurityException.class)
+@Transactional(value="securityTransactionManager", propagation=Propagation.REQUIRED, rollbackFor=TargetTrakSecurityException.class)
 @Service("forgotPasswordService")
 public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
