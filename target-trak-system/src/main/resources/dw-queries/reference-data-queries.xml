@@ -10,7 +10,7 @@
 	</entry>
 	<entry key="selectCountOfAllReferenceDataSql">
 	    <![CDATA[
-	     	SELECT COUNT(1) FROM target_trak_dw.reference_data
+	     	SELECT COUNT(1) FROM target_trak_dw.reference_data 
        ]]>
 	</entry>
 	<entry key="baseReferenceDataPagingSql">
