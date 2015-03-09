@@ -1,5 +1,7 @@
 package com.target.trak.system.service.converters;
 
+import java.util.Calendar;
+
 import org.springframework.core.convert.converter.Converter;
 
 import com.target.trak.system.domain.ReferenceDataDomain;
@@ -9,8 +11,22 @@ public class ReferenceDataDomainDtoConverter implements Converter<ReferenceDataD
 
 	@Override
 	public ReferenceDataDto convert(final ReferenceDataDomain domain) {
+		ReferenceDataDto dto = new ReferenceDataDto();
+		dto.setId(domain.getId());
+		dto.setType(domain.getReferenceDataType());
+		dto.setLabel(domain.getReferenceDataLabel());
+		dto.setValue(domain.getReferenceDataValue());
+		dto.setCreatedBy(domain.getCreatedBy());
 		
-		return null;
+		Calendar createDateTime = Calendar.getInstance();
+		createDateTime.setTimeInMillis(domain.getCreatedTimestamp().getTime());
+		dto.setCreatedDateTime(createDateTime);
+		dto.setLastUpdatedBy(domain.getLastUpdatedBy());
+		
+		Calendar lastUpdateDateTime = Calendar.getInstance();
+		lastUpdateDateTime.setTimeInMillis(domain.getLastUpdatedTimestamp().getTime());
+		dto.setLastUpdatedDateTime(lastUpdateDateTime);
+		return dto;
 	}
 
 }

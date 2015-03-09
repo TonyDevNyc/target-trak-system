@@ -9,9 +9,9 @@ public class ReferenceDataDto {
 	private String label;
 	private String value;
 	private String createdBy;
-	private Calendar createdTimestamp;
+	private Calendar createdDateTime;
 	private String lastUpdatedBy;
-	private Calendar lastUpdatedTimestamp;
+	private Calendar lastUpdatedDateTime;
 
 	public Long getId() {
 		return id;
@@ -53,12 +53,12 @@ public class ReferenceDataDto {
 		this.createdBy = createdBy;
 	}
 
-	public Calendar getCreatedTimestamp() {
-		return createdTimestamp;
+	public Calendar getCreatedDateTime() {
+		return createdDateTime;
 	}
 
-	public void setCreatedTimestamp(Calendar createdTimestamp) {
-		this.createdTimestamp = createdTimestamp;
+	public void setCreatedDateTime(Calendar createdDateTime) {
+		this.createdDateTime = createdDateTime;
 	}
 
 	public String getLastUpdatedBy() {
@@ -69,12 +69,12 @@ public class ReferenceDataDto {
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
 
-	public Calendar getLastUpdatedTimestamp() {
-		return lastUpdatedTimestamp;
+	public Calendar getLastUpdatedDateTime() {
+		return lastUpdatedDateTime;
 	}
 
-	public void setLastUpdatedTimestamp(Calendar lastUpdatedTimestamp) {
-		this.lastUpdatedTimestamp = lastUpdatedTimestamp;
+	public void setLastUpdatedDateTime(Calendar lastUpdatedDateTime) {
+		this.lastUpdatedDateTime = lastUpdatedDateTime;
 	}
 
 }
