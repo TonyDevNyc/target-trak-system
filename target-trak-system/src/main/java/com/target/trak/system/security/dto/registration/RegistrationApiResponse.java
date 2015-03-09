@@ -2,12 +2,12 @@ package com.target.trak.system.security.dto.registration;
 
 import java.util.List;
 
-import com.target.trak.system.security.validations.SecurityValidationError;
+import com.target.trak.system.validations.TargetTrakValidationError;
 
 public class RegistrationApiResponse {
 
 	private boolean success;
-	private List<SecurityValidationError> errors;
+	private List<TargetTrakValidationError> errors;
 	private String errorMessage;
 
 	public boolean isSuccess() {
@@ -18,11 +18,11 @@ public class RegistrationApiResponse {
 		this.success = success;
 	}
 
-	public List<SecurityValidationError> getErrors() {
+	public List<TargetTrakValidationError> getErrors() {
 		return errors;
 	}
 
-	public void setErrors(List<SecurityValidationError> errors) {
+	public void setErrors(List<TargetTrakValidationError> errors) {
 		this.errors = errors;
 	}
 

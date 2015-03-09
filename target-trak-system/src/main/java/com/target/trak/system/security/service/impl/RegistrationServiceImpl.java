@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,10 @@ import com.target.trak.system.security.dto.registration.RegistrationApiRequest;
 import com.target.trak.system.security.dto.registration.RegistrationApiResponse;
 import com.target.trak.system.security.exceptions.TargetTrakSecurityException;
 import com.target.trak.system.security.service.RegistrationService;
-import com.target.trak.system.security.validations.SecurityValidationError;
-import com.target.trak.system.security.validations.UserRegistrationValidator;
+import com.target.trak.system.validations.TargetTrakValidationError;
+import com.target.trak.system.validations.impl.UserRegistrationValidatorImpl;
 
-@Transactional(propagation = Propagation.REQUIRED, rollbackFor = TargetTrakSecurityException.class)
+@Transactional(value="securityTransactionManager", propagation = Propagation.REQUIRED, rollbackFor = TargetTrakSecurityException.class)
 @Service("registrationService")
 public class RegistrationServiceImpl implements RegistrationService {
 
@@ -31,13 +32,14 @@ public class RegistrationServiceImpl implements RegistrationService {
 	@Autowired
 	private ConversionService conversionService;
 
+	@Qualifier("registrationValidator")
 	@Autowired
-	private UserRegistrationValidator validator;
+	private UserRegistrationValidatorImpl validator;
 
 	@Override
 	public RegistrationApiResponse registerUser(final RegistrationApiRequest request) throws TargetTrakSecurityException {
 		RegistrationApiResponse response = new RegistrationApiResponse();
-		List<SecurityValidationError> validations = validator.validate(request);
+		List<TargetTrakValidationError> validations = validator.validate(request);
 
 		if (validations.isEmpty()) {
 			TargetTrakUser user = conversionService.convert(request.getUserRegistration(), TargetTrakUser.class);

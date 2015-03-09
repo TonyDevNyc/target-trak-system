@@ -12,8 +12,8 @@ import com.target.trak.system.security.dto.credentials.ForgotPasswordApiRequest;
 import com.target.trak.system.security.dto.credentials.ForgotPasswordApiResponse;
 import com.target.trak.system.security.exceptions.TargetTrakSecurityException;
 import com.target.trak.system.security.service.ForgotPasswordService;
-import com.target.trak.system.security.validations.ForgotPasswordValidator;
-import com.target.trak.system.security.validations.SecurityValidationError;
+import com.target.trak.system.validations.TargetTrakValidationError;
+import com.target.trak.system.validations.impl.ForgotPasswordValidatorImpl;
 
 @Transactional(value="securityTransactionManager", propagation=Propagation.REQUIRED, rollbackFor=TargetTrakSecurityException.class)
 @Service("forgotPasswordService")
@@ -21,12 +21,12 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
 	@Qualifier("forgotPasswordValidator")
 	@Autowired
-	private ForgotPasswordValidator validator;
+	private ForgotPasswordValidatorImpl validator;
 	
 	@Override
 	public ForgotPasswordApiResponse handleForgotPassword(final ForgotPasswordApiRequest request) throws TargetTrakSecurityException {
 		ForgotPasswordApiResponse response = new ForgotPasswordApiResponse();
-		List<SecurityValidationError> validationErrors = validator.validate(request);
+		List<TargetTrakValidationError> validationErrors = validator.validate(request);
 		if (validationErrors.isEmpty()) {
 			// audit log
 			
