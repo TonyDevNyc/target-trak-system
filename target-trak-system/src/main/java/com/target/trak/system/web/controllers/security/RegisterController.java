@@ -19,7 +19,7 @@ import com.target.trak.system.security.dto.registration.RegistrationApiRequest;
 import com.target.trak.system.security.dto.registration.RegistrationApiResponse;
 import com.target.trak.system.security.exceptions.TargetTrakSecurityException;
 import com.target.trak.system.security.service.RegistrationService;
-import com.target.trak.system.security.validations.SecurityValidationError;
+import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.web.forms.RegistrationForm;
 
 @Controller
@@ -65,9 +65,9 @@ public class RegisterController {
 		return returnPage;
 	}
 	
-	private void bindValidationErrors(List<SecurityValidationError> validationErrors, final BindingResult result) {
-		for (SecurityValidationError validationError : validationErrors) {
-			result.rejectValue(validationError.getField(), validationError.getErrorMessage());
+	private void bindValidationErrors(List<TargetTrakValidationError> validationErrors, final BindingResult result) {
+		for (TargetTrakValidationError validationError : validationErrors) {
+			result.rejectValue(validationError.getFieldName(), validationError.getErrorMessage());
 		}
 	}
 
