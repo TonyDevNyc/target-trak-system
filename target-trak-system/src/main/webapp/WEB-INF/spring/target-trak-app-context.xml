@@ -30,8 +30,9 @@
 	
 	<util:properties id="referenceDataQueries" location="classpath:/dw-queries/reference-data-queries.xml" />
 	<util:properties id="errorMessages" location="classpath:/properties/error-messages.properties" />
+	<util:properties id="dwValidationProps" location="classpath:/properties/dw-validation-codes.properties" />
 	
-	<!-- Common -->
+	<!-- Common Beans -->
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
@@ -48,6 +49,9 @@
 				<bean id="targetTrakUserConverter" class="com.target.trak.system.security.converters.TargetTrakUserConverter" />
 				<bean id="menuDtoConverter" class="com.target.trak.system.security.converters.MenuDtoConverter" />
 				<bean id="userDtoConverter" class="com.target.trak.system.security.converters.UserDtoConverter" />
+				
+				<bean id="referenceDataDomainDtoConverter" class="com.target.trak.system.service.converters.ReferenceDataDomainDtoConverter " />
+				<bean id="referenceDataDtoDomainConverter" class="com.target.trak.system.service.converters.ReferenceDataDtoDomainConverter" />
 			</set>
 		</property>
 	</bean>
