@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.target.trak.system.security.dto.credentials.ForgotPasswordApiRequest;
 import com.target.trak.system.validations.TargetTrakValidationError;
+import com.target.trak.system.validations.TargetTrakValidationException;
 import com.target.trak.system.validations.TargetTrakValidator;
 import com.target.trak.system.validations.rules.EmailRules;
 
@@ -19,10 +20,10 @@ public class ForgotPasswordValidatorImpl implements TargetTrakValidator<ForgotPa
 	private EmailRules emailRules;
 
 	@Override
-	public List<TargetTrakValidationError> validate(ForgotPasswordApiRequest request) throws IllegalArgumentException {
+	public List<TargetTrakValidationError> validate(final ForgotPasswordApiRequest request) throws TargetTrakValidationException {
 		List<TargetTrakValidationError> errors = new ArrayList<TargetTrakValidationError>();
 		if (request == null) {
-			throw new IllegalArgumentException("API request is null");
+			throw new TargetTrakValidationException("API request is null");
 		}
 
 		final String email = request.getEmail();

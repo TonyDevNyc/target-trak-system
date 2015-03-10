@@ -18,6 +18,7 @@ import com.target.trak.system.security.dto.registration.RegistrationApiResponse;
 import com.target.trak.system.security.exceptions.TargetTrakSecurityException;
 import com.target.trak.system.security.service.RegistrationService;
 import com.target.trak.system.validations.TargetTrakValidationError;
+import com.target.trak.system.validations.TargetTrakValidationException;
 import com.target.trak.system.validations.impl.UserRegistrationValidatorImpl;
 
 @Transactional(value="securityTransactionManager", propagation = Propagation.REQUIRED, rollbackFor = TargetTrakSecurityException.class)
@@ -39,7 +40,13 @@ public class RegistrationServiceImpl implements RegistrationService {
 	@Override
 	public RegistrationApiResponse registerUser(final RegistrationApiRequest request) throws TargetTrakSecurityException {
 		RegistrationApiResponse response = new RegistrationApiResponse();
-		List<TargetTrakValidationError> validations = validator.validate(request);
+		List<TargetTrakValidationError> validations = null;
+		try {
+			validations = validator.validate(request);
+		} catch (TargetTrakValidationException e) {
+			logger.error(e.getMessage(), e);
+			throw new TargetTrakSecurityException(e.getMessage());
+		}
 
 		if (validations.isEmpty()) {
 			TargetTrakUser user = conversionService.convert(request.getUserRegistration(), TargetTrakUser.class);

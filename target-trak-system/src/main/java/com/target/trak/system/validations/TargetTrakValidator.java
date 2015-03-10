@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface TargetTrakValidator<T> {
 
-	public List<TargetTrakValidationError> validate(T object) throws IllegalArgumentException;
+	public List<TargetTrakValidationError> validate(T object) throws TargetTrakValidationException;
 }
