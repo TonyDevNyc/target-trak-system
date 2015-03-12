@@ -27,13 +27,13 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 	@Qualifier("referenceDataQueries")
 	@Autowired
 	private Properties referenceDataQueries;
-	
+
 	@Qualifier("referenceDataQueryBuilder")
 	@Autowired
 	private ReferenceDataQueryBuilder refDataQueryBuilder;
 
 	private NamedParameterJdbcTemplate refDataTemplate;
-	
+
 	@Autowired
 	public ReferenceDataDaoImpl(@Qualifier("dwDataSource") DataSource dataSource) {
 		refDataTemplate = new NamedParameterJdbcTemplate(dataSource);
@@ -41,7 +41,7 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 
 	@Override
 	public ReferenceDataDomain insertReferenceData(final ReferenceDataDomain referenceData) {
-		MapSqlParameterSource params = new MapSqlParameterSource();	
+		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("referenceDataType", referenceData.getReferenceDataType());
 		params.addValue("referenceDataLabel", referenceData.getReferenceDataLabel());
 		params.addValue("referenceDataValue", referenceData.getReferenceDataValue());
@@ -53,7 +53,7 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 		String sql = referenceDataQueries.getProperty("insertReferenceDataSql");
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		int count = refDataTemplate.update(sql, params, keyHolder);
-		
+
 		if (count > 0) {
 			referenceData.setId(keyHolder.getKey().longValue());
 		} else {
@@ -87,7 +87,19 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 		String sql = refDataQueryBuilder.buildSearchCriteriaReferenceDataCountQuery(criteria, params);
 		return refDataTemplate.queryForObject(sql, new MapSqlParameterSource(), Integer.class);
 	}
-	
+
+	@Override
+	public boolean referenceDataAlreadyExists(final String type, final String label, final String value) {
+		String sql = referenceDataQueries.getProperty("selectCountReferenceDataSql");
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("type", type);
+		params.addValue("label", label);
+		params.addValue("value", value);
+		
+		int count = refDataTemplate.queryForObject(sql, params, Integer.class);
+		return (count > 0) ? true : false;
+	}
+
 	private final class ReferenceDataDomainRowMapper implements RowMapper<ReferenceDataDomain> {
 
 		@Override
@@ -102,6 +114,7 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 			domain.setLastUpdatedBy(rs.getString("last_updated_by"));
 			domain.setLastUpdatedTimestamp(rs.getTimestamp("last_updated_timestamp"));
 			return domain;
-		}	
+		}
 	}
+
 }

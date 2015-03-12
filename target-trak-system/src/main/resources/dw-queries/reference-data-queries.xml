@@ -19,4 +19,13 @@
 	     	FROM target_trak_dw.reference_data 
        ]]>
 	</entry>
+	<entry key="selectCountReferenceDataSql">
+	    <![CDATA[
+	     	SELECT COUNT(1) 
+	     		FROM target_trak_dw.reference_data 
+	     	WHERE reference_data_type = :type
+	     	AND reference_data_label = :label
+	     	AND reference_data_value = :value
+       ]]>
+	</entry>
 </properties>

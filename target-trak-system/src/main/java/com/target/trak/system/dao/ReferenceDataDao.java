@@ -16,4 +16,6 @@ public interface ReferenceDataDao {
 	public List<ReferenceDataDomain> selectPaginatedReferenceDataBySearchCriteria(final ReferenceDataSearchCriteria criteria);
 	
 	public int selectReferenceDataBySearchCriteriaCount(final ReferenceDataSearchCriteria criteria);
+	
+	public boolean referenceDataAlreadyExists(final String type, final String label, final String value);
 }
