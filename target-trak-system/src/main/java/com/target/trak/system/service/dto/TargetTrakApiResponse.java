@@ -2,10 +2,12 @@ package com.target.trak.system.service.dto;
 
 import java.util.List;
 
+import com.target.trak.system.validations.TargetTrakValidationError;
+
 public class TargetTrakApiResponse {
 
 	private boolean success;
-	private List<TargetTrakError> errors;
+	private List<TargetTrakValidationError> errors;
 	private int totalSize;
 
 	public boolean isSuccess() {
@@ -16,11 +18,11 @@ public class TargetTrakApiResponse {
 		this.success = success;
 	}
 
-	public List<TargetTrakError> getErrors() {
+	public List<TargetTrakValidationError> getErrors() {
 		return errors;
 	}
 
-	public void setErrors(List<TargetTrakError> errors) {
+	public void setErrors(List<TargetTrakValidationError> errors) {
 		this.errors = errors;
 	}
 

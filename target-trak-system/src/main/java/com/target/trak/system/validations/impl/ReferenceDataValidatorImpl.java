@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 
 import com.target.trak.system.service.dto.referencedata.ReferenceDataApiRequest;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataDto;
+import com.target.trak.system.service.dto.referencedata.ReferenceDataSearchCriteriaDto;
 import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.validations.TargetTrakValidationException;
 import com.target.trak.system.validations.TargetTrakValidator;
@@ -36,6 +37,38 @@ public class ReferenceDataValidatorImpl implements TargetTrakValidator<Reference
 			throw new TargetTrakValidationException("Reference Data is null");
 		}
 
+		switch (request.getRequestType()) {
+			case CREATE:
+				validationErrors.addAll(validateCreate(referenceDataDto));
+				break;
+			case READ_PAGING:
+				validationErrors.addAll(validateReadPaging(request.getSearchCriteria()));
+				break;
+			case UPDATE:
+				System.out.println("Implementation in progress.");
+				break;
+			case READ_BY_ID:
+				System.out.println("Implementation in progress.");
+				break;
+			case DELETE:
+				System.out.println("Implementation in progress.");
+				break;
+			default:
+				System.out.println("No implementation available");
+				break;
+		}
+		validationErrors.removeAll(Collections.singleton(null));
+		return validationErrors;
+	}
+	
+	private List<TargetTrakValidationError> validateReadPaging(final ReferenceDataSearchCriteriaDto searchCriteria) {
+		List<TargetTrakValidationError> validationErrors = new ArrayList<TargetTrakValidationError>();
+		//TODO - finish validations
+		return validationErrors;
+	}
+	
+	private List<TargetTrakValidationError> validateCreate(final ReferenceDataDto referenceDataDto) {
+		List<TargetTrakValidationError> validationErrors = new ArrayList<TargetTrakValidationError>();
 		String type = referenceDataDto.getType();
 		String label = referenceDataDto.getLabel();
 		String value = referenceDataDto.getValue();
@@ -43,11 +76,10 @@ public class ReferenceDataValidatorImpl implements TargetTrakValidator<Reference
 		validateType(validationErrors, type);
 		validateLabel(validationErrors, label);
 		validateValue(validationErrors, value);
-		
+
 		if (!StringUtils.isEmpty(type) && !StringUtils.isEmpty(label) && !StringUtils.isEmpty(value)) {
 			validationErrors.add(referenceDataRules.referenceDataAlreadyExists(type, label, value));
 		}
-		validationErrors.removeAll(Collections.singleton(null));
 		return validationErrors;
 	}
 
