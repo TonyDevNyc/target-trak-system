@@ -11,10 +11,11 @@ Ext.application({
 	requires: [
 	   'Ext.util.History',
        'TGT.controller.TargetTrakMenuController', 
-       'TGT.view.menu.TargetTrakMenu'
+       'TGT.view.menu.TargetTrakMenu',
+       'TGT.controller.refdata.ReferenceDataMaintenanceController'
     ],
 	
-    controllers: ['App', 'TargetTrakMenuController'],
+    controllers: ['App', 'TargetTrakMenuController', 'refdata.ReferenceDataMaintenanceController'],
 	
 	autoCreateViewport: true,
 	

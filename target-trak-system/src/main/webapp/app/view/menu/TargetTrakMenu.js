@@ -10,7 +10,7 @@ Ext.define('TGT.view.menu.TargetTrakMenu', {
 		loadMask: true,
 		renderer: 'component',
 		failure: function() {
-			console.log('failed ajax call to get menu items');
+			console.log('Failed ajax call to get menu items');
 		}
 	}
 });

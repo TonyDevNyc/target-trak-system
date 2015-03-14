@@ -1,6 +1,8 @@
 Ext.define('TGT.controller.App', {
     extend: 'TGT.controller.BaseController',
-    views: [ ],
+    views: [ 
+        'TGT.view.refdata.search.ReferenceDataMaintenance'
+    ],
     refs: [
         {
             ref: 'Menu',
@@ -52,11 +54,9 @@ Ext.define('TGT.controller.App', {
         var me = this, config;
        
         switch(token) {
-            case 'searchMatterItem':
+            case 'searchRefDataItem':
                 config = {
-                    xtype: 'panel',
-                    title: 'Search Matter',
-                    html: 'Search for Matters'
+                    xtype: 'refdata.search.maintenance'
                 };
                 break;
             case 'createMatterItem':
