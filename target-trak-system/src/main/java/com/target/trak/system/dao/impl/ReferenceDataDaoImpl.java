@@ -99,6 +99,12 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 		int count = refDataTemplate.queryForObject(sql, params, Integer.class);
 		return (count > 0) ? true : false;
 	}
+	
+	@Override
+	public List<ReferenceDataDomain> getReferenceDataTypes() {
+		String sql = referenceDataQueries.getProperty("selectReferenceTypesSql");
+		return refDataTemplate.query(sql, new ReferenceDataDomainRowMapper());
+	}
 
 	private final class ReferenceDataDomainRowMapper implements RowMapper<ReferenceDataDomain> {
 
@@ -116,5 +122,4 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 			return domain;
 		}
 	}
-
 }

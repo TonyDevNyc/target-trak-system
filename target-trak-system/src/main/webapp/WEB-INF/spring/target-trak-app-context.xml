@@ -52,6 +52,7 @@
 				
 				<bean id="referenceDataDomainDtoConverter" class="com.target.trak.system.service.converters.ReferenceDataDomainDtoConverter " />
 				<bean id="referenceDataDtoDomainConverter" class="com.target.trak.system.service.converters.ReferenceDataDtoDomainConverter" />
+				<bean id="referenceDataSearchCriteriaConverter" class="com.target.trak.system.service.converters.ReferenceDataSearchCriteriaDtoDomainConverter" />
 			</set>
 		</property>
 	</bean>

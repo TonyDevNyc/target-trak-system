@@ -28,4 +28,11 @@
 	     	AND reference_data_value = :value
        ]]>
 	</entry>
+	<entry key="selectReferenceTypesSql">
+	    <![CDATA[
+	     	SELECT DISTINCT reference_data_type 
+	     		FROM target_trak_dw.reference_data 
+	     	ORDER BY reference_data_type
+       ]]>
+	</entry>
 </properties>

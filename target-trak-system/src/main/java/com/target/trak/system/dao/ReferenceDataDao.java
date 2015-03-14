@@ -18,4 +18,6 @@ public interface ReferenceDataDao {
 	public int selectReferenceDataBySearchCriteriaCount(final ReferenceDataSearchCriteria criteria);
 	
 	public boolean referenceDataAlreadyExists(final String type, final String label, final String value);
+	
+	public List<ReferenceDataDomain> getReferenceDataTypes();
 }

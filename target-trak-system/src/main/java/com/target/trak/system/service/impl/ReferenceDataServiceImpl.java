@@ -81,7 +81,7 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
 		response.setTotalSize(totalSize);
 		response.setSuccess(Boolean.TRUE);
 		
-		return null;
+		return response;
 	}
 	
 	private List<ReferenceDataDto> convertListOfDomains(final List<ReferenceDataDomain> domains) {
@@ -90,6 +90,17 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
 			dtos.add(conversionService.convert(domain, ReferenceDataDto.class));
 		}
 		return dtos;
+	}
+
+	@Transactional(propagation=Propagation.NEVER)
+	@Override
+	public ReferenceDataApiResponse getReferenceDataTypes() {
+		ReferenceDataApiResponse response = new ReferenceDataApiResponse();
+		List<ReferenceDataDomain> data = referenceDataDao.getReferenceDataTypes();
+		List<ReferenceDataDto> dtos = convertListOfDomains(data);
+		response.setSuccess(Boolean.TRUE);
+		response.setReferenceDataList(dtos);
+		return response;
 	}
 
 }

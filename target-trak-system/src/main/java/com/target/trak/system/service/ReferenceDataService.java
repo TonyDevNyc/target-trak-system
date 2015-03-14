@@ -10,4 +10,5 @@ public interface ReferenceDataService {
 	
 	public ReferenceDataApiResponse getReferenceDataByCriteria(final ReferenceDataApiRequest request) throws TargetTrakException;
 	
+	public ReferenceDataApiResponse getReferenceDataTypes();
 }

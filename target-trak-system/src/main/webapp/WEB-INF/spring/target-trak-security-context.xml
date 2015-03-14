@@ -28,10 +28,12 @@
 			always-use-default-target="true"
 			authentication-failure-url="/sys/login.htm?err=true" />
 		
+		<intercept-url pattern="/sys/refdata/getReferenceDataTypes.json" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/sys/refdata/getReferenceData.json" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/sys/buildUserMenu.json" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/sys/index.htm" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
-
+		
 		<logout delete-cookies="JSESSIONID"/>
 	</http>
 	
