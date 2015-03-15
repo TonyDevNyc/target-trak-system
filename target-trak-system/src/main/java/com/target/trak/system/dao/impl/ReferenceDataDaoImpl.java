@@ -2,6 +2,7 @@ package com.target.trak.system.dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -9,6 +10,8 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -103,7 +106,21 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 	@Override
 	public List<ReferenceDataDomain> getReferenceDataTypes() {
 		String sql = referenceDataQueries.getProperty("selectReferenceTypesSql");
-		return refDataTemplate.query(sql, new ReferenceDataDomainRowMapper());
+		return refDataTemplate.query(sql, new ResultSetExtractor<List<ReferenceDataDomain>>() {
+
+			@Override
+			public List<ReferenceDataDomain> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				List<ReferenceDataDomain> typesList = new ArrayList<ReferenceDataDomain>();
+				ReferenceDataDomain domain = null;
+				while (rs.next()) {
+					domain = new ReferenceDataDomain();
+					domain.setReferenceDataType(rs.getString("reference_data_type"));
+					typesList.add(domain);
+				}
+				return typesList;
+			}
+		
+		});
 	}
 
 	private final class ReferenceDataDomainRowMapper implements RowMapper<ReferenceDataDomain> {

@@ -17,16 +17,23 @@ public class ReferenceDataDomainDtoConverter implements Converter<ReferenceDataD
 		dto.setLabel(domain.getReferenceDataLabel());
 		dto.setValue(domain.getReferenceDataValue());
 		dto.setCreatedBy(domain.getCreatedBy());
-		
-		Calendar createDateTime = Calendar.getInstance();
-		createDateTime.setTimeInMillis(domain.getCreatedTimestamp().getTime());
-		dto.setCreatedDateTime(createDateTime);
+
+		if (domain.getCreatedTimestamp() == null) {
+			dto.setCreatedDateTime(null);
+		} else {
+			Calendar createDateTime = Calendar.getInstance();
+			createDateTime.setTimeInMillis(domain.getCreatedTimestamp().getTime());
+			dto.setCreatedDateTime(createDateTime);
+		}
+
 		dto.setLastUpdatedBy(domain.getLastUpdatedBy());
-		
-		Calendar lastUpdateDateTime = Calendar.getInstance();
-		lastUpdateDateTime.setTimeInMillis(domain.getLastUpdatedTimestamp().getTime());
-		dto.setLastUpdatedDateTime(lastUpdateDateTime);
+		if (domain.getLastUpdatedTimestamp() == null) {
+			dto.setLastUpdatedDateTime(null);
+		} else {
+			Calendar lastUpdateDateTime = Calendar.getInstance();
+			lastUpdateDateTime.setTimeInMillis(domain.getLastUpdatedTimestamp().getTime());
+			dto.setLastUpdatedDateTime(lastUpdateDateTime);
+		}
 		return dto;
 	}
-
 }

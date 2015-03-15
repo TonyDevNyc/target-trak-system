@@ -37,7 +37,7 @@ public class ReferenceDataQueryBuilder {
 
 	public String buildDefaultReferenceDataPaginatedQuery(final ReferenceDataSearchCriteria criteria) {
 		StringBuilder builder = new StringBuilder();
-		builder.append(referenceDataQueries.get("baseCompaniesPagingQuery"));
+		builder.append(referenceDataQueries.get("baseReferenceDataPagingSql"));
 
 		if (StringUtils.isEmpty(criteria.getSortField())) {
 			builder.append(DEFAULT_SORT_ORDER);
@@ -52,7 +52,7 @@ public class ReferenceDataQueryBuilder {
 
 	public String buildSearchCriteriaReferenceDataPaginatedQuery(final ReferenceDataSearchCriteria criteria, final MapSqlParameterSource params) {
 		StringBuilder builder = new StringBuilder();
-		builder.append(referenceDataQueries.get("baseCompaniesPagingQuery"));
+		builder.append(referenceDataQueries.get("baseReferenceDataPagingSql"));
 		builder.append(WHERE_CLAUSE).append(EMPTY_SPACE);
 
 		if (!StringUtils.isEmpty(criteria.getReferenceDataType())) {

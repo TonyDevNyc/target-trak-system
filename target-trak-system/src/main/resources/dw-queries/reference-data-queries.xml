@@ -15,7 +15,7 @@
 	</entry>
 	<entry key="baseReferenceDataPagingSql">
 	    <![CDATA[
-	     	SELECT id, referenceDataType, referenceDataLabel, referenceDataValue, createdBy, createdTimestamp, lastUpdatedBy, lastUpdatedTimestamp 
+	     	SELECT id, reference_data_type, reference_data_label, reference_data_value, created_by, created_timestamp, last_updated_by, last_updated_timestamp
 	     	FROM target_trak_dw.reference_data 
        ]]>
 	</entry>
