@@ -3,7 +3,8 @@ Ext.define('TGT.view.refdata.search.ReferenceDataMaintenance', {
 	alias : 'widget.refdata.search.maintenance',
 	requires : [
 	    'TGT.view.refdata.search.ReferenceDataSearchForm',
-	    'TGT.view.refdata.search.ReferenceDataGrid'
+	    'TGT.view.refdata.search.ReferenceDataGrid',
+	    'TGT.store.ReferenceDataTypes'
 	],
 	items: [
 		{
@@ -11,11 +12,11 @@ Ext.define('TGT.view.refdata.search.ReferenceDataMaintenance', {
 			layout: 'vbox',    
 	        items: [
 				{
-				    xtype: 'company.components.searchform',
+				    xtype: 'refdata.search.referencedatasearchform',
 				    flex: 1
 				},
 				{
-				    xtype: 'refdata.search.referencedatasearchform',
+				    xtype: 'refdata.search.referencedatagrid',
 				    flex: 1
 				}
             ]

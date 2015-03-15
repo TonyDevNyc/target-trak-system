@@ -3,10 +3,12 @@ Ext.define('TGT.view.refdata.search.ReferenceDataSearchForm', {
 	alias : 'widget.refdata.search.referencedatasearchform',
 	requires : [ 
 		'Ext.form.Panel',
-		'Ext.layout.container.Anchor'
+		'Ext.layout.container.Anchor',
+		'TGT.store.ReferenceDataTypes',
+		'TGT.view.refdata.common.ReferenceDataTypeCombo'
     ],
-	bodyStyle : 'padding:5px 5px 0',
-	width : 1309,
+	bodyStyle : 'padding:10px 10px 0',
+	width : 1275,
 	height: 225,
 	fieldDefaults : {
 		msgTarget : 'side'

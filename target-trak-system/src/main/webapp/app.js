@@ -12,9 +12,13 @@ Ext.application({
 	   'Ext.util.History',
        'TGT.controller.TargetTrakMenuController', 
        'TGT.view.menu.TargetTrakMenu',
+       'TGT.store.ReferenceDataTypes',
+       'TGT.store.ReferenceDatas',
        'TGT.controller.refdata.ReferenceDataMaintenanceController'
     ],
 	
+    stores: ['ReferenceDataTypes', 'ReferenceDatas'],
+    
     controllers: ['App', 'TargetTrakMenuController', 'refdata.ReferenceDataMaintenanceController'],
 	
 	autoCreateViewport: true,

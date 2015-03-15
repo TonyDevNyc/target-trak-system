@@ -1,5 +1,10 @@
 Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
 	extend : 'TGT.controller.BaseController',
+	
+	requires: [
+       'TGT.store.ReferenceDataTypes',
+       'TGT.store.ReferenceDatas'
+    ],
 
 	stores : [ 'ReferenceDatas', 'ReferenceDataTypes'],
 
@@ -24,7 +29,8 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
 			}
 		});
 		
-		this.getReferenceDataTypesStore().referenceDatasStore.load();
+		var typesStore = this.getReferenceDataTypesStore();
+		typesStore.load();
 	},
 
 	init : function() {
