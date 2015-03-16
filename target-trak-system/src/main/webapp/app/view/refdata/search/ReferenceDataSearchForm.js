@@ -23,18 +23,32 @@ Ext.define('TGT.view.refdata.search.ReferenceDataSearchForm', {
 	items: [
         {
         	items: [
-    	        {
-	                xtype: 'refdata.common.referencedatatypecombo'
-	            }
+				{
+				    xtype: 'refdata.common.referencedatatypecombo',
+				    width: 350
+				}
             ]
 		}
+//        , {
+//            items: [
+//                {
+//	                xtype:'textfield',
+//	                fieldLabel: 'Company Name',
+//	                name: 'companyName',
+//	                width: 350
+//	            },
+//	            {
+//	            	xtype: 'refdata.common.referencedatatypecombo'
+//	            }
+//            ]
+//		}
 	],
 	buttons: [
         '->', 
         {
         	text: 'Search',
         	name: 'searchReferenceData',
-        	action: 'searchReferenceDataAction'
+        	action: 'searchReferenceData'
         }, 
         {
         	text: 'Clear',

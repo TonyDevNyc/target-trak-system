@@ -88,7 +88,7 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 	public int selectReferenceDataBySearchCriteriaCount(final ReferenceDataSearchCriteria criteria) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		String sql = refDataQueryBuilder.buildSearchCriteriaReferenceDataCountQuery(criteria, params);
-		return refDataTemplate.queryForObject(sql, new MapSqlParameterSource(), Integer.class);
+		return refDataTemplate.queryForObject(sql, params, Integer.class);
 	}
 
 	@Override

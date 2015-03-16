@@ -48,13 +48,13 @@ Ext.define('TGT.view.refdata.search.ReferenceDataGrid', {
 			xtype : 'gridcolumn',
 			dataIndex : 'label',
 			text : 'Label',
-			width : 190
+			width : 180
 		}, 
 		{
 			xtype : 'gridcolumn',
 			dataIndex : 'value',
 			text : 'Value',
-			width : 190
+			width : 180
 		}, 
 		{
 			xtype : 'gridcolumn',
