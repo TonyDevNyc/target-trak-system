@@ -32,7 +32,10 @@ Ext.application({
     },
  
     launch: function() {
- 
+    	/** Custom Application Events **/
+    	this.addEvents('actionclick');
+    	
+    	/** Application Load Mask **/
         Ext.tip.QuickTipManager.init();
         var task = new Ext.util.DelayedTask(function() {
  
@@ -47,11 +50,10 @@ Ext.application({
                 duration: 500,
                 remove: true
             });
- 
        });
- 
        task.delay(2000);
  
+       /** Application History mechanism **/
        var me = this;
        // init Ext.util.History on app launch; if there is a hash in the url,
        // our controller will load the appropriate content

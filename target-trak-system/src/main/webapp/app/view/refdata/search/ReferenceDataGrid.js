@@ -24,7 +24,7 @@ Ext.define('TGT.view.refdata.search.ReferenceDataGrid', {
                     getClass: 'x-action-col-icon',
                     handler: function(grid, rowIndex, colIndex) {
                     	var record = grid.getStore().getAt(rowIndex);
-                    	alert("Edit clicked");
+                    	TGT.app.fireEvent('actionclick', 'editReferenceData', record);
                     }
 	            },
 	            {
@@ -32,8 +32,8 @@ Ext.define('TGT.view.refdata.search.ReferenceDataGrid', {
 	                tooltip: 'Delete Reference Data',
 	                itemId: 'deleteReferenceData',
 	                handler: function(grid, rowIndex, colIndex) {
-	                    var rec = grid.getStore().getAt(rowIndex);
-	                    alert("Delete clicked");
+	                    var record = grid.getStore().getAt(rowIndex);
+	                    TGT.app.fireEvent('actionclick', 'deleteReferenceData', record);
 	                }
 	            }
             ]
