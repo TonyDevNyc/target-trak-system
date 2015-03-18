@@ -35,4 +35,19 @@
 	     	ORDER BY reference_data_type
        ]]>
 	</entry>
+	<entry key="updateReferenceTypesSql">
+	    <![CDATA[
+	     	UPDATE target_trak_dw.reference_data 
+	     		SET reference_data_label = :label,
+	     			reference_data_value = :value,
+	     			last_updated_by = :lastUpdatedBy,
+	     			last_updated_timestamp = :lastUpdatedTimestamp
+   			WHERE id = :id
+       ]]>
+	</entry>
+	<entry key="deleteReferenceTypesSql">
+	    <![CDATA[
+	     	DELETE FROM target_trak_dw.reference_data WHERE id = :id
+       ]]>
+	</entry>
 </properties>

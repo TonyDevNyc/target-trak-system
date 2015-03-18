@@ -11,4 +11,8 @@ public interface ReferenceDataService {
 	public ReferenceDataApiResponse getReferenceDataByCriteria(final ReferenceDataApiRequest request) throws TargetTrakException;
 	
 	public ReferenceDataApiResponse getReferenceDataTypes();
+	
+	public ReferenceDataApiResponse updateReferenceData(final ReferenceDataApiRequest request) throws TargetTrakException;
+	
+	public ReferenceDataApiResponse deleteReferenceData(final ReferenceDataApiRequest request) throws TargetTrakException;
 }

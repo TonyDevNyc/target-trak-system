@@ -29,6 +29,14 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
         {
     		ref : 'editReferenceDataWindow',
     		selector : '[xtype=refdata.edit.editreferencedatawindow]'
+    	}, 
+        {
+    		ref : 'editReferenceDataForm',
+    		selector : '[xtype=refdata.edit.editreferencedataform]'
+    	},
+    	{
+    		ref : 'editReferenceDataButton',
+    		selector : 'button[name="updateReferenceData"]'
     	}
     ],
 	
@@ -54,11 +62,44 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
             },
             'button[name="cancelEditReferenceData"]': {
             	click: this.closeEditReferenceDataWindow
+            },
+            'button[name="updateReferenceData"]' : {
+            	click: this.updateReferenceData
             }
         });
 	}, 
 	
+	updateReferenceData : function() {
+		var me = this;
+		var form = me.getEditReferenceDataButton().up('form').getForm();
+		if (form.isValid()) {
+			form.submit({
+    			submitEmptyText: true,
+    			url : '/target-trak-system/sys/refdata/updateReferenceData.json',
+				method : 'POST',
+                waitMsg : 'Updating Reference Data Please Wait...',
+                success : function(form, action) {
+                	Ext.example.msg('Update Reference Data Success', 'Data was updated successfully');
+                	me.getEditReferenceDataWindow().close();
+                	me.getReferenceDataGrid().getStore().reload();
+                },
+                failure : function(form, action) {
+                	var errorsArray = action.result.errors;
+                	if (errorsArray != null || errorsArray.length > 0) {
+                		Ext.Array.each(errorsArray, function(errorObject) {
+                			var fieldName = errorObject.fieldName;
+                			var errorMsg = errorObject.errorMessage;
+                			form.findField(fieldName).markInvalid(errorMsg);
+                		});
+                	}
+                	Ext.Msg.alert('Update Reference Data Error', action.result.errorMessage);
+                }
+    		});
+		}
+	},
+	
 	handleActionColumn : function(action, record) {
+		var me = this;
 		var id = record.get('id');
 		switch (action) {
 			
@@ -69,26 +110,34 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
 				editReferenceDataWindow.down('form').loadRecord(record);
 				editReferenceDataWindow.show();
 				break;
-			
+			//TODO - how to implement better
 			case 'deleteReferenceData':
 				Ext.MessageBox.show({
 			           title: 'Delete Reference Data',
 			           msg: 'Are you sure you want to delete this reference data?',
-			           width:300,
-			           buttons: Ext.MessageBox.OKCANCEL,    
-			           icon: Ext.MessageBox.QUESTION,
-			           fn: function(record) {
-			        	   submitDeleteReferenceData(id);
+			           width : 300,
+			           buttons : Ext.MessageBox.OKCANCEL,    
+			           icon : Ext.MessageBox.QUESTION,
+			           fn : function(buttonId) {
+			               if (buttonId === "ok") {
+			            	   var me = this;
+			            	   
+			            	   Ext.Ajax.request({
+			            		   url: '/target-trak-system/sys/refdata/deleteReferenceData.json',
+			            		   params: {
+			            			   referenceDataId: id
+			            		   },
+			            		   success: function(response) {
+			            			   alert(id + ' has been deleted');
+			            		   }
+			            	   });
+			               }
 			           }
 				});
 	            break;
-
 		}
 	},
 	
-	submitDeleteReferenceData : function(recordId) {
-		 alert('deleted ' + recordId);
-	},
 	
 	searchReferenceData : function() {
 		var me = this;

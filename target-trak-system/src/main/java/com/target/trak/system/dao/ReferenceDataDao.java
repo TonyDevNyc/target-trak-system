@@ -20,4 +20,8 @@ public interface ReferenceDataDao {
 	public boolean referenceDataAlreadyExists(final String type, final String label, final String value);
 	
 	public List<ReferenceDataDomain> getReferenceDataTypes();
+	
+	public ReferenceDataDomain updateReferenceData(final ReferenceDataDomain referenceData);
+	
+	public void deleteReferenceData(final ReferenceDataDomain referenceData);
 }

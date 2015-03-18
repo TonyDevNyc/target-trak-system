@@ -8,6 +8,7 @@ public class TargetTrakApiResponse {
 
 	private boolean success;
 	private List<TargetTrakValidationError> errors;
+	private String errorMessage;
 	private int totalSize;
 
 	public boolean isSuccess() {
@@ -32,6 +33,14 @@ public class TargetTrakApiResponse {
 
 	public void setTotalSize(int totalSize) {
 		this.totalSize = totalSize;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
 	}
 
 }

@@ -15,6 +15,7 @@ import com.target.trak.system.dao.ReferenceDataDao;
 import com.target.trak.system.domain.ReferenceDataDomain;
 import com.target.trak.system.domain.ReferenceDataSearchCriteria;
 import com.target.trak.system.service.ReferenceDataService;
+import com.target.trak.system.service.dto.TargetTrakRequestTypeEnum;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataApiRequest;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataApiResponse;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataDto;
@@ -23,27 +24,27 @@ import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.validations.TargetTrakValidationException;
 import com.target.trak.system.validations.impl.ReferenceDataValidatorImpl;
 
-@Transactional(value="dwTransactionManager", propagation=Propagation.REQUIRED, rollbackFor=TargetTrakException.class)
+@Transactional(value = "dwTransactionManager", propagation = Propagation.REQUIRED, rollbackFor = TargetTrakException.class)
 @Service("referenceDataService")
 public class ReferenceDataServiceImpl implements ReferenceDataService {
 
 	private final Logger logger = Logger.getLogger(getClass());
-	
+
 	@Autowired
 	private ReferenceDataDao referenceDataDao;
-	
+
 	@Autowired
 	private ConversionService conversionService;
-	
+
 	@Qualifier("referenceDataValidator")
 	@Autowired
 	private ReferenceDataValidatorImpl validator;
-	
+
 	@Override
 	public ReferenceDataApiResponse createReferenceData(final ReferenceDataApiRequest request) throws TargetTrakException {
 		ReferenceDataApiResponse response = new ReferenceDataApiResponse();
 		List<TargetTrakValidationError> validationErrors = validateRequest(request);
-		
+
 		if (validationErrors.isEmpty()) {
 			ReferenceDataDomain domain = referenceDataDao.insertReferenceData(conversionService.convert(request.getReferenceDataDto(), ReferenceDataDomain.class));
 			response.setReferenceData(conversionService.convert(domain, ReferenceDataDto.class));
@@ -54,7 +55,84 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
 		}
 		return response;
 	}
-	
+
+	@Transactional(propagation = Propagation.NEVER)
+	@Override
+	public ReferenceDataApiResponse getReferenceDataByCriteria(final ReferenceDataApiRequest request) throws TargetTrakException {
+		ReferenceDataApiResponse response = new ReferenceDataApiResponse();
+		ReferenceDataSearchCriteria criteria = conversionService.convert(request.getSearchCriteria(), ReferenceDataSearchCriteria.class);
+
+		int totalSize = referenceDataDao.selectReferenceDataBySearchCriteriaCount(criteria);
+		if (totalSize > 0) {
+			List<ReferenceDataDomain> data = referenceDataDao.selectPaginatedReferenceDataBySearchCriteria(criteria);
+			List<ReferenceDataDto> dtos = convertListOfDomains(data);
+			response.setReferenceDataList(dtos);
+		}
+		response.setTotalSize(totalSize);
+		response.setSuccess(Boolean.TRUE);
+
+		return response;
+	}
+
+	@Transactional(propagation = Propagation.NEVER)
+	@Override
+	public ReferenceDataApiResponse getReferenceDataTypes() {
+		ReferenceDataApiResponse response = new ReferenceDataApiResponse();
+		List<ReferenceDataDomain> data = referenceDataDao.getReferenceDataTypes();
+		List<ReferenceDataDto> dtos = convertListOfDomains(data);
+		response.setSuccess(Boolean.TRUE);
+		response.setReferenceDataList(dtos);
+		return response;
+	}
+
+	@Override
+	public ReferenceDataApiResponse updateReferenceData(final ReferenceDataApiRequest request) throws TargetTrakException {
+		ReferenceDataApiResponse response = new ReferenceDataApiResponse();
+		request.setRequestType(TargetTrakRequestTypeEnum.UPDATE);
+		List<TargetTrakValidationError> validationErrors = validateRequest(request);
+
+		try {
+			if (validationErrors.isEmpty()) {
+				ReferenceDataDto requestDto = request.getReferenceDataDto();
+				ReferenceDataDomain domain = referenceDataDao.updateReferenceData(conversionService.convert(requestDto, ReferenceDataDomain.class));
+				ReferenceDataDto dto = conversionService.convert(domain, ReferenceDataDto.class);
+				response.setReferenceData(dto);
+				response.setSuccess(Boolean.TRUE);
+			} else {
+				response.setSuccess(Boolean.FALSE);
+				response.setErrors(validationErrors);
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setSuccess(Boolean.FALSE);
+			response.setErrorMessage("An error has occurred trying to update Reference Data. <br /> If the error still occurs, contact your administrator");
+		}
+		return response;
+	}
+
+	@Override
+	public ReferenceDataApiResponse deleteReferenceData(final ReferenceDataApiRequest request) throws TargetTrakException {
+		ReferenceDataApiResponse response = new ReferenceDataApiResponse();
+		request.setRequestType(TargetTrakRequestTypeEnum.DELETE);
+		List<TargetTrakValidationError> validationErrors = validateRequest(request);
+
+		try {
+			if (validationErrors.isEmpty()) {
+				ReferenceDataDto requestDto = request.getReferenceDataDto();
+				referenceDataDao.deleteReferenceData(conversionService.convert(requestDto, ReferenceDataDomain.class));
+				response.setSuccess(Boolean.TRUE);
+			} else {
+				response.setSuccess(Boolean.FALSE);
+				response.setErrors(validationErrors);
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setSuccess(Boolean.FALSE);
+			response.setErrorMessage("An error has occurred trying to delete Reference Data. <br /> If the error still occurs, contact your administrator");
+		}
+		return response;
+	}
+
 	private List<TargetTrakValidationError> validateRequest(final ReferenceDataApiRequest request) throws TargetTrakException {
 		List<TargetTrakValidationError> validations = new ArrayList<TargetTrakValidationError>();
 		try {
@@ -66,24 +144,6 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
 		}
 	}
 
-	@Transactional(propagation=Propagation.NEVER)
-	@Override
-	public ReferenceDataApiResponse getReferenceDataByCriteria(final ReferenceDataApiRequest request) throws TargetTrakException {
-		ReferenceDataApiResponse response = new ReferenceDataApiResponse();
-		ReferenceDataSearchCriteria criteria = conversionService.convert(request.getSearchCriteria(), ReferenceDataSearchCriteria.class);
-		
-		int totalSize = referenceDataDao.selectReferenceDataBySearchCriteriaCount(criteria);
-		if (totalSize > 0) {
-			List<ReferenceDataDomain> data = referenceDataDao.selectPaginatedReferenceDataBySearchCriteria(criteria);
-			List<ReferenceDataDto> dtos = convertListOfDomains(data);
-			response.setReferenceDataList(dtos);
-		}
-		response.setTotalSize(totalSize);
-		response.setSuccess(Boolean.TRUE);
-		
-		return response;
-	}
-	
 	private List<ReferenceDataDto> convertListOfDomains(final List<ReferenceDataDomain> domains) {
 		List<ReferenceDataDto> dtos = new ArrayList<ReferenceDataDto>();
 		for (ReferenceDataDomain domain : domains) {
@@ -91,16 +151,4 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
 		}
 		return dtos;
 	}
-
-	@Transactional(propagation=Propagation.NEVER)
-	@Override
-	public ReferenceDataApiResponse getReferenceDataTypes() {
-		ReferenceDataApiResponse response = new ReferenceDataApiResponse();
-		List<ReferenceDataDomain> data = referenceDataDao.getReferenceDataTypes();
-		List<ReferenceDataDto> dtos = convertListOfDomains(data);
-		response.setSuccess(Boolean.TRUE);
-		response.setReferenceDataList(dtos);
-		return response;
-	}
-
 }

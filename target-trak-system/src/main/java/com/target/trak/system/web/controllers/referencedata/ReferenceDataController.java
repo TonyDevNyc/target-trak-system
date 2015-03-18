@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.target.trak.system.security.context.UserContext;
 import com.target.trak.system.service.ReferenceDataService;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataApiRequest;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataApiResponse;
@@ -32,6 +33,21 @@ public class ReferenceDataController {
 	@Qualifier("referenceDataService")
 	@Autowired
 	private ReferenceDataService referenceDataService;
+
+	@Qualifier("userContext")
+	@Autowired
+	private UserContext securityUserContext;
+
+	@RequestMapping(value = "/refdata/getReferenceDataTypes.json", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody
+	Map<String, Object> getReferenceDataTypes() {
+		Map<String, Object> jsonResponse = new HashMap<String, Object>();
+		ReferenceDataApiResponse response = referenceDataService.getReferenceDataTypes();
+		List<NameValuePair> list = convertToNameValuePairs(response.getReferenceDataList());
+		jsonResponse.put("referenceDataTypes", list);
+		jsonResponse.put("success", Boolean.TRUE);
+		return jsonResponse;
+	}
 
 	@RequestMapping(value = "/refdata/getReferenceData.json", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody
@@ -73,6 +89,49 @@ public class ReferenceDataController {
 		return jsonResponse;
 	}
 
+	@RequestMapping(value = "/refdata/updateReferenceData.json", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody
+	Map<String, Object> updateReferenceData(@RequestParam Long id, @RequestParam String type, @RequestParam String label, @RequestParam String value) {
+		Map<String, Object> jsonResponse = new HashMap<String, Object>();
+		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
+		request.setReferenceDataDto(buildReferenceDataDto(id, type, label, value));
+		ReferenceDataApiResponse response = new ReferenceDataApiResponse();
+		
+		try {
+			response = referenceDataService.updateReferenceData(request);
+			boolean success = response.isSuccess();
+			
+			if (!success) {
+				jsonResponse.put("errors", response.getErrors());
+				jsonResponse.put("errorMessage", response.getErrorMessage());
+			}
+			jsonResponse.put("success", success);
+		} 
+		catch (TargetTrakException e) {
+			response.setSuccess(Boolean.FALSE);
+		}
+		return jsonResponse;
+	}
+	
+	private ReferenceDataDto buildReferenceDataDto(final Long id, final String type, final String label, final String value) {
+		ReferenceDataDto dto = new ReferenceDataDto();
+		dto.setId(id);
+		dto.setType(type);
+		dto.setLabel(label);
+		dto.setValue(value);
+		dto.setLastUpdatedBy(securityUserContext.getCurrentUser().getUsername());
+		dto.setLastUpdatedDateTime(Calendar.getInstance());
+		return dto;
+	}
+
+	@RequestMapping(value = "/refdata/deleteReferenceData.json", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody
+	Map<String, Object> deleteReferenceData(@RequestParam Long referenceDataId) {
+		Map<String, Object> jsonResponse = new HashMap<String, Object>();
+		jsonResponse.put("success", Boolean.TRUE);
+		return jsonResponse;
+	}
+
 	private List<ReferenceDataModel> buildReferenceDataModel(List<ReferenceDataDto> dtos) {
 		List<ReferenceDataModel> models = new ArrayList<ReferenceDataModel>();
 		ReferenceDataModel model = null;
@@ -97,20 +156,8 @@ public class ReferenceDataController {
 		}
 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
-		// df.setTimeZone(TimeZone.getTimeZone("UTC"));
 		String iso8601Date = df.format(new Date(calendar.getTimeInMillis()));
 		return iso8601Date;
-	}
-
-	@RequestMapping(value = "/refdata/getReferenceDataTypes.json", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody
-	Map<String, Object> getReferenceDataTypes() {
-		Map<String, Object> jsonResponse = new HashMap<String, Object>();
-		ReferenceDataApiResponse response = referenceDataService.getReferenceDataTypes();
-		List<NameValuePair> list = convertToNameValuePairs(response.getReferenceDataList());
-		jsonResponse.put("referenceDataTypes", list);
-		jsonResponse.put("success", Boolean.TRUE);
-		return jsonResponse;
 	}
 
 	private List<NameValuePair> convertToNameValuePairs(List<ReferenceDataDto> dtos) {

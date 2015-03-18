@@ -45,19 +45,31 @@ public class ReferenceDataValidatorImpl implements TargetTrakValidator<Reference
 				validationErrors.addAll(validateReadPaging(request.getSearchCriteria()));
 				break;
 			case UPDATE:
-				System.out.println("Implementation in progress.");
+				validationErrors.addAll(validateUpdate(referenceDataDto));
 				break;
 			case READ_BY_ID:
 				System.out.println("Implementation in progress.");
 				break;
 			case DELETE:
-				System.out.println("Implementation in progress.");
+				validationErrors.addAll(validateDelete(referenceDataDto));
 				break;
 			default:
 				System.out.println("No implementation available");
 				break;
 		}
 		validationErrors.removeAll(Collections.singleton(null));
+		return validationErrors;
+	}
+	
+	private List<TargetTrakValidationError> validateDelete(final ReferenceDataDto referenceDataDto) {
+		List<TargetTrakValidationError> validationErrors = new ArrayList<TargetTrakValidationError>();
+		//TODO - finish validations
+		return validationErrors;
+	}
+	
+	private List<TargetTrakValidationError> validateUpdate(final ReferenceDataDto referenceDataDto) {
+		List<TargetTrakValidationError> validationErrors = new ArrayList<TargetTrakValidationError>();
+		//TODO - finish validations
 		return validationErrors;
 	}
 	

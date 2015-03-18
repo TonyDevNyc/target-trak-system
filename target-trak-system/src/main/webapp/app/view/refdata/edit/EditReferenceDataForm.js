@@ -14,12 +14,16 @@ Ext.define('TGT.view.refdata.edit.EditReferenceDataForm', {
 	},
 	layout : 'vbox',
 	items: [
+	    {
+	    	xtype : 'hidden',
+	    	name : 'id'
+	    },
         {
 		    xtype:'textfield',
 		    fieldLabel: 'Reference Data Type',
 		    labelWidth: 150,
 		    name: 'type',
-		    disabled: true,
+		    readOnly: true,
 		    width: 450
 		},
 		{
@@ -40,8 +44,8 @@ Ext.define('TGT.view.refdata.edit.EditReferenceDataForm', {
 	buttons: [
         '->', 
         {
-        	text: 'Save',
-        	name: 'saveReferenceData',
+        	text: 'Update',
+        	name: 'updateReferenceData',
         	action: 'saveReferenceData'
         }, 
         {

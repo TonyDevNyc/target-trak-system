@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
@@ -26,6 +27,8 @@ import com.target.trak.system.domain.ReferenceDataSearchCriteria;
 
 @Repository
 public class ReferenceDataDaoImpl implements ReferenceDataDao {
+
+	private final Logger logger = Logger.getLogger(getClass());
 
 	@Qualifier("referenceDataQueries")
 	@Autowired
@@ -60,6 +63,7 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 		if (count > 0) {
 			referenceData.setId(keyHolder.getKey().longValue());
 		} else {
+			logger.error("Reference Data was not created");
 			throw new RuntimeException("Reference Data was not created");
 		}
 		return referenceData;
@@ -98,11 +102,11 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 		params.addValue("type", type);
 		params.addValue("label", label);
 		params.addValue("value", value);
-		
+
 		int count = refDataTemplate.queryForObject(sql, params, Integer.class);
 		return (count > 0) ? true : false;
 	}
-	
+
 	@Override
 	public List<ReferenceDataDomain> getReferenceDataTypes() {
 		String sql = referenceDataQueries.getProperty("selectReferenceTypesSql");
@@ -119,8 +123,42 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 				}
 				return typesList;
 			}
-		
 		});
+	}
+
+	@Override
+	public ReferenceDataDomain updateReferenceData(final ReferenceDataDomain referenceData) {
+		String sql = referenceDataQueries.getProperty("updateReferenceTypesSql");
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("label", referenceData.getReferenceDataLabel());
+		params.addValue("value", referenceData.getReferenceDataValue());
+		params.addValue("id", referenceData.getId());
+		params.addValue("lastUpdatedBy", referenceData.getLastUpdatedBy());
+		params.addValue("lastUpdatedTimestamp", referenceData.getLastUpdatedTimestamp());
+
+		int count = refDataTemplate.update(sql, params);
+		if (count != 1) {
+			logger.error("Reference Data was not updated");
+			throw new RuntimeException("Reference Data was not updated!");
+		} else {
+			logger.info("Reference Data was updated successfully");
+			return referenceData;
+		}
+	}
+
+	@Override
+	public void deleteReferenceData(final ReferenceDataDomain referenceData) {
+		String sql = referenceDataQueries.getProperty("deleteReferenceTypesSql");
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("id", referenceData.getId());
+
+		int count = refDataTemplate.update(sql, params);
+		if (count != 1) {
+			logger.error("Reference Data was not deleted");
+			throw new RuntimeException("Reference Data was not deleted!");
+		} else {
+			logger.info("Reference Data was deleted successfully");
+		}
 	}
 
 	private final class ReferenceDataDomainRowMapper implements RowMapper<ReferenceDataDomain> {

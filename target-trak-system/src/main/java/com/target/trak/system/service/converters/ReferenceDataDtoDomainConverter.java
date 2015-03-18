@@ -17,11 +17,16 @@ public class ReferenceDataDtoDomainConverter implements Converter<ReferenceDataD
 		domain.setReferenceDataLabel(dto.getLabel());
 		domain.setReferenceDataValue(dto.getValue());
 		domain.setCreatedBy(dto.getCreatedBy());
-		Timestamp createTimestamp = new Timestamp(dto.getCreatedDateTime().getTimeInMillis());
-		domain.setCreatedTimestamp(createTimestamp);
+		if (dto.getCreatedDateTime() != null) {
+			Timestamp createTimestamp = new Timestamp(dto.getCreatedDateTime().getTimeInMillis());
+			domain.setCreatedTimestamp(createTimestamp);
+		}
 		domain.setLastUpdatedBy(dto.getLastUpdatedBy());
-		Timestamp lastUpdateTimestamp = new Timestamp(dto.getLastUpdatedDateTime().getTimeInMillis());
-		domain.setLastUpdatedTimestamp(lastUpdateTimestamp);
+		
+		if (dto.getLastUpdatedDateTime() != null) {
+			Timestamp lastUpdateTimestamp = new Timestamp(dto.getLastUpdatedDateTime().getTimeInMillis());
+			domain.setLastUpdatedTimestamp(lastUpdateTimestamp);
+		}
 		return domain;
 	}
 
