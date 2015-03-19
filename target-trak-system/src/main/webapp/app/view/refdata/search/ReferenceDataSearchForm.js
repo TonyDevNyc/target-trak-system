@@ -25,6 +25,7 @@ Ext.define('TGT.view.refdata.search.ReferenceDataSearchForm', {
         	items: [
 				{
 				    xtype: 'refdata.common.referencedatatypecombo',
+				    labelWidth: 150,
 				    width: 350
 				}
             ]
