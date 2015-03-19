@@ -12,7 +12,10 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
 
 	models : [ 'ReferenceData', 'ReferenceDataType' ],
 
-	views : [ 'refdata.search.ReferenceDataMaintenance', 'refdata.edit.EditReferenceDataWindow' ],
+	views : [ 
+        'refdata.search.ReferenceDataMaintenance', 
+        'refdata.edit.EditReferenceDataWindow'
+    ],
 
 	refs : [ 
         {
@@ -55,6 +58,7 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
 
 	init : function() {
 		this.application.on('actionclick', this.handleActionColumn);
+		this.application.on('handleDeleteReferenceData', this.deleteReferenceData);
 		
 		this.control({
             'button[name="searchReferenceData"]': {
@@ -68,6 +72,23 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
             }
         });
 	}, 
+	
+	deleteReferenceData : function(id) {
+		Ext.Ajax.request({
+		    url : '/target-trak-system/sys/refdata/deleteReferenceData.json',
+			params : {
+				referenceDataId : id
+			},
+			success : function(response) {
+				Ext.example.msg('Delete Reference Data Success', id + ' has been deleted');
+			},
+			failure : function() {
+				Ext.example.msg('Delete Reference Data Error',  'An error occurred');
+			}
+		});
+		
+		
+	},
 	
 	updateReferenceData : function() {
 		var me = this;
@@ -92,7 +113,7 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
                 			form.findField(fieldName).markInvalid(errorMsg);
                 		});
                 	}
-                	Ext.Msg.alert('Update Reference Data Error', action.result.errorMessage);
+                	Ext.example.msg('Update Reference Data Error', action.result.message);
                 }
     		});
 		}
@@ -110,7 +131,7 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
 				editReferenceDataWindow.down('form').loadRecord(record);
 				editReferenceDataWindow.show();
 				break;
-			//TODO - how to implement better
+			
 			case 'deleteReferenceData':
 				Ext.MessageBox.show({
 			           title: 'Delete Reference Data',
@@ -120,17 +141,7 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
 			           icon : Ext.MessageBox.QUESTION,
 			           fn : function(buttonId) {
 			               if (buttonId === "ok") {
-			            	   var me = this;
-			            	   
-			            	   Ext.Ajax.request({
-			            		   url: '/target-trak-system/sys/refdata/deleteReferenceData.json',
-			            		   params: {
-			            			   referenceDataId: id
-			            		   },
-			            		   success: function(response) {
-			            			   alert(id + ' has been deleted');
-			            		   }
-			            	   });
+			            	   TGT.app.fireEvent('handleDeleteReferenceData', id);
 			               }
 			           }
 				});
