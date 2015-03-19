@@ -2,6 +2,7 @@ Ext.define('TGT.view.refdata.search.ReferenceDataGrid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.refdata.search.referencedatagrid',
 	store : 'ReferenceDatas',
+	itemId : 'referenceDataGrid',
 	loadMask : true,
 	autoScroll : true,
 	width : 1275,
