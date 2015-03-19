@@ -33,13 +33,7 @@
 	<util:properties id="dwValidationProps" location="classpath:/properties/dw-validation-codes.properties" />
 	
 	<!-- Common Beans -->
-	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="basenames">
-			<list>
-				<value>classpath:/properties/messages</value>
-			</list>
-		</property>
-	</bean>
+	
 	
 	<!-- Common Beans -->
 	
