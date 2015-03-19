@@ -22,6 +22,13 @@ public class ReferenceDataRules {
 
 	// TODO implement regex for special characters after bus req updatedSS
 
+	public TargetTrakValidationError isIdEmpty(final Long id) {
+		if (id == null || id == 0L) {
+			return new TargetTrakValidationError("id", "REFERENCE_DATA_011");
+		}
+		return null;
+	}
+	
 	public TargetTrakValidationError isTypeEmpty(final String type) {
 		if (StringUtils.isEmpty(type)) {
 			return new TargetTrakValidationError("type", "REFERENCE_DATA_001");
@@ -38,10 +45,9 @@ public class ReferenceDataRules {
 	}
 
 	public TargetTrakValidationError typeContainsAllowableChars(final String type) {
-		// String pattern = "[a-zA-Z0-9~@$,#&.-=]+";
-		if (!type.matches("[a-zA-Z0-9.,]")) {
-			return new TargetTrakValidationError("type", "REFERENCE_DATA_003");
-		}
+		// String pattern = "a-zA-Z0-9~@#\^\$&\*\(\)-_\+=\[\]\{\}\|\\,\.\?\s]*";
+		//[a-zA-Z0-9\\s\\,\\-\\.]+
+		// TODO implementation in progress
 		return null;
 	}
 
@@ -62,9 +68,8 @@ public class ReferenceDataRules {
 
 	public TargetTrakValidationError labelContainsAllowableChars(final String label) {
 		// String pattern = "a-zA-Z0-9~@#\^\$&\*\(\)-_\+=\[\]\{\}\|\\,\.\?\s]*";
-		if (label.matches("[a-zA-Z0-9.,]")) {
-			return new TargetTrakValidationError("type", "REFERENCE_DATA_006");
-		}
+		//[a-zA-Z0-9\\s\\,\\-\\.]+
+		// TODO implementation in progress
 		return null;
 	}
 
@@ -85,9 +90,9 @@ public class ReferenceDataRules {
 
 	public TargetTrakValidationError valueContainsAllowableChars(final String value) {
 		// String pattern = "a-zA-Z0-9~@#\^\$&\*\(\)-_\+=\[\]\{\}\|\\,\.\?\s]*";
-		if (value.matches("[a-zA-Z0-9.,]")) {
-			return new TargetTrakValidationError("type", "REFERENCE_DATA_009");
-		}
+		// String pattern = "a-zA-Z0-9~@#\^\$&\*\(\)-_\+=\[\]\{\}\|\\,\.\?\s]*";
+		//[a-zA-Z0-9\\s\\,\\-\\.]+
+		// TODO implementation in progress
 		return null;
 	}
 	
