@@ -1,4 +1,5 @@
 Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
+	
 	extend : 'TGT.controller.BaseController',
 	
 	requires : [
@@ -74,20 +75,25 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
 	}, 
 	
 	deleteReferenceData : function(id) {
+		var grid = Ext.ComponentQuery.query('#referenceDataGrid')[0];
+		var myMask = new Ext.LoadMask(Ext.getBody(), {msg : 'Loading.. Please wait'});
+		myMask.show();
+		
 		Ext.Ajax.request({
 		    url : '/target-trak-system/sys/refdata/deleteReferenceData.json',
 			params : {
 				referenceDataId : id
 			},
 			success : function(response) {
-				Ext.example.msg('Delete Reference Data Success', id + ' has been deleted');
+				Ext.example.msg('Delete Reference Data Success', 'Reference Data Item has been deleted successfully.');
+				grid.getStore().reload();
+				myMask.hide();
 			},
-			failure : function() {
-				Ext.example.msg('Delete Reference Data Error',  'An error occurred');
+			failure : function(response) {
+				myMask.hide();
+				Ext.example.msg('Delete Reference Data Error',  response.message);
 			}
 		});
-		
-		
 	},
 	
 	updateReferenceData : function() {
@@ -120,7 +126,6 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
 	},
 	
 	handleActionColumn : function(action, record) {
-		var me = this;
 		var id = record.get('id');
 		switch (action) {
 			
@@ -135,7 +140,7 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
 			case 'deleteReferenceData':
 				Ext.MessageBox.show({
 			           title: 'Delete Reference Data',
-			           msg: 'Are you sure you want to delete this reference data?',
+			           msg: 'Are you sure you want to delete this Reference Data item?',
 			           width : 300,
 			           buttons : Ext.MessageBox.OKCANCEL,    
 			           icon : Ext.MessageBox.QUESTION,
@@ -148,7 +153,6 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
 	            break;
 		}
 	},
-	
 	
 	searchReferenceData : function() {
 		var me = this;
@@ -177,6 +181,7 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
     		});
 		}
 	},
+	
 	closeEditReferenceDataWindow : function() {
 		this.getEditReferenceDataWindow().close();
 	}

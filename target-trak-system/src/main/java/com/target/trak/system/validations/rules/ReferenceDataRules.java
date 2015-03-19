@@ -61,7 +61,7 @@ public class ReferenceDataRules {
 	public TargetTrakValidationError isLabelValidLength(final String label) {
 		int maxLength = Integer.parseInt((String) dwValidationProps.get("label.maxlength"));
 		if (label.length() > maxLength) {
-			return new TargetTrakValidationError("type", "REFERENCE_DATA_005");
+			return new TargetTrakValidationError("label", "REFERENCE_DATA_005");
 		}
 		return null;
 	}
@@ -75,7 +75,7 @@ public class ReferenceDataRules {
 
 	public TargetTrakValidationError isValueEmpty(final String value) {
 		if (StringUtils.isEmpty(value)) {
-			return new TargetTrakValidationError("label", "REFERENCE_DATA_007");
+			return new TargetTrakValidationError("value", "REFERENCE_DATA_007");
 		}
 		return null;
 	}
@@ -83,7 +83,7 @@ public class ReferenceDataRules {
 	public TargetTrakValidationError isValueValidLength(final String value) {
 		int maxLength = Integer.parseInt((String) dwValidationProps.get("value.maxlength"));
 		if (value.length() > maxLength) {
-			return new TargetTrakValidationError("type", "REFERENCE_DATA_008");
+			return new TargetTrakValidationError("value", "REFERENCE_DATA_008");
 		}
 		return null;
 	}

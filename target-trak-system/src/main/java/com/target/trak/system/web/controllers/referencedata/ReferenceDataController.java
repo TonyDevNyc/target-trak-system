@@ -124,6 +124,22 @@ public class ReferenceDataController {
 	public @ResponseBody
 	Map<String, Object> deleteReferenceData(@RequestParam Long referenceDataId) {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
+		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
+		request.setReferenceDataDto(buildReferenceDataDto(referenceDataId, null, null, null));
+		ReferenceDataApiResponse response = null;
+		try {
+			response = referenceDataService.deleteReferenceData(request);
+			boolean success = response.isSuccess();
+
+			if (!success) {
+				jsonResponse.put("errors", convertValidationErrors(response.getErrors()));
+				jsonResponse.put("message", response.getMessage());
+			}
+			jsonResponse.put("success", success);
+		} catch (TargetTrakException e) {
+			response = new ReferenceDataApiResponse();
+			response.setSuccess(Boolean.FALSE);
+		}
 		jsonResponse.put("success", Boolean.TRUE);
 		return jsonResponse;
 	}

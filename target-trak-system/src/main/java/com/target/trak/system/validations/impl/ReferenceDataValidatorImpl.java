@@ -63,7 +63,7 @@ public class ReferenceDataValidatorImpl implements TargetTrakValidator<Reference
 
 	private List<TargetTrakValidationError> validateDelete(final ReferenceDataDto referenceDataDto) {
 		List<TargetTrakValidationError> validationErrors = new ArrayList<TargetTrakValidationError>();
-		// TODO - finish validations
+		validateId(validationErrors, referenceDataDto.getId());
 		return validationErrors;
 	}
 

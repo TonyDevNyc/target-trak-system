@@ -123,6 +123,7 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
 				referenceDataDao.deleteReferenceData(conversionService.convert(requestDto, ReferenceDataDomain.class));
 				response.setSuccess(Boolean.TRUE);
 			} else {
+				response.setMessage("A validation error has occurred. Please fix the errors below");
 				response.setSuccess(Boolean.FALSE);
 				response.setErrors(validationErrors);
 			}
