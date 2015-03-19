@@ -7,10 +7,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,7 +26,9 @@ import com.target.trak.system.service.dto.referencedata.ReferenceDataApiResponse
 import com.target.trak.system.service.dto.referencedata.ReferenceDataDto;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataSearchCriteriaDto;
 import com.target.trak.system.service.exception.TargetTrakException;
+import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.web.views.ui.common.NameValuePair;
+import com.target.trak.system.web.views.ui.common.UIValidationError;
 import com.target.trak.system.web.views.ui.refdata.ReferenceDataModel;
 
 @Controller
@@ -37,6 +41,10 @@ public class ReferenceDataController {
 	@Qualifier("userContext")
 	@Autowired
 	private UserContext securityUserContext;
+
+	@Qualifier("messageSource")
+	@Autowired
+	private MessageSource messageSource;
 
 	@RequestMapping(value = "/refdata/getReferenceDataTypes.json", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody
@@ -96,23 +104,42 @@ public class ReferenceDataController {
 		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
 		request.setReferenceDataDto(buildReferenceDataDto(id, type, label, value));
 		ReferenceDataApiResponse response = new ReferenceDataApiResponse();
-		
+
 		try {
 			response = referenceDataService.updateReferenceData(request);
 			boolean success = response.isSuccess();
-			
+
 			if (!success) {
-				jsonResponse.put("errors", response.getErrors());
-				jsonResponse.put("errorMessage", response.getErrorMessage());
+				jsonResponse.put("errors", convertValidationErrors(response.getErrors()));
+				jsonResponse.put("message", response.getMessage());
 			}
 			jsonResponse.put("success", success);
-		} 
-		catch (TargetTrakException e) {
+		} catch (TargetTrakException e) {
 			response.setSuccess(Boolean.FALSE);
 		}
 		return jsonResponse;
 	}
+
+	@RequestMapping(value = "/refdata/deleteReferenceData.json", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody
+	Map<String, Object> deleteReferenceData(@RequestParam Long referenceDataId) {
+		Map<String, Object> jsonResponse = new HashMap<String, Object>();
+		jsonResponse.put("success", Boolean.TRUE);
+		return jsonResponse;
+	}
 	
+	private List<UIValidationError> convertValidationErrors(List<TargetTrakValidationError> validationErrors) {
+		List<UIValidationError> errors = new ArrayList<UIValidationError>();
+		if (validationErrors != null && !validationErrors.isEmpty()) {
+			String msg = null;
+			for (TargetTrakValidationError validationError : validationErrors) {
+				msg = messageSource.getMessage(validationError.getErrorMessage(), new Object[]{}, Locale.US);
+				errors.add(new UIValidationError(validationError.getFieldName(), msg));
+			}
+		}
+		return errors;
+	}
+
 	private ReferenceDataDto buildReferenceDataDto(final Long id, final String type, final String label, final String value) {
 		ReferenceDataDto dto = new ReferenceDataDto();
 		dto.setId(id);
@@ -122,14 +149,6 @@ public class ReferenceDataController {
 		dto.setLastUpdatedBy(securityUserContext.getCurrentUser().getUsername());
 		dto.setLastUpdatedDateTime(Calendar.getInstance());
 		return dto;
-	}
-
-	@RequestMapping(value = "/refdata/deleteReferenceData.json", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody
-	Map<String, Object> deleteReferenceData(@RequestParam Long referenceDataId) {
-		Map<String, Object> jsonResponse = new HashMap<String, Object>();
-		jsonResponse.put("success", Boolean.TRUE);
-		return jsonResponse;
 	}
 
 	private List<ReferenceDataModel> buildReferenceDataModel(List<ReferenceDataDto> dtos) {

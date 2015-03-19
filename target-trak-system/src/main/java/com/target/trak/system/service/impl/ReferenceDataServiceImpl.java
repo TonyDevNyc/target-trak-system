@@ -99,13 +99,14 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
 				response.setReferenceData(dto);
 				response.setSuccess(Boolean.TRUE);
 			} else {
+				response.setMessage("A validation error has occurred. Please fix the errors below");
 				response.setSuccess(Boolean.FALSE);
 				response.setErrors(validationErrors);
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			response.setSuccess(Boolean.FALSE);
-			response.setErrorMessage("An error has occurred trying to update Reference Data. <br /> If the error still occurs, contact your administrator");
+			response.setMessage("An error has occurred trying to update Reference Data. <br /> If the error still occurs, contact your administrator");
 		}
 		return response;
 	}
@@ -128,7 +129,7 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			response.setSuccess(Boolean.FALSE);
-			response.setErrorMessage("An error has occurred trying to delete Reference Data. <br /> If the error still occurs, contact your administrator");
+			response.setMessage("An error has occurred trying to delete Reference Data. <br /> If the error still occurs, contact your administrator");
 		}
 		return response;
 	}
