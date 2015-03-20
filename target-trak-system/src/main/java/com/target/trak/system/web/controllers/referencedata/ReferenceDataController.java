@@ -144,6 +144,44 @@ public class ReferenceDataController {
 		return jsonResponse;
 	}
 	
+	@RequestMapping(value = "/refdata/createReferenceData.json", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody
+	Map<String, Object> createReferenceData(@RequestParam String type, @RequestParam String label, @RequestParam String value) {
+		Map<String, Object> jsonResponse = new HashMap<String, Object>();
+		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
+		request.setReferenceDataDto(buildCreateReferenceDataDto(type, label, value));
+		ReferenceDataApiResponse response = null;
+		try {
+			response = referenceDataService.createReferenceData(request);
+			boolean success = response.isSuccess();
+
+			if (!success) {
+				jsonResponse.put("errors", convertValidationErrors(response.getErrors()));
+				jsonResponse.put("message", response.getMessage());
+			}
+			jsonResponse.put("success", success);
+		} catch (TargetTrakException e) {
+			response = new ReferenceDataApiResponse();
+			response.setSuccess(Boolean.FALSE);
+		}
+		return jsonResponse;
+	}
+	
+	private ReferenceDataDto buildCreateReferenceDataDto(final String type, final String label, final String value) {
+		ReferenceDataDto dto = new ReferenceDataDto();
+		dto.setType(type);
+		dto.setLabel(label);
+		dto.setValue(value);
+		
+		Calendar currentTime = Calendar.getInstance();
+		String currentUser = securityUserContext.getCurrentUser().getUsername();
+		dto.setCreatedBy(currentUser);
+		dto.setCreatedDateTime(currentTime);
+		dto.setLastUpdatedBy(currentUser);
+		dto.setLastUpdatedDateTime(currentTime);
+		return dto;
+	}
+	
 	private List<UIValidationError> convertValidationErrors(List<TargetTrakValidationError> validationErrors) {
 		List<UIValidationError> errors = new ArrayList<UIValidationError>();
 		if (validationErrors != null && !validationErrors.isEmpty()) {

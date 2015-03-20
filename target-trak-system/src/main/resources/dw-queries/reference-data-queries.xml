@@ -5,7 +5,7 @@
 	<entry key="insertReferenceDataSql">
 	    <![CDATA[
 	     	INSERT INTO target_trak_dw.reference_data (reference_data_type, reference_data_label, reference_data_value, created_by, created_timestamp, last_updated_by, last_updated_timestamp)
-			VALUES (:referenceDataType, :referenceDataLabel, referenceDataValue, :createdBy, :createdTimestamp, :lastUpdatedBy, :lastUpdatedTimestamp)
+			VALUES (:referenceDataType, :referenceDataLabel, :referenceDataValue, :createdBy, :createdTimestamp, :lastUpdatedBy, :lastUpdatedTimestamp)
        ]]>
 	</entry>
 	<entry key="selectCountOfAllReferenceDataSql">

@@ -43,15 +43,23 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
 	@Override
 	public ReferenceDataApiResponse createReferenceData(final ReferenceDataApiRequest request) throws TargetTrakException {
 		ReferenceDataApiResponse response = new ReferenceDataApiResponse();
+		request.setRequestType(TargetTrakRequestTypeEnum.CREATE);
 		List<TargetTrakValidationError> validationErrors = validateRequest(request);
+		try {
+			if (validationErrors.isEmpty()) {
+				ReferenceDataDomain domain = referenceDataDao.insertReferenceData(conversionService.convert(request.getReferenceDataDto(), ReferenceDataDomain.class));
+				response.setReferenceData(conversionService.convert(domain, ReferenceDataDto.class));
+				response.setSuccess(Boolean.TRUE);
 
-		if (validationErrors.isEmpty()) {
-			ReferenceDataDomain domain = referenceDataDao.insertReferenceData(conversionService.convert(request.getReferenceDataDto(), ReferenceDataDomain.class));
-			response.setReferenceData(conversionService.convert(domain, ReferenceDataDto.class));
-			response.setSuccess(Boolean.TRUE);
-		} else {
+			} else {
+				response.setMessage("A validation error has occurred. Please fix the errors below");
+				response.setSuccess(Boolean.FALSE);
+				response.setErrors(validationErrors);
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			response.setSuccess(Boolean.FALSE);
-			response.setErrors(validationErrors);
+			response.setMessage("An error has occurred trying to create Reference Data. <br /> If the error still occurs, contact your administrator");
 		}
 		return response;
 	}
