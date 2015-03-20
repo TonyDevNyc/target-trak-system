@@ -6,7 +6,9 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
        'TGT.store.ReferenceDataTypes',
        'TGT.store.ReferenceDatas',
        'TGT.view.refdata.edit.EditReferenceDataWindow',
-       'TGT.view.refdata.edit.EditReferenceDataForm'
+       'TGT.view.refdata.edit.EditReferenceDataForm',
+       'TGT.view.refdata.create.CreateReferenceDataWindow',
+       'TGT.view.refdata.create.CreateReferenceDataForm'
     ],
 
 	stores : [ 'ReferenceDatas', 'ReferenceDataTypes'],
@@ -41,6 +43,14 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
     	{
     		ref : 'editReferenceDataButton',
     		selector : 'button[name="updateReferenceData"]'
+    	},
+    	{
+    		ref : 'saveReferenceDataButton',
+    		selector : 'button[name="saveReferenceDataBtn"]'
+    	}, 
+        {
+    		ref : 'createReferenceDataWindow',
+    		selector : '[xtype=refdata.create.createreferencedatawindow]'
     	}
     ],
 	
@@ -63,16 +73,59 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
 		
 		this.control({
             'button[name="searchReferenceData"]': {
-                click: this.searchReferenceData
+                click : this.searchReferenceData
             },
             'button[name="cancelEditReferenceData"]': {
-            	click: this.closeEditReferenceDataWindow
+            	click : this.closeEditReferenceDataWindow
             },
             'button[name="updateReferenceData"]' : {
-            	click: this.updateReferenceData
+            	click : this.updateReferenceData
+            },
+            'button#createReferenceDataBtn' : {
+            	click : this.showCreateReferenceDataWindow
+            },
+            'button#saveReferenceDataBtn' : {
+            	click : this.createReferenceData
             }
         });
 	}, 
+	
+	createReferenceData : function() {
+		var me = this;
+		var form = me.getSaveReferenceDataButton().up('form').getForm();
+		
+		if (form.isValid()) {
+			form.submit({
+    			submitEmptyText: true,
+    			url : '/target-trak-system/sys/refdata/createReferenceData.json',
+				method : 'POST',
+                waitMsg : 'Creating Reference Data Please Wait...',
+                success : function(form, action) {
+                	Ext.example.msg('Create Reference Data Success', 'Reference Data Item was created successfully');
+                	me.getCreateReferenceDataWindow().close();
+                	me.getReferenceDataGrid().getStore().reload();
+                },
+                failure : function(form, action) {
+                	var errorsArray = action.result.errors;
+                	if (errorsArray != null || errorsArray.length > 0) {
+                		Ext.Array.each(errorsArray, function(errorObject) {
+                			var fieldName = errorObject.fieldName;
+                			var errorMsg = errorObject.errorMessage;
+                			form.findField(fieldName).markInvalid(errorMsg);
+                		});
+                	}
+                	Ext.example.msg('Create Reference Data Error', action.result.message);
+                }
+    		});
+		}
+	},
+	
+	showCreateReferenceDataWindow : function() {
+		var createReferenceDataWindow = Ext.create('TGT.view.refdata.create.CreateReferenceDataWindow',{
+			title: 'Create New Reference Data'
+		});
+		createReferenceDataWindow.show();
+	},
 	
 	deleteReferenceData : function(id) {
 		var grid = Ext.ComponentQuery.query('#referenceDataGrid')[0];
