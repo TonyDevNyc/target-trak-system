@@ -28,7 +28,7 @@ Ext.define('TGT.controller.App', {
 				'menuitem#createRefDataItem' : {
 					click : this.addHistory
 				},
-				'menuitem#searchRefDataItem' : {
+				'menuitem#administerRefDataItem' : {
 					click : this.addHistory
 				},
 				'menuitem#editRefDataItem' : {
@@ -54,7 +54,7 @@ Ext.define('TGT.controller.App', {
         var me = this, config;
        
         switch(token) {
-            case 'searchRefDataItem':
+            case 'administerRefDataItem':
                 config = {
                     xtype: 'refdata.search.maintenance'
                 };
