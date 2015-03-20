@@ -71,6 +71,12 @@
     background-image:url('/target-trak-system/resources/images/ref-data-icon.png') !important;
 }
 
+.icon-add-ref-data {
+	width: 16px !important;
+    height: 16px !important;
+    background-image:url('/target-trak-system/resources/images/add-refdata.png') !important;
+}
+
 .icon-sec-admin {
 	width: 16px !important;
     height: 16px !important;
