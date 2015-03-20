@@ -86,6 +86,15 @@ Ext.define('TGT.view.refdata.search.ReferenceDataGrid', {
 		xtype : 'pagingtoolbar',
 		store : 'ReferenceDatas',
 		displayInfo : true,
-		width : 1275
+		width : 1275,
+		items : [
+	        '-', 
+	        {
+                text : 'Create Item',
+                itemId : 'createReferenceDataBtn', 
+                enableToggle : true,
+                icon : '/target-trak-system/resources/images/add-refdata.png'
+	        }
+        ]
 	} ]
 });
