@@ -7,12 +7,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,9 +24,8 @@ import com.target.trak.system.service.dto.referencedata.ReferenceDataApiResponse
 import com.target.trak.system.service.dto.referencedata.ReferenceDataDto;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataSearchCriteriaDto;
 import com.target.trak.system.service.exception.TargetTrakException;
-import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.web.views.ui.common.NameValuePair;
-import com.target.trak.system.web.views.ui.common.UIValidationError;
+import com.target.trak.system.web.views.ui.common.UIErrorBuilder;
 import com.target.trak.system.web.views.ui.refdata.ReferenceDataModel;
 
 @Controller
@@ -42,9 +39,9 @@ public class ReferenceDataController {
 	@Autowired
 	private UserContext securityUserContext;
 
-	@Qualifier("messageSource")
+	@Qualifier("uiErrorBuilder")
 	@Autowired
-	private MessageSource messageSource;
+	private UIErrorBuilder uiErrorBuilder;
 
 	@RequestMapping(value = "/refdata/getReferenceDataTypes.json", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody
@@ -110,7 +107,7 @@ public class ReferenceDataController {
 			boolean success = response.isSuccess();
 
 			if (!success) {
-				jsonResponse.put("errors", convertValidationErrors(response.getErrors()));
+				jsonResponse.put("errors", uiErrorBuilder.buildUiValidationErrors(response.getErrors()));
 				jsonResponse.put("message", response.getMessage());
 			}
 			jsonResponse.put("success", success);
@@ -127,12 +124,13 @@ public class ReferenceDataController {
 		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
 		request.setReferenceDataDto(buildReferenceDataDto(referenceDataId, null, null, null));
 		ReferenceDataApiResponse response = null;
+		
 		try {
 			response = referenceDataService.deleteReferenceData(request);
 			boolean success = response.isSuccess();
 
 			if (!success) {
-				jsonResponse.put("errors", convertValidationErrors(response.getErrors()));
+				jsonResponse.put("errors", uiErrorBuilder.buildUiValidationErrors(response.getErrors()));
 				jsonResponse.put("message", response.getMessage());
 			}
 			jsonResponse.put("success", success);
@@ -151,12 +149,13 @@ public class ReferenceDataController {
 		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
 		request.setReferenceDataDto(buildCreateReferenceDataDto(type, label, value));
 		ReferenceDataApiResponse response = null;
+		
 		try {
 			response = referenceDataService.createReferenceData(request);
 			boolean success = response.isSuccess();
 
 			if (!success) {
-				jsonResponse.put("errors", convertValidationErrors(response.getErrors()));
+				jsonResponse.put("errors", uiErrorBuilder.buildUiValidationErrors(response.getErrors()));
 				jsonResponse.put("message", response.getMessage());
 			}
 			jsonResponse.put("success", success);
@@ -182,18 +181,6 @@ public class ReferenceDataController {
 		return dto;
 	}
 	
-	private List<UIValidationError> convertValidationErrors(List<TargetTrakValidationError> validationErrors) {
-		List<UIValidationError> errors = new ArrayList<UIValidationError>();
-		if (validationErrors != null && !validationErrors.isEmpty()) {
-			String msg = null;
-			for (TargetTrakValidationError validationError : validationErrors) {
-				msg = messageSource.getMessage(validationError.getErrorMessage(), new Object[]{}, Locale.US);
-				errors.add(new UIValidationError(validationError.getFieldName(), msg));
-			}
-		}
-		return errors;
-	}
-
 	private ReferenceDataDto buildReferenceDataDto(final Long id, final String type, final String label, final String value) {
 		ReferenceDataDto dto = new ReferenceDataDto();
 		dto.setId(id);
