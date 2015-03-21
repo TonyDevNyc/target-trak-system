@@ -53,6 +53,8 @@
 
 	<!-- Security Beans -->
 	
+	<aop:aspectj-autoproxy/>
+	
 	<bean id="securityDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
  		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/target_trak_sec" />
