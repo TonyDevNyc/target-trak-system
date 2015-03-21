@@ -1,8 +1,9 @@
 package com.target.trak.system.security.audit.service;
 
-import com.target.trak.system.security.audit.domain.AuditEvent;
+import com.target.trak.system.security.audit.AuditableEvent;
 
 public interface AuditService {
 
-	public AuditEvent createAuditEvent(final AuditEvent auditEvent);
+	public void createAuditEvent(final AuditableEvent auditableEvent, Throwable exception);
+
 }
