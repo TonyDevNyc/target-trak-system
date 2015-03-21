@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
+import com.target.trak.system.security.audit.AuditableEvent;
+import com.target.trak.system.security.audit.TargetTrakAuditEventCode;
 import com.target.trak.system.security.dao.MenuDao;
 import com.target.trak.system.security.domain.TargetTrakMenu;
 import com.target.trak.system.security.dto.PrivilegeDto;
@@ -27,6 +29,7 @@ public class MenuServiceImpl implements MenuService {
 	@Autowired
 	private ConversionService conversionService;
 	
+	@AuditableEvent(auditableEventCode=TargetTrakAuditEventCode.BUILD_USER_MENU)
 	@Override
 	public List<MenuDto> getMenuItemsForUser(final UserDto user) throws TargetTrakSecurityException {
 		List<MenuDto> menuList = new ArrayList<MenuDto>();

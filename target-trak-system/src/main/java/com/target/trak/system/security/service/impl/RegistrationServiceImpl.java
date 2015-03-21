@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.target.trak.system.security.audit.AuditableEvent;
+import com.target.trak.system.security.audit.TargetTrakAuditEventCode;
 import com.target.trak.system.security.dao.UserDetailsDao;
 import com.target.trak.system.security.domain.TargetTrakUser;
 import com.target.trak.system.security.dto.registration.RegistrationApiRequest;
@@ -37,6 +39,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 	@Autowired
 	private UserRegistrationValidatorImpl validator;
 
+	@AuditableEvent(auditableEventCode=TargetTrakAuditEventCode.REGISTER_NEW_USER)
 	@Override
 	public RegistrationApiResponse registerUser(final RegistrationApiRequest request) throws TargetTrakSecurityException {
 		RegistrationApiResponse response = new RegistrationApiResponse();
