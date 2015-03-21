@@ -1,8 +1,6 @@
 package com.target.trak.system.security.audit;
 
 import java.lang.reflect.Method;
-import java.sql.Timestamp;
-import java.util.Calendar;
 
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -15,7 +13,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.target.trak.system.security.audit.dao.AuditEventDao;
-import com.target.trak.system.security.audit.domain.AuditEvent;
 import com.target.trak.system.security.audit.service.AuditService;
 
 @Aspect
@@ -33,7 +30,6 @@ public class AuditAspect {
 
 	@Around("@annotation(AuditableEvent)")
 	public Object audit(ProceedingJoinPoint jp) throws Throwable {
-
 		Throwable exception = null;
 		Object retVal = null;
 		Method method = AopUtils.getMostSpecificMethod(((MethodSignature) jp.getSignature()).getMethod(), jp.getTarget().getClass());
@@ -50,8 +46,7 @@ public class AuditAspect {
 
 		AuditableEvent annotation = method.getAnnotation(AuditableEvent.class);
 		if (annotation != null) {
-			AuditEvent auditEvent = buildAuditEvent(annotation, exception);
-			auditEventService.createAuditEvent(auditEvent);
+			auditEventService.createAuditEvent(annotation, exception);
 		}
 
 		if (exception != null) {
@@ -59,21 +54,5 @@ public class AuditAspect {
 			throw exception;
 		}
 		return retVal;
-	}
-
-	private AuditEvent buildAuditEvent(AuditableEvent auditableEvent, Throwable exception) {
-		AuditEvent auditEvent = new AuditEvent();
-		auditEvent.setAuditEventCode(auditableEvent.auditableEventCode());
-		auditEvent.setAuditEventDescription(auditableEvent.auditableEventMessage());
-		auditEvent.setUsername(auditableEvent.auditableEventUser());
-		Calendar currentTime = Calendar.getInstance();
-		auditEvent.setTimestamp(new Timestamp(currentTime.getTimeInMillis()));
-
-		boolean isSuccessful = exception == null;
-		auditEvent.setSuccess(isSuccessful);
-		if (!isSuccessful) {
-			auditEvent.setErrorMessage(exception.getMessage());
-		}
-		return auditEvent;
 	}
 }
