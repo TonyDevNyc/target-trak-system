@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"> 
+
+<properties>
+	<entry key="insertAuditEventSql">
+	    <![CDATA[
+	     	INSERT INTO target_trak_sec.audit_event (username, event_code, event_desc, timestamp, success, error_message) 
+	     	VALUES (:username, :eventCode, :eventDescription, :timestamp, :success, :errorMessage)
+       ]]>
+	</entry>
+</properties>
