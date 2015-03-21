@@ -7,27 +7,31 @@ import java.util.Calendar;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import com.target.trak.system.security.audit.dao.AuditEventDao;
 import com.target.trak.system.security.audit.domain.AuditEvent;
 import com.target.trak.system.security.audit.service.AuditService;
 
+@Aspect
+@Component
 public class AuditAspect {
 
 	private Logger logger = Logger.getLogger(getClass());
 
 	@Autowired
 	private AuditEventDao auditEventDao;
-	
+
 	@Qualifier("auditEventService")
 	@Autowired
 	private AuditService auditEventService;
 
-	 @Around("auditMethods()")
+	@Around("@annotation(AuditableEvent)")
 	public Object audit(ProceedingJoinPoint jp) throws Throwable {
 
 		Throwable exception = null;
@@ -48,6 +52,11 @@ public class AuditAspect {
 		if (annotation != null) {
 			AuditEvent auditEvent = buildAuditEvent(annotation, exception);
 			auditEventService.createAuditEvent(auditEvent);
+		}
+
+		if (exception != null) {
+			logger.debug("re-throwing '" + exception.getClass().getName() + "' exception");
+			throw exception;
 		}
 		return retVal;
 	}
