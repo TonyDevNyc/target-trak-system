@@ -67,5 +67,4 @@ public class AuditEvent {
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
-
 }
