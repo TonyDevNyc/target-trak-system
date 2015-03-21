@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.target.trak.system.dao.ReferenceDataDao;
 import com.target.trak.system.domain.ReferenceDataDomain;
 import com.target.trak.system.domain.ReferenceDataSearchCriteria;
+import com.target.trak.system.security.audit.AuditableEvent;
 import com.target.trak.system.service.ReferenceDataService;
 import com.target.trak.system.service.dto.TargetTrakRequestTypeEnum;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataApiRequest;
@@ -40,6 +41,7 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
 	@Autowired
 	private ReferenceDataValidatorImpl validator;
 
+	@AuditableEvent(auditableEventCode="Create Reference Data", auditableEventMessage = "Create Reference Data", auditableEventUser = "tina")
 	@Override
 	public ReferenceDataApiResponse createReferenceData(final ReferenceDataApiRequest request) throws TargetTrakException {
 		ReferenceDataApiResponse response = new ReferenceDataApiResponse();
