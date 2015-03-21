@@ -65,6 +65,7 @@
 	<util:properties id="rolePrivilegesQueries" location="classpath:/security-queries/role-privileges-queries.xml" />
 	<util:properties id="menuQueries" location="classpath:/security-queries/menu-queries.xml" />
 	<util:properties id="validationProps" location="classpath:/properties/security-validation-codes.properties" />
+	<util:properties id="auditEventQueries" location="classpath:/security-queries/audit-event-queries.xml" />
 	
 	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 	
