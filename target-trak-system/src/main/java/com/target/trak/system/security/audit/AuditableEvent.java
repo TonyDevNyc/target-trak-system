@@ -9,9 +9,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface AuditableEvent {
 
-	String auditableEventCode();
+	AuditEventCode auditableEventCode();
 	
-	String auditableEventMessage();
-	
-	String auditableEventUser();
 }
