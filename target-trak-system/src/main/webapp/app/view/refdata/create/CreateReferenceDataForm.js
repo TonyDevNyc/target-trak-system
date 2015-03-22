@@ -44,12 +44,9 @@ Ext.define('TGT.view.refdata.create.CreateReferenceDataForm', {
         	itemId : 'saveReferenceDataBtn'
         }, 
         {
-        	text : 'Clear',
-        	name : 'clearReferenceData',
-        	handler: function() {
-             	var form = this.up('form').getForm();
-             	form.reset();
-        	}
+        	text : 'Cancel',
+        	name : 'cancelCreateReferenceData',
+        	itemId : 'cancelCreateReferenceData'
         	
         }
     ]

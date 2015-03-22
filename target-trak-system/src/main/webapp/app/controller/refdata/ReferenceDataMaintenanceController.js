@@ -86,6 +86,9 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
             },
             'button#saveReferenceDataBtn' : {
             	click : this.createReferenceData
+            },
+            'button#cancelCreateReferenceData' : {
+            	click : this.cancelCreateReferenceData
             }
         });
 	}, 
@@ -118,6 +121,10 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
                 }
     		});
 		}
+	},
+	
+	cancelCreateReferenceData : function() {
+		this.getCreateReferenceDataWindow().close();
 	},
 	
 	showCreateReferenceDataWindow : function() {
