@@ -16,6 +16,8 @@ import com.target.trak.system.security.domain.TargetTrakMenu;
 import com.target.trak.system.security.dto.PrivilegeDto;
 import com.target.trak.system.security.dto.RoleDto;
 import com.target.trak.system.security.dto.UserDto;
+import com.target.trak.system.security.dto.menu.MenuApiRequest;
+import com.target.trak.system.security.dto.menu.MenuApiResponse;
 import com.target.trak.system.security.dto.menu.MenuDto;
 import com.target.trak.system.security.exceptions.TargetTrakSecurityException;
 import com.target.trak.system.security.service.MenuService;
@@ -31,21 +33,29 @@ public class MenuServiceImpl implements MenuService {
 	
 	@AuditableEvent(auditableEventCode=TargetTrakAuditEventCode.BUILD_USER_MENU)
 	@Override
-	public List<MenuDto> getMenuItemsForUser(final UserDto user) throws TargetTrakSecurityException {
+	public MenuApiResponse getMenuItemsForUser(final MenuApiRequest request) throws TargetTrakSecurityException {
+		MenuApiResponse response = new MenuApiResponse();
 		List<MenuDto> menuList = new ArrayList<MenuDto>();
-		if (user == null) {
+		UserDto currentUser = request.getCurrentUser();
+		
+		if (currentUser == null) {
 			throw new TargetTrakSecurityException("User is null");
 		}
 		
-		List<RoleDto> roles = user.getRoles();
+		List<RoleDto> roles = currentUser.getRoles();
 		if (roles == null || roles.isEmpty()) {
-			return menuList;
+			response.setSuccess(false);
+			response.setMessage("User [" + currentUser.getUsername() + "] does not have any roles");
+			response.setMenuItems(menuList);
+			return response;
 		}
 		
 		List<Long> privilegeIds = buildPrivilegeList(roles);
 		List<TargetTrakMenu> menuItems = menuDao.selectMenuItemsByPrivileges(privilegeIds);
 		menuList = buildMenuList(menuItems);
-		return menuList;
+		response.setSuccess(true);
+		response.setMenuItems(menuList);
+		return response;
 	}
 	
 	private List<MenuDto> buildMenuList(List<TargetTrakMenu> menuItems) {
