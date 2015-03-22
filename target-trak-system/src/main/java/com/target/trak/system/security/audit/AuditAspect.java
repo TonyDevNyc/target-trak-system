@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.target.trak.system.security.audit.dao.AuditEventDao;
 import com.target.trak.system.security.audit.service.AuditService;
+import com.target.trak.system.service.dto.TargetTrakApiResponse;
 
 @Aspect
 @Component
@@ -46,7 +47,8 @@ public class AuditAspect {
 
 		AuditableEvent annotation = method.getAnnotation(AuditableEvent.class);
 		if (annotation != null) {
-			auditEventService.createAuditEvent(annotation, exception);
+			TargetTrakApiResponse response = (TargetTrakApiResponse) retVal;
+			auditEventService.createAuditEvent(annotation, response);
 		}
 
 		if (exception != null) {

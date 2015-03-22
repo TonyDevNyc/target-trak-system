@@ -13,6 +13,7 @@ import com.target.trak.system.security.audit.dao.AuditEventDao;
 import com.target.trak.system.security.audit.domain.AuditEvent;
 import com.target.trak.system.security.audit.service.AuditService;
 import com.target.trak.system.security.context.UserContext;
+import com.target.trak.system.service.dto.TargetTrakApiResponse;
 
 @Transactional(propagation=Propagation.REQUIRES_NEW)
 @Service("auditEventService")
@@ -25,12 +26,12 @@ public class AuditServiceImpl implements AuditService {
 	private UserContext userContext;
 	
 	@Override
-	public void createAuditEvent(final AuditableEvent auditableEvent, final Throwable exception) {
-		AuditEvent auditEvent = buildAuditEvent(auditableEvent, exception);
+	public void createAuditEvent(final AuditableEvent auditableEvent, final TargetTrakApiResponse response) {
+		AuditEvent auditEvent = buildAuditEvent(auditableEvent, response);
 		auditEventDao.insertAuditEvent(auditEvent);
 	}
 	
-	private AuditEvent buildAuditEvent(final AuditableEvent auditableEvent, final Throwable exception) {
+	private AuditEvent buildAuditEvent(final AuditableEvent auditableEvent, final TargetTrakApiResponse response) {
 		AuditEvent auditEvent = new AuditEvent();
 		auditEvent.setAuditEventCode(auditableEvent.auditableEventCode().toString());
 		auditEvent.setAuditEventDescription(auditableEvent.auditableEventCode().description());
@@ -38,10 +39,11 @@ public class AuditServiceImpl implements AuditService {
 		Calendar currentTime = Calendar.getInstance();
 		auditEvent.setTimestamp(new Timestamp(currentTime.getTimeInMillis()));
 
-		boolean isSuccessful = exception == null;
-		auditEvent.setSuccess(isSuccessful);
-		if (!isSuccessful) {
-			auditEvent.setErrorMessage(exception.getMessage());
+		auditEvent.setSuccess(response.isSuccess());
+		if (response.isSuccess()) {
+			auditEvent.setErrorMessage(null);
+		} else {
+			auditEvent.setErrorMessage(response.getMessage());
 		}
 		return auditEvent;
 	}
