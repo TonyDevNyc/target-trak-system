@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.target.trak.system.security.context.UserContext;
 import com.target.trak.system.security.dto.UserDto;
-import com.target.trak.system.security.dto.menu.MenuDto;
+import com.target.trak.system.security.dto.menu.MenuApiRequest;
+import com.target.trak.system.security.dto.menu.MenuApiResponse;
 import com.target.trak.system.security.service.MenuService;
 import com.target.trak.system.web.builders.MenuBuilder;
 import com.target.trak.system.web.views.ui.menu.MenuButton;
@@ -29,9 +30,12 @@ public class MenuController {
 
 	@RequestMapping(value = "/buildUserMenu.json", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List<MenuButton> buildUserMenu() throws Exception {
+		MenuApiRequest request = new MenuApiRequest();
 		UserDto currentUser = userContext.getCurrentUser();
-		List<MenuDto> menuList = menuService.getMenuItemsForUser(currentUser);
-		List<MenuButton> allowableMenuButtons = menuBuilder.buildUserMenu(menuList);
+		request.setCurrentUser(currentUser);
+		MenuApiResponse response = menuService.getMenuItemsForUser(request);
+		
+		List<MenuButton> allowableMenuButtons = menuBuilder.buildUserMenu(response.getMenuItems());
 		return allowableMenuButtons;
 	}
 
