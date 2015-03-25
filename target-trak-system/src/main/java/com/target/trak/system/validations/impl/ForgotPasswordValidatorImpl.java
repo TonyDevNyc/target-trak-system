@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.target.trak.system.security.dto.credentials.ForgotPasswordApiRequest;
@@ -16,6 +17,7 @@ import com.target.trak.system.validations.rules.EmailRules;
 @Component("forgotPasswordValidator")
 public class ForgotPasswordValidatorImpl implements TargetTrakValidator<ForgotPasswordApiRequest> {
 
+	@Qualifier("emailRules")
 	@Autowired
 	private EmailRules emailRules;
 
