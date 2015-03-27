@@ -14,18 +14,7 @@ import com.target.trak.system.domain.criteria.ReferenceDataSearchCriteria;
 @Component("referenceDataQueryBuilder")
 public class ReferenceDataQueryBuilder {
 
-	private static final String WHERE_CLAUSE = " WHERE 1 = 1";
-	private static final String AND = " AND ";
-	private static final String EQUALS = " = ";
-	private static final String LIKE = " LIKE ";
-	private static final String WILDCARD = "% ";
-	private static final String ORDER_BY_CLAUSE = " ORDER BY ";
-	private static final String ASCENDING_ORDER = " ASC ";
-	private static final String DESCENDING_ORDER = " DESC ";
-	private static final String LIMIT_CLAUSE = " LIMIT ";
-	private static final String COMMA = ",";
 	private static final String DEFAULT_SORT_ORDER = " ORDER BY reference_data_type, reference_data_label ASC ";
-	private static final String EMPTY_SPACE = " ";
 	private static final String REFERENCE_DATA_TYPE_COLUMN = "reference_data_type";
 	private static final String REFERENCE_DATA_LABEL_COLUMN = "reference_data_label";
 
@@ -42,9 +31,9 @@ public class ReferenceDataQueryBuilder {
 		if (StringUtils.isEmpty(criteria.getSortField())) {
 			builder.append(DEFAULT_SORT_ORDER);
 		} else {
-			builder.append(ORDER_BY_CLAUSE).append(criteria.getSortField()).append(EMPTY_SPACE).append(DESCENDING_ORDER);
+			builder.append(QueryConstantsEnum.ORDER_BY_CLAUSE.value).append(criteria.getSortField()).append(QueryConstantsEnum.EMPTY_SPACE.value).append(QueryConstantsEnum.DESCENDING_ORDER.value);
 		}
-		builder.append(LIMIT_CLAUSE).append(criteria.getStart()).append(COMMA).append(criteria.getEnd());
+		builder.append(QueryConstantsEnum.LIMIT_CLAUSE.value).append(criteria.getStart()).append(QueryConstantsEnum.COMMA.value).append(criteria.getEnd());
 
 		logger.info("Default Reference Data Query Built: " + builder.toString());
 		return builder.toString();
@@ -53,26 +42,26 @@ public class ReferenceDataQueryBuilder {
 	public String buildSearchCriteriaReferenceDataPaginatedQuery(final ReferenceDataSearchCriteria criteria, final MapSqlParameterSource params) {
 		StringBuilder builder = new StringBuilder();
 		builder.append(referenceDataQueries.get("baseReferenceDataPagingSql"));
-		builder.append(WHERE_CLAUSE).append(EMPTY_SPACE);
+		builder.append(QueryConstantsEnum.WHERE_CLAUSE.value).append(QueryConstantsEnum.EMPTY_SPACE.value);
 
 		if (!StringUtils.isEmpty(criteria.getReferenceDataType())) {
-			builder.append(AND).append(REFERENCE_DATA_TYPE_COLUMN).append(EQUALS).append(":referenceDataType");
+			builder.append(QueryConstantsEnum.AND.value).append(REFERENCE_DATA_TYPE_COLUMN).append(QueryConstantsEnum.EQUALS.value).append(":referenceDataType");
 			params.addValue("referenceDataType", criteria.getReferenceDataType());
 		}
 
 		if (!StringUtils.isEmpty(criteria.getReferenceDataLabel())) {
-			builder.append(AND).append(REFERENCE_DATA_LABEL_COLUMN).append(EQUALS).append(":referenceDataLabel");
+			builder.append(QueryConstantsEnum.AND.value).append(REFERENCE_DATA_LABEL_COLUMN).append(QueryConstantsEnum.EQUALS.value).append(":referenceDataLabel");
 			params.addValue("referenceDataLabel", criteria.getReferenceDataLabel());
 		}
 
 		if (StringUtils.isEmpty(criteria.getSortField())) {
 			builder.append(DEFAULT_SORT_ORDER);
 		} else {
-			builder.append(ORDER_BY_CLAUSE).append(":sortField").append(EMPTY_SPACE).append(DESCENDING_ORDER);
+			builder.append(QueryConstantsEnum.ORDER_BY_CLAUSE.value).append(":sortField").append(QueryConstantsEnum.EMPTY_SPACE.value).append(QueryConstantsEnum.DESCENDING_ORDER.value);
 			params.addValue("sortField", criteria.getSortField());
 		}
 
-		builder.append(LIMIT_CLAUSE).append(":pageStart").append(COMMA).append(":pageEnd");
+		builder.append(QueryConstantsEnum.LIMIT_CLAUSE.value).append(":pageStart").append(QueryConstantsEnum.COMMA.value).append(":pageEnd");
 		params.addValue("pageStart", criteria.getStart());
 		params.addValue("pageEnd", criteria.getEnd());
 
@@ -83,22 +72,22 @@ public class ReferenceDataQueryBuilder {
 	public String buildSearchCriteriaReferenceDataCountQuery(final ReferenceDataSearchCriteria criteria, final MapSqlParameterSource params) {
 		StringBuilder builder = new StringBuilder();
 		builder.append(referenceDataQueries.get("selectCountOfAllReferenceDataSql"));
-		builder.append(WHERE_CLAUSE).append(EMPTY_SPACE);
+		builder.append(QueryConstantsEnum.WHERE_CLAUSE.value).append(QueryConstantsEnum.EMPTY_SPACE.value);
 
 		if (!StringUtils.isEmpty(criteria.getReferenceDataType())) {
-			builder.append(AND).append(REFERENCE_DATA_TYPE_COLUMN).append(EQUALS).append(":referenceDataType");
+			builder.append(QueryConstantsEnum.AND.value).append(REFERENCE_DATA_TYPE_COLUMN).append(QueryConstantsEnum.EQUALS.value).append(":referenceDataType");
 			params.addValue("referenceDataType", criteria.getReferenceDataType());
 		}
 
 		if (!StringUtils.isEmpty(criteria.getReferenceDataLabel())) {
-			builder.append(AND).append(REFERENCE_DATA_LABEL_COLUMN).append(EQUALS).append(":referenceDataLabel");
+			builder.append(QueryConstantsEnum.AND.value).append(REFERENCE_DATA_LABEL_COLUMN).append(QueryConstantsEnum.EQUALS.value).append(":referenceDataLabel");
 			params.addValue("referenceDataLabel", criteria.getReferenceDataLabel());
 		}
 
 		if (StringUtils.isEmpty(criteria.getSortField())) {
 			builder.append(DEFAULT_SORT_ORDER);
 		} else {
-			builder.append(ORDER_BY_CLAUSE).append(":sortField").append(EMPTY_SPACE).append(DESCENDING_ORDER);
+			builder.append(QueryConstantsEnum.ORDER_BY_CLAUSE.value).append(":sortField").append(QueryConstantsEnum.EMPTY_SPACE.value).append(QueryConstantsEnum.DESCENDING_ORDER.value);
 			params.addValue("sortField", criteria.getSortField());
 		}
 		logger.info("Reference Data Count Query Built: " + builder.toString());
