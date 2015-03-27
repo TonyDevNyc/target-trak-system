@@ -2,7 +2,7 @@ package com.target.trak.system.service.converters;
 
 import org.springframework.core.convert.converter.Converter;
 
-import com.target.trak.system.domain.ReferenceDataSearchCriteria;
+import com.target.trak.system.domain.criteria.ReferenceDataSearchCriteria;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataSearchCriteriaDto;
 
 public class ReferenceDataSearchCriteriaDtoDomainConverter implements Converter<ReferenceDataSearchCriteriaDto, ReferenceDataSearchCriteria> {

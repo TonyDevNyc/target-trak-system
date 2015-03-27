@@ -23,7 +23,7 @@ import org.springframework.stereotype.Repository;
 import com.target.trak.system.dao.ReferenceDataDao;
 import com.target.trak.system.dao.builder.ReferenceDataQueryBuilder;
 import com.target.trak.system.domain.ReferenceDataDomain;
-import com.target.trak.system.domain.ReferenceDataSearchCriteria;
+import com.target.trak.system.domain.criteria.ReferenceDataSearchCriteria;
 
 @Repository
 public class ReferenceDataDaoImpl implements ReferenceDataDao {

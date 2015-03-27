@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.target.trak.system.domain.ReferenceDataSearchCriteria;
+import com.target.trak.system.domain.criteria.ReferenceDataSearchCriteria;
 
 @Component("referenceDataQueryBuilder")
 public class ReferenceDataQueryBuilder {

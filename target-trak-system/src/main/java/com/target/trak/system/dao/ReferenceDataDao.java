@@ -3,7 +3,7 @@ package com.target.trak.system.dao;
 import java.util.List;
 
 import com.target.trak.system.domain.ReferenceDataDomain;
-import com.target.trak.system.domain.ReferenceDataSearchCriteria;
+import com.target.trak.system.domain.criteria.ReferenceDataSearchCriteria;
 
 public interface ReferenceDataDao {
 

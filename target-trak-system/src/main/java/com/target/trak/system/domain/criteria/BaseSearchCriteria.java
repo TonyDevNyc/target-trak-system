@@ -1,22 +1,12 @@
-package com.target.trak.system.domain;
+package com.target.trak.system.domain.criteria;
 
-public class ReferenceDataSearchCriteria {
+public abstract class BaseSearchCriteria {
 
-	private String referenceDataType;
-	private String referenceDataLabel;
 	private int start;
 	private int end;
 	private int page;
 	private String sortField;
 	private String sortDirection;
-
-	public String getReferenceDataType() {
-		return referenceDataType;
-	}
-
-	public void setReferenceDataType(String referenceDataType) {
-		this.referenceDataType = referenceDataType;
-	}
 
 	public int getStart() {
 		return start;
@@ -58,11 +48,4 @@ public class ReferenceDataSearchCriteria {
 		this.sortDirection = sortDirection;
 	}
 
-	public String getReferenceDataLabel() {
-		return referenceDataLabel;
-	}
-
-	public void setReferenceDataLabel(String referenceDataLabel) {
-		this.referenceDataLabel = referenceDataLabel;
-	}
 }
