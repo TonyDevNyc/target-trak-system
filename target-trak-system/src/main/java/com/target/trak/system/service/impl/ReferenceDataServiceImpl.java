@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.target.trak.system.dao.ReferenceDataDao;
 import com.target.trak.system.domain.ReferenceDataDomain;
-import com.target.trak.system.domain.ReferenceDataSearchCriteria;
+import com.target.trak.system.domain.criteria.ReferenceDataSearchCriteria;
 import com.target.trak.system.service.ReferenceDataService;
 import com.target.trak.system.service.dto.TargetTrakApiResponse;
 import com.target.trak.system.service.dto.TargetTrakErrorTypeEnum;
