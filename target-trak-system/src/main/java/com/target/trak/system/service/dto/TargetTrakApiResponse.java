@@ -7,6 +7,7 @@ import com.target.trak.system.validations.TargetTrakValidationError;
 public class TargetTrakApiResponse {
 
 	private boolean success;
+	private TargetTrakErrorTypeEnum errorType;
 	private List<TargetTrakValidationError> errors;
 	private String message;
 	private int totalSize;
@@ -41,5 +42,13 @@ public class TargetTrakApiResponse {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public TargetTrakErrorTypeEnum getErrorType() {
+		return errorType;
+	}
+
+	public void setErrorType(TargetTrakErrorTypeEnum errorType) {
+		this.errorType = errorType;
 	}
 }
