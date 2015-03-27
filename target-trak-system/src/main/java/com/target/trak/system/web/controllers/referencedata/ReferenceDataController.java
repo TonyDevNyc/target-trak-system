@@ -23,9 +23,7 @@ import com.target.trak.system.service.dto.referencedata.ReferenceDataApiRequest;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataApiResponse;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataDto;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataSearchCriteriaDto;
-import com.target.trak.system.service.exception.TargetTrakException;
 import com.target.trak.system.web.views.ui.common.NameValuePair;
-import com.target.trak.system.web.views.ui.common.UIErrorBuilder;
 import com.target.trak.system.web.views.ui.refdata.ReferenceDataModel;
 
 @Controller
@@ -39,10 +37,6 @@ public class ReferenceDataController {
 	@Autowired
 	private UserContext securityUserContext;
 
-	@Qualifier("uiErrorBuilder")
-	@Autowired
-	private UIErrorBuilder uiErrorBuilder;
-
 	@RequestMapping(value = "/refdata/getReferenceDataTypes.json", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody
 	Map<String, Object> getReferenceDataTypes() {
@@ -50,7 +44,7 @@ public class ReferenceDataController {
 		ReferenceDataApiResponse response = referenceDataService.getReferenceDataTypes();
 		List<NameValuePair> list = convertToNameValuePairs(response.getReferenceDataList());
 		jsonResponse.put("referenceDataTypes", list);
-		jsonResponse.put("success", Boolean.TRUE);
+		jsonResponse.put("success", response.isSuccess());
 		return jsonResponse;
 	}
 
@@ -60,17 +54,10 @@ public class ReferenceDataController {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
 		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
 		request.setSearchCriteria(buildCriteria(null, page, start, limit));
-		ReferenceDataApiResponse response;
-
-		try {
-			response = referenceDataService.getReferenceDataByCriteria(request);
-			jsonResponse.put("data", buildReferenceDataModel(response.getReferenceDataList()));
-			jsonResponse.put("success", Boolean.TRUE);
-			jsonResponse.put("totalSize", response.getTotalSize());
-		} catch (TargetTrakException e) {
-			response = new ReferenceDataApiResponse();
-			response.setSuccess(Boolean.FALSE);
-		}
+		ReferenceDataApiResponse response = referenceDataService.getReferenceDataByCriteria(request);
+		jsonResponse.put("data", buildReferenceDataModel(response.getReferenceDataList()));
+		jsonResponse.put("success", response.isSuccess());
+		jsonResponse.put("totalSize", response.getTotalSize());
 		return jsonResponse;
 	}
 
@@ -80,17 +67,10 @@ public class ReferenceDataController {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
 		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
 		request.setSearchCriteria(buildCriteria(referenceDataType, page, start, limit));
-		ReferenceDataApiResponse response;
-
-		try {
-			response = referenceDataService.getReferenceDataByCriteria(request);
-			jsonResponse.put("data", buildReferenceDataModel(response.getReferenceDataList()));
-			jsonResponse.put("success", Boolean.TRUE);
-			jsonResponse.put("totalSize", response.getTotalSize());
-		} catch (TargetTrakException e) {
-			response = new ReferenceDataApiResponse();
-			response.setSuccess(Boolean.FALSE);
-		}
+		ReferenceDataApiResponse response = referenceDataService.getReferenceDataByCriteria(request);
+		jsonResponse.put("data", buildReferenceDataModel(response.getReferenceDataList()));
+		jsonResponse.put("success", response.isSuccess());
+		jsonResponse.put("totalSize", response.getTotalSize());
 		return jsonResponse;
 	}
 
@@ -100,20 +80,8 @@ public class ReferenceDataController {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
 		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
 		request.setReferenceDataDto(buildReferenceDataDto(id, type, label, value));
-		ReferenceDataApiResponse response = new ReferenceDataApiResponse();
-
-		try {
-			response = referenceDataService.updateReferenceData(request);
-			boolean success = response.isSuccess();
-
-			if (!success) {
-				jsonResponse.put("errors", uiErrorBuilder.buildUiValidationErrors(response.getErrors()));
-				jsonResponse.put("message", response.getMessage());
-			}
-			jsonResponse.put("success", success);
-		} catch (TargetTrakException e) {
-			response.setSuccess(Boolean.FALSE);
-		}
+		ReferenceDataApiResponse response = referenceDataService.updateReferenceData(request);
+		jsonResponse.put("success", response.isSuccess());
 		return jsonResponse;
 	}
 
@@ -123,55 +91,28 @@ public class ReferenceDataController {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
 		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
 		request.setReferenceDataDto(buildReferenceDataDto(referenceDataId, null, null, null));
-		ReferenceDataApiResponse response = null;
-		
-		try {
-			response = referenceDataService.deleteReferenceData(request);
-			boolean success = response.isSuccess();
-
-			if (!success) {
-				jsonResponse.put("errors", uiErrorBuilder.buildUiValidationErrors(response.getErrors()));
-				jsonResponse.put("message", response.getMessage());
-			}
-			jsonResponse.put("success", success);
-		} catch (TargetTrakException e) {
-			response = new ReferenceDataApiResponse();
-			response.setSuccess(Boolean.FALSE);
-		}
-		jsonResponse.put("success", Boolean.TRUE);
+		ReferenceDataApiResponse response = referenceDataService.deleteReferenceData(request);
+		jsonResponse.put("success", response.isSuccess());
 		return jsonResponse;
 	}
-	
+
 	@RequestMapping(value = "/refdata/createReferenceData.json", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody
 	Map<String, Object> createReferenceData(@RequestParam String type, @RequestParam String label, @RequestParam String value) {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
 		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
 		request.setReferenceDataDto(buildCreateReferenceDataDto(type, label, value));
-		ReferenceDataApiResponse response = null;
-		
-		try {
-			response = referenceDataService.createReferenceData(request);
-			boolean success = response.isSuccess();
-
-			if (!success) {
-				jsonResponse.put("errors", uiErrorBuilder.buildUiValidationErrors(response.getErrors()));
-				jsonResponse.put("message", response.getMessage());
-			}
-			jsonResponse.put("success", success);
-		} catch (TargetTrakException e) {
-			response = new ReferenceDataApiResponse();
-			response.setSuccess(Boolean.FALSE);
-		}
+		ReferenceDataApiResponse response = referenceDataService.createReferenceData(request);
+		jsonResponse.put("success", response.isSuccess());
 		return jsonResponse;
 	}
-	
+
 	private ReferenceDataDto buildCreateReferenceDataDto(final String type, final String label, final String value) {
 		ReferenceDataDto dto = new ReferenceDataDto();
 		dto.setType(type);
 		dto.setLabel(label);
 		dto.setValue(value);
-		
+
 		Calendar currentTime = Calendar.getInstance();
 		String currentUser = securityUserContext.getCurrentUser().getUsername();
 		dto.setCreatedBy(currentUser);
@@ -180,7 +121,7 @@ public class ReferenceDataController {
 		dto.setLastUpdatedDateTime(currentTime);
 		return dto;
 	}
-	
+
 	private ReferenceDataDto buildReferenceDataDto(final Long id, final String type, final String label, final String value) {
 		ReferenceDataDto dto = new ReferenceDataDto();
 		dto.setId(id);
