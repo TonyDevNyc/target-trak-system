@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"> 
+
+<properties>
+	<entry key="insertCompanySql">
+	    <![CDATA[
+	     	INSERT INTO target_trak_dw.company (name, address_line1, address_line2, city, state, zipcode, country, created_by, created_timestamp, last_updated_by, last_updated_timestamp)
+			VALUES (:name, :addressLine1, :addressLine2, :city, :state, :zipcode, :country, :createdBy, :createdTimestamp, :lastUpdatedBy, :lastUpdatedTimestamp)
+       ]]>
+	</entry>
+	<entry key="selectCompanyByIdSql">
+	    <![CDATA[
+	     	SELECT id, name, address_line1, address_line2, city, state, zipcode, country, created_by, created_timestamp, last_updated_by, last_updated_timestamp 
+			FROM target_trak_dw.company
+			WHERE id = :id
+       ]]>
+	</entry>
+	<entry key="baseCompanySql">
+	    <![CDATA[
+	     	SELECT id, name, address_line1, address_line2, city, state, zipcode, country, created_by, created_timestamp, last_updated_by, last_updated_timestamp 
+			FROM target_trak_dw.company
+       ]]>
+	</entry>
+	<entry key="selectBaseCountReferenceDataSql">
+	    <![CDATA[
+	     	SELECT COUNT(1) FROM target_trak_dw.company 
+       ]]>
+	</entry>
+	<entry key="selectDistinctCompaniesSql">
+	    <![CDATA[
+	     	SELECT id, name FROM target_trak_dw.company ORDER BY name DESC
+       ]]>
+	</entry>
+	<entry key="updateCompanySql">
+	    <![CDATA[
+	     	UPDATE target_trak_dw.company 
+	     	SET name = :name,
+	     		address_line1 = :addressLine1,
+	     		address_line2 = :addressLine2,
+	     		city = :city,
+	     		state = :state,
+	     		zipcode = :zipcode,
+	     		country = :country,
+	     		last_updated_by = :lastUpdatedBy,
+	     		last_updated_timestamp = :lastUpdatedTimestamp
+	     	WHERE id = :id
+       ]]>
+	</entry>
+</properties>

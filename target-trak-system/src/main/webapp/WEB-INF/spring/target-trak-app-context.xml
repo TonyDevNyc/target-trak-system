@@ -29,6 +29,8 @@
 	</bean>
 	
 	<util:properties id="referenceDataQueries" location="classpath:/dw-queries/reference-data-queries.xml" />
+	<util:properties id="companyQueries" location="classpath:/dw-queries/company-queries.xml" />
+	
 	<util:properties id="errorMessages" location="classpath:/properties/error-messages.properties" />
 	<util:properties id="dwValidationProps" location="classpath:/properties/dw-validation-codes.properties" />
 	
