@@ -22,6 +22,11 @@ public class FirstNameRulesImpl implements FirstNameRules {
 		if (StringUtils.isEmpty(firstName)) {
 			return new TargetTrakValidationError("firstName", "REGISTRATION_007");
 		}
+		
+		if (firstName != null && StringUtils.isEmpty(firstName.trim())) {
+			return new TargetTrakValidationError("firstName", "REGISTRATION_007");
+		}
+		
 		return null;
 	}
 
