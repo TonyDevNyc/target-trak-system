@@ -1,4 +1,4 @@
-package com.target.trak.system.service.converters;
+package com.target.trak.system.service.converters.referencedata;
 
 import java.sql.Timestamp;
 
