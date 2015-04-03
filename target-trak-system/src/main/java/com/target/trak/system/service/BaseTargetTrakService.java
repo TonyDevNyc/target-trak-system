@@ -7,7 +7,7 @@ import com.target.trak.system.service.dto.common.TargetTrakErrorTypeEnum;
 import com.target.trak.system.service.exception.TargetTrakException;
 import com.target.trak.system.validations.TargetTrakValidationError;
 
-public class AbstractTargetTrakService {
+public class BaseTargetTrakService {
 
 	public final TargetTrakException generateServiceException(final List<TargetTrakValidationError> validationErrors, final TargetTrakErrorTypeEnum errorType, final String message) {
 		TargetTrakException exception = new TargetTrakException(message);
