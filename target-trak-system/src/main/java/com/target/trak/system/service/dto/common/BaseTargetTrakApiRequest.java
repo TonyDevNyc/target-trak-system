@@ -1,6 +1,6 @@
 package com.target.trak.system.service.dto.common;
 
-public abstract class AbstractTargetTrakApiRequest implements TargetTrakApiRequest {
+public abstract class BaseTargetTrakApiRequest implements TargetTrakApiRequest {
 
 	private TargetTrakRequestTypeEnum requestType;
 

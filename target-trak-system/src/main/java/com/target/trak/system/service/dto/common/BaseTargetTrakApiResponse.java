@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.target.trak.system.validations.TargetTrakValidationError;
 
-public abstract class AbstractTargetTrakApiResponse implements TargetTrakApiResponse {
+public abstract class BaseTargetTrakApiResponse implements TargetTrakApiResponse {
 
 	private boolean success;
 	private List<TargetTrakValidationError> errors;
