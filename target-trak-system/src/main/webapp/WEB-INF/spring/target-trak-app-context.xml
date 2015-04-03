@@ -46,9 +46,13 @@
 				<bean id="menuDtoConverter" class="com.target.trak.system.security.converters.MenuDtoConverter" />
 				<bean id="userDtoConverter" class="com.target.trak.system.security.converters.UserDtoConverter" />
 				
-				<bean id="referenceDataDomainDtoConverter" class="com.target.trak.system.service.converters.ReferenceDataDomainDtoConverter " />
-				<bean id="referenceDataDtoDomainConverter" class="com.target.trak.system.service.converters.ReferenceDataDtoDomainConverter" />
-				<bean id="referenceDataSearchCriteriaConverter" class="com.target.trak.system.service.converters.ReferenceDataSearchCriteriaDtoDomainConverter" />
+				<bean id="referenceDataDomainDtoConverter" class="com.target.trak.system.service.converters.referencedata.ReferenceDataDomainDtoConverter " />
+				<bean id="referenceDataDtoDomainConverter" class="com.target.trak.system.service.converters.referencedata.ReferenceDataDtoDomainConverter" />
+				<bean id="referenceDataSearchCriteriaConverter" class="com.target.trak.system.service.converters.referencedata.ReferenceDataSearchCriteriaDtoDomainConverter" />
+				
+				<bean id="companyDomainDtoConverter" class="com.target.trak.system.service.converters.company.CompanyDomainDtoConverter" />
+				<bean id="companyDtoDomainConverter" class="com.target.trak.system.service.converters.company.CompanyDtoDomainConverter" />
+				<bean id="companyDataSearchCriteriaConverter" class="com.target.trak.system.service.converters.company.CompanySearchCriteriaConverter" />
 			</set>
 		</property>
 	</bean>
