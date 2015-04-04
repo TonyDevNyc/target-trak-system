@@ -17,4 +17,8 @@ public interface TargetTrakApiResponse {
 	public String getMessage();
 	
 	public void setMessage(final String message);
+	
+	public int getTotalSize();
+	
+	public void setTotalSize(int totalSize);
 }

@@ -9,6 +9,17 @@ public abstract class BaseTargetTrakApiResponse implements TargetTrakApiResponse
 	private boolean success;
 	private List<TargetTrakValidationError> errors;
 	private String message;
+	private int totalSize;
+
+	@Override
+	public int getTotalSize() {
+		return totalSize;
+	}
+
+	@Override
+	public void setTotalSize(int totalSize) {
+		this.totalSize = totalSize;
+	}
 
 	@Override
 	public boolean isSuccess() {
