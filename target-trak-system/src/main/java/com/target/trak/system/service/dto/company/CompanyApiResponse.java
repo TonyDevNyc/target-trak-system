@@ -2,9 +2,9 @@ package com.target.trak.system.service.dto.company;
 
 import java.util.List;
 
-import com.target.trak.system.service.dto.common.AbstractTargetTrakApiResponse;
+import com.target.trak.system.service.dto.common.BaseTargetTrakApiResponse;
 
-public class CompanyApiResponse extends AbstractTargetTrakApiResponse {
+public class CompanyApiResponse extends BaseTargetTrakApiResponse {
 
 	private CompanyDto company;
 	private List<CompanyDto> companies;

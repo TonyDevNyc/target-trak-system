@@ -1,8 +1,8 @@
 package com.target.trak.system.service.dto.company;
 
-import com.target.trak.system.service.dto.common.AbstractTargetTrakApiRequest;
+import com.target.trak.system.service.dto.common.BaseTargetTrakApiRequest;
 
-public class CompanyApiRequest extends AbstractTargetTrakApiRequest {
+public class CompanyApiRequest extends BaseTargetTrakApiRequest {
 
 	private CompanyDto company;
 	private CompanySearchCriteriaDto searchCriteria;
