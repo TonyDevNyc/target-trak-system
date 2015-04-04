@@ -1,9 +1,9 @@
 package com.target.trak.system.security.dto.menu;
 
 import com.target.trak.system.security.dto.UserDto;
-import com.target.trak.system.service.dto.TargetTrakApiRequest;
+import com.target.trak.system.service.dto.common.BaseTargetTrakApiRequest;
 
-public class MenuApiRequest extends TargetTrakApiRequest {
+public class MenuApiRequest extends BaseTargetTrakApiRequest {
 
 	private UserDto currentUser;
 

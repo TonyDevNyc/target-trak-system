@@ -2,9 +2,9 @@ package com.target.trak.system.security.dto.menu;
 
 import java.util.List;
 
-import com.target.trak.system.service.dto.TargetTrakApiResponse;
+import com.target.trak.system.service.dto.common.BaseTargetTrakApiResponse;
 
-public class MenuApiResponse extends TargetTrakApiResponse {
+public class MenuApiResponse extends BaseTargetTrakApiResponse {
 
 	private List<MenuDto> menuItems;
 
