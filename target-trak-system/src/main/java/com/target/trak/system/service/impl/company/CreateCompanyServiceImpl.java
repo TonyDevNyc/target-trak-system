@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.target.trak.system.dao.CompanyDao;
 import com.target.trak.system.domain.CompanyDomain;
-import com.target.trak.system.service.AbstractTargetTrakService;
+import com.target.trak.system.service.BaseTargetTrakService;
 import com.target.trak.system.service.TargetTrakService;
 import com.target.trak.system.service.dto.common.TargetTrakErrorTypeEnum;
 import com.target.trak.system.service.dto.company.CompanyApiRequest;
@@ -23,7 +23,7 @@ import com.target.trak.system.validations.TargetTrakValidationException;
 import com.target.trak.system.validations.impl.CompanyValidatorImpl;
 
 @Transactional(value = "dwTransactionManager", propagation = Propagation.REQUIRED)
-public class CreateCompanyServiceImpl extends AbstractTargetTrakService implements TargetTrakService<CompanyApiRequest, CompanyApiResponse> {
+public class CreateCompanyServiceImpl extends BaseTargetTrakService implements TargetTrakService<CompanyApiRequest, CompanyApiResponse> {
 
 	private final Logger logger = Logger.getLogger(getClass());
 
