@@ -1,13 +1,13 @@
 package com.target.trak.system.service.exception;
 
-import com.target.trak.system.service.dto.TargetTrakApiResponse;
+import com.target.trak.system.service.dto.common.TargetTrakApiResponse;
 
 public class TargetTrakException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
 	private TargetTrakApiResponse response;
-	
+
 	public TargetTrakException() {
 		super();
 	}
