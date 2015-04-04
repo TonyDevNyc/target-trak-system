@@ -21,4 +21,8 @@ public interface TargetTrakApiResponse {
 	public int getTotalSize();
 	
 	public void setTotalSize(int totalSize);
+	
+	public TargetTrakErrorTypeEnum getErrorType();
+	
+	public void setErrorType(TargetTrakErrorTypeEnum errorType);
 }
