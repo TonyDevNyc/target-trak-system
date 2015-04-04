@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
 import com.target.trak.system.service.dto.TargetTrakApiResponse;
-import com.target.trak.system.service.dto.TargetTrakErrorTypeEnum;
+import com.target.trak.system.service.dto.common.TargetTrakErrorTypeEnum;
 import com.target.trak.system.service.exception.TargetTrakException;
 import com.target.trak.system.web.views.ui.common.UIErrorBuilder;
 import com.target.trak.system.web.views.ui.common.UIValidationError;
