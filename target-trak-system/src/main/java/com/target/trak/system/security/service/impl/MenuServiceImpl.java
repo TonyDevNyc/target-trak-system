@@ -31,7 +31,7 @@ public class MenuServiceImpl implements MenuService {
 	@Autowired
 	private ConversionService conversionService;
 	
-	@AuditableEvent(auditableEventCode=TargetTrakAuditEventCode.BUILD_USER_MENU)
+	//@AuditableEvent(auditableEventCode=TargetTrakAuditEventCode.BUILD_USER_MENU)
 	@Override
 	public MenuApiResponse getMenuItemsForUser(final MenuApiRequest request) throws TargetTrakSecurityException {
 		MenuApiResponse response = new MenuApiResponse();
