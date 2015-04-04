@@ -47,7 +47,7 @@ public class CreateReferenceDataServiceImpl extends BaseTargetTrakService implem
 		List<TargetTrakValidationError> validationErrors = validateRequest(request);
 
 		if (!validationErrors.isEmpty()) {
-			TargetTrakException exception = generateServiceException(validationErrors, TargetTrakErrorTypeEnum.VALIDATION, "A validation error has occurred. Please fix the errors below");
+			TargetTrakException exception = generateServiceException(response, validationErrors, TargetTrakErrorTypeEnum.VALIDATION, "A validation error has occurred. Please fix the errors below");
 			throw exception;
 		}
 
@@ -57,7 +57,7 @@ public class CreateReferenceDataServiceImpl extends BaseTargetTrakService implem
 			response.setSuccess(Boolean.TRUE);
 		} catch (Throwable e) {
 			logger.error(e.getMessage(), e);
-			TargetTrakException exception = generateServiceException(validationErrors, TargetTrakErrorTypeEnum.ERROR, "An error has occurred trying to create Reference Data. <br /> If the error still occurs, contact your administrator");
+			TargetTrakException exception = generateServiceException(response, validationErrors, TargetTrakErrorTypeEnum.ERROR, "An error has occurred trying to create Reference Data. <br /> If the error still occurs, contact your administrator");
 			throw exception;
 		}
 		return response;

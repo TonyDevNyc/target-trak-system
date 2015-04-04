@@ -56,7 +56,7 @@ public class GetReferenceDataItemServiceImpl extends BaseTargetTrakService imple
 			response.setSuccess(Boolean.TRUE);
 		} catch (Throwable e) {
 			logger.error(e.getMessage(), e);
-			TargetTrakException exception = generateServiceException(null, TargetTrakErrorTypeEnum.ERROR, "An error has occurred trying to search Reference Data. <br /> If the error still occurs, contact your administrator");
+			TargetTrakException exception = generateServiceException(response, null, TargetTrakErrorTypeEnum.ERROR, "An error has occurred trying to search Reference Data. <br /> If the error still occurs, contact your administrator");
 			throw exception;
 		}
 		return response;

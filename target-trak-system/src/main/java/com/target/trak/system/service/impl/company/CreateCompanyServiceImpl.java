@@ -46,7 +46,7 @@ public class CreateCompanyServiceImpl extends BaseTargetTrakService implements T
 			response.setSuccess(Boolean.TRUE);
 		} catch (Throwable t) {
 			logger.error(t.getMessage(), t);
-			TargetTrakException exception = generateServiceException(null, TargetTrakErrorTypeEnum.ERROR, "An error has occurred processing your request. <br /> If the error still occurs, contact your administrator");
+			TargetTrakException exception = generateServiceException(response, null, TargetTrakErrorTypeEnum.ERROR, "An error has occurred processing your request. <br /> If the error still occurs, contact your administrator");
 			throw exception;
 		}
 		return response;
