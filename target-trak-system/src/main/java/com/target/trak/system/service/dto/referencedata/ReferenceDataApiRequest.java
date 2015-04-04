@@ -1,8 +1,8 @@
 package com.target.trak.system.service.dto.referencedata;
 
-import com.target.trak.system.service.dto.TargetTrakApiRequest;
+import com.target.trak.system.service.dto.common.BaseTargetTrakApiRequest;
 
-public class ReferenceDataApiRequest extends TargetTrakApiRequest {
+public class ReferenceDataApiRequest extends BaseTargetTrakApiRequest {
 
 	private ReferenceDataDto referenceDataDto;
 	private ReferenceDataSearchCriteriaDto searchCriteria;
