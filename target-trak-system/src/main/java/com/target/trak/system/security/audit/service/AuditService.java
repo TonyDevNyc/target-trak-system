@@ -1,7 +1,8 @@
 package com.target.trak.system.security.audit.service;
 
 import com.target.trak.system.security.audit.AuditableEvent;
-import com.target.trak.system.service.dto.TargetTrakApiResponse;
+import com.target.trak.system.service.dto.common.TargetTrakApiResponse;
+
 
 public interface AuditService {
 

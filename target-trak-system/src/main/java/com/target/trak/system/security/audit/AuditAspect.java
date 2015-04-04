@@ -14,7 +14,8 @@ import org.springframework.stereotype.Component;
 
 import com.target.trak.system.security.audit.dao.AuditEventDao;
 import com.target.trak.system.security.audit.service.AuditService;
-import com.target.trak.system.service.dto.TargetTrakApiResponse;
+import com.target.trak.system.service.dto.common.TargetTrakApiResponse;
+
 
 @Aspect
 @Component

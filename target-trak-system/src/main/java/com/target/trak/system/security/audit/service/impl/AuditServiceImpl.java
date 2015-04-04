@@ -13,7 +13,8 @@ import com.target.trak.system.security.audit.dao.AuditEventDao;
 import com.target.trak.system.security.audit.domain.AuditEvent;
 import com.target.trak.system.security.audit.service.AuditService;
 import com.target.trak.system.security.context.UserContext;
-import com.target.trak.system.service.dto.TargetTrakApiResponse;
+import com.target.trak.system.service.dto.common.TargetTrakApiResponse;
+
 
 @Transactional(propagation=Propagation.REQUIRES_NEW)
 @Service("auditEventService")
