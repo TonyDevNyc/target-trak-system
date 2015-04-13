@@ -34,7 +34,7 @@ public class TargetTrakWebExceptionHandler {
 	private MessageSource messageSource;
 	
 	private Logger logger = Logger.getLogger(getClass());
-
+	
 	@ExceptionHandler({ TargetTrakException.class })
 	public @ResponseBody
 	Map<String, Object> handleServiceException(RuntimeException e, WebRequest request) {
