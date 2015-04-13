@@ -69,3 +69,16 @@ Ext.application({
        });
     }
 });
+
+Ext.Ajax.on('requestcomplete', function (conn, response, options) {
+	var data = Ext.decode(response.responseText);
+	var success = data.success;
+	if (success == false) {
+		var errorType = data.errorType;
+		if ("SESSION_TIMEOUT" == errorType) {
+			Ext.Msg.alert('Target-Trak Session Timeout', "Your session has timed out due to inactivity. You will be forwarded to login");
+			window.location = data.redirectUrl;
+		} 
+		console.log("Success is false, value: " + success);
+	}
+});
