@@ -10,7 +10,7 @@ public abstract class BaseTargetTrakApiResponse implements TargetTrakApiResponse
 	private List<TargetTrakValidationError> errors;
 	private String message;
 	private int totalSize;
-	public TargetTrakErrorTypeEnum errorType;
+	private TargetTrakErrorTypeEnum errorType;
 
 	@Override
 	public int getTotalSize() {
