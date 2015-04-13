@@ -19,9 +19,18 @@
 	<http pattern="/sys/forgotPassword.htm" security="none" />
 	<http pattern="/sys/handleForgotPasswordEmail.htm" security="none" /> 
 	
+	<beans:bean id="httpSessionSecurityContextRepository" class="org.springframework.security.web.context.HttpSessionSecurityContextRepository"/>
+ 
+	<beans:bean id="ajaxRedirectStrategy" class="com.target.trak.system.web.filters.AjaxRedirectInvalidSessionStrategy" />
+	
+	<beans:bean id="sessionManagementFilter" class="org.springframework.security.web.session.SessionManagementFilter">
+        <beans:constructor-arg name="securityContextRepository" ref="httpSessionSecurityContextRepository" />
+        <beans:property name="invalidSessionStrategy" ref="ajaxRedirectStrategy" />
+    </beans:bean>
+	
 	<http use-expressions="true">
 		<!-- <session-management></session-management>  -->
-		
+		<custom-filter ref="sessionManagementFilter" before="SESSION_MANAGEMENT_FILTER" />
 		<form-login 
 			login-page="/sys/login.htm" 
 			default-target-url="/sys/index.htm" 
