@@ -50,5 +50,4 @@ public class UpdateReferenceDataItemController {
 		dto.setLastUpdatedDateTime(Calendar.getInstance());
 		return dto;
 	}
-
 }
