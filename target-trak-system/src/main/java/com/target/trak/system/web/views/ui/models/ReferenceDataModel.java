@@ -1,4 +1,4 @@
-package com.target.trak.system.web.views.ui.refdata;
+package com.target.trak.system.web.views.ui.models;
 
 public class ReferenceDataModel {
 
