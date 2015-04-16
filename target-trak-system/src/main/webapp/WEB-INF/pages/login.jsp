@@ -1,5 +1,6 @@
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -10,7 +11,9 @@
 		<div class="container">
 			<div class="login">
 				<h1>Target-Trak Login</h1>
-				<form method="POST" action="<c:url value='/j_spring_security_check' />">
+				<c:url var="loginUrl" value="/j_spring_security_check"/>
+				<form method="POST" action="${loginUrl}">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 					<c:if test="${not empty param.err}">
 						<div>
 							<p class="error_messages">
