@@ -10,16 +10,23 @@ Ext.application({
 	
 	requires: [
 	   'Ext.util.History',
+	   'TGT.security.CsrfToken',
        'TGT.controller.TargetTrakMenuController', 
        'TGT.view.menu.TargetTrakMenu',
        'TGT.store.ReferenceDataTypes',
        'TGT.store.ReferenceDatas',
+       'TGT.controller.BaseController',
        'TGT.controller.refdata.ReferenceDataMaintenanceController'
     ],
 	
     stores: ['ReferenceDataTypes', 'ReferenceDatas'],
     
-    controllers: ['App', 'TargetTrakMenuController', 'refdata.ReferenceDataMaintenanceController'],
+    controllers: [
+        'App', 
+        'BaseController',
+        'TargetTrakMenuController', 
+        'refdata.ReferenceDataMaintenanceController'
+    ],
 	
 	autoCreateViewport: true,
 	
@@ -64,9 +71,18 @@ Ext.application({
        });
        // add change handler for Ext.util.History; when a change in the token
        // occurs, this will fire our controller's event to load the appropriate content
-       Ext.util.History.on( 'change', function( token ){
-           me.getAppController().fireEvent( 'tokenchange', token );
+       Ext.util.History.on('change', function(token){
+           me.getAppController().fireEvent( 'tokenchange', token);
        });
+       
+       //var csrfParam;
+       var csrfToken = ''; 
+       var metaHeaders =  Ext.dom.Query.select("meta[name='_csrf']");
+       Ext.Array.each(metaHeaders, function(metaHeader) {
+    	   	csrfToken = metaHeader.content;
+       });
+       TGT.security.CsrfToken.setCsrfToken(csrfToken);
+       console.log('Token from singleton: ' + TGT.security.CsrfToken.getCsrfToken());
     }
 });
 
