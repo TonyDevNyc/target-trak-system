@@ -12,12 +12,6 @@
 	<http pattern="/app.js" security="none" />
 	<http pattern="/css/**" security="none" />
 	<http pattern="/resources/**" security="none" />
-	<http pattern="/sys/login.htm*" security="none" />
-	<http pattern="/sys/register.htm" security="none" />
-	<http pattern="/sys/registerNewUser.htm" security="none" />
-	<http pattern="/sys/registrationComplete*" security="none" />
-	<http pattern="/sys/forgotPassword.htm" security="none" />
-	<http pattern="/sys/handleForgotPasswordEmail.htm" security="none" /> 
 	
 	<beans:bean id="httpSessionSecurityContextRepository" class="org.springframework.security.web.context.HttpSessionSecurityContextRepository"/>
  
@@ -27,10 +21,11 @@
         <beans:constructor-arg name="securityContextRepository" ref="httpSessionSecurityContextRepository" />
         <beans:property name="invalidSessionStrategy" ref="ajaxRedirectStrategy" />
     </beans:bean>
-	
+    
 	<http use-expressions="true">
 		<!-- <session-management></session-management>  -->
 		<custom-filter ref="sessionManagementFilter" before="SESSION_MANAGEMENT_FILTER" />
+		<csrf />
 		<form-login 
 			login-page="/sys/login.htm" 
 			default-target-url="/sys/index.htm" 
@@ -41,10 +36,18 @@
 		<intercept-url pattern="/sys/refdata/updateReferenceData.json" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/sys/refdata/getReferenceDataTypes.json" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/sys/refdata/getReferenceData.json" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/sys/buildUserMenu.json" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/sys/index.htm" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/sys/buildUserMenu.json" access="permitAll" />
+
+		<intercept-url pattern="/sys/user/getUserDetails.json" access="permitAll" />
 		
+		<intercept-url pattern="/sys/index.htm" access="permitAll" />
+		<intercept-url pattern="/sys/login.htm" access="permitAll" />
+		<intercept-url pattern="/sys/register.htm" access="permitAll" />
+		<intercept-url pattern="/sys/registerNewUser.htm" access="permitAll" />
+		<intercept-url pattern="/sys/registrationComplete*" access="permitAll" />
+		<intercept-url pattern="/sys/forgotPassword.htm" access="permitAll" />
+		<intercept-url pattern="/sys/handleForgotPasswordEmail.htm" access="permitAll" />
+		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
 		<logout delete-cookies="JSESSIONID"/>
 	</http>
 	
