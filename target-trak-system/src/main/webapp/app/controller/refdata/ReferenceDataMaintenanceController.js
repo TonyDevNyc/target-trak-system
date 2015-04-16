@@ -102,6 +102,9 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
     			submitEmptyText: true,
     			url : '/target-trak-system/sys/refdata/createReferenceData.json',
 				method : 'POST',
+				headers : {
+					'X-CSRF-TOKEN': TGT.security.CsrfToken.getCsrfToken()
+				},
                 waitMsg : 'Creating Reference Data Please Wait...',
                 success : function(form, action) {
                 	Ext.example.msg('Create Reference Data Success', 'Reference Data Item was created successfully');
@@ -141,6 +144,11 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
 		
 		Ext.Ajax.request({
 		    url : '/target-trak-system/sys/refdata/deleteReferenceData.json',
+		    method : 'POST',
+		    scope: this,
+		    headers : {
+				'X-CSRF-TOKEN': TGT.security.CsrfToken.getCsrfToken()
+			},
 			params : {
 				referenceDataId : id
 			},
@@ -163,6 +171,9 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
 			form.submit({
     			submitEmptyText: true,
     			url : '/target-trak-system/sys/refdata/updateReferenceData.json',
+    			headers : {
+					'X-CSRF-TOKEN': TGT.security.CsrfToken.getCsrfToken()
+				},
 				method : 'POST',
                 waitMsg : 'Updating Reference Data Please Wait...',
                 success : function(form, action) {
@@ -222,6 +233,9 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
 			form.submit({
     			submitEmptyText: true,
     			url : '/target-trak-system/sys/refdata/searchReferenceData.json',
+    			headers : {
+					'X-CSRF-TOKEN': TGT.security.CsrfToken.getCsrfToken()
+				},
     			params : {
     				page: 1,
     				start : 0,
