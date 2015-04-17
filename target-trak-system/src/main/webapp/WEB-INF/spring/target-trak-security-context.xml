@@ -26,11 +26,21 @@
 		<!-- <session-management></session-management>  -->
 		<custom-filter ref="sessionManagementFilter" before="SESSION_MANAGEMENT_FILTER" />
 		<csrf />
+		<access-denied-handler error-page="/sys/login.htm?err=accessdenied" />
+		
+		<headers>
+	        <cache-control />
+	        <content-type-options />
+	 		<hsts />
+	 		<frame-options />
+	 		<xss-protection />
+	    </headers>
+		
 		<form-login 
 			login-page="/sys/login.htm" 
 			default-target-url="/sys/index.htm" 
 			always-use-default-target="true"
-			authentication-failure-url="/sys/login.htm?err=true" />
+			authentication-failure-url="/sys/login.htm?access-denied=access-denied" />
 		
 		<intercept-url pattern="/sys/refdata/deleteReferenceData.json" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/sys/refdata/updateReferenceData.json" access="hasRole('ROLE_USER')" />
