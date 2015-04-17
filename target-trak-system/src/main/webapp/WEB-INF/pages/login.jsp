@@ -37,7 +37,13 @@
 							</p>
 						</div>
 					</c:if>
-					
+					<c:if test="${not empty param.accessdenied}">
+						<div>
+							<p class="error_messages">
+								<label>Access Denied!</label>
+							</p>
+						</div>
+					</c:if>
 					<p>
 						<input type="text" name="j_username" value="" placeholder="Username">
 					</p>
