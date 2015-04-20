@@ -3,26 +3,20 @@ package com.target.trak.system.dao.builder;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.target.trak.system.domain.criteria.ReferenceDataSearchCriteria;
 
-@Component("referenceDataQueryBuilder")
 public class ReferenceDataQueryBuilder {
 
 	private static final String DEFAULT_SORT_ORDER = " ORDER BY reference_data_type, reference_data_label ASC ";
 	private static final String REFERENCE_DATA_TYPE_COLUMN = "reference_data_type";
 	private static final String REFERENCE_DATA_LABEL_COLUMN = "reference_data_label";
 
-	@Qualifier("referenceDataQueries")
-	@Autowired
-	private Properties referenceDataQueries;
-
 	private Logger logger = Logger.getLogger(getClass());
+
+	private Properties referenceDataQueries;
 
 	public String buildDefaultReferenceDataPaginatedQuery(final ReferenceDataSearchCriteria criteria) {
 		StringBuilder builder = new StringBuilder();
@@ -92,5 +86,9 @@ public class ReferenceDataQueryBuilder {
 		}
 		logger.info("Reference Data Count Query Built: " + builder.toString());
 		return builder.toString();
+	}
+
+	public void setReferenceDataQueries(Properties referenceDataQueries) {
+		this.referenceDataQueries = referenceDataQueries;
 	}
 }
