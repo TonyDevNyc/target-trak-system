@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<jee:jndi-lookup id="securityDataSource" jndi-name="java:comp/env/jdbc/TargetTrakSecurityLocalDataSource"/>
+	
+	<util:properties id="userDetailQueries" location="classpath:/security-queries/user-detail-queries.xml" />
+	<util:properties id="userRoleQueries" location="classpath:/security-queries/user-role-queries.xml" />
+	<util:properties id="rolePrivilegesQueries" location="classpath:/security-queries/role-privileges-queries.xml" />
+	<util:properties id="menuQueries" location="classpath:/security-queries/menu-queries.xml" />
+	<util:properties id="auditEventQueries" location="classpath:/security-queries/audit-event-queries.xml" />
+
+	<bean id="menuDao" class="com.target.trak.system.security.dao.impl.MenuDaoImpl">
+		<constructor-arg ref="securityDataSource" />
+		<property name="menuQueries" ref="menuQueries" />
+	</bean>
+	
+	<bean id="rolePrivilegesDao" class="com.target.trak.system.security.dao.impl.RolePrivilegesDaoImpl">
+		<constructor-arg ref="securityDataSource" />
+		<property name="rolePrivilegesQueries" ref="rolePrivilegesQueries" />
+	</bean>
+	
+	<bean id="userDetailsDao" class="com.target.trak.system.security.dao.impl.UserDetailsDaoImpl">
+		<constructor-arg ref="securityDataSource" />
+		<property name="userDetailQueries" ref="userDetailQueries" />
+	</bean>
+	
+	<bean id="userRoleDao" class="com.target.trak.system.security.dao.impl.UserRoleDaoImpl">
+		<constructor-arg ref="securityDataSource" />
+		<property name="userRoleQueries" ref="userRoleQueries" />
+	</bean>
+	
+	<bean id="auditEventDao" class="com.target.trak.system.security.audit.dao.impl.AuditEventDaoImpl">
+		<constructor-arg ref="securityDataSource" />
+		<property name="auditEventQueries" ref="auditEventQueries" />
+	</bean>
+	
+</beans>
