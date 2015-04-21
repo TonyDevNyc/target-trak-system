@@ -50,6 +50,10 @@
 		<property name="messageSource" ref="messageSource" />
 	</bean>
 	
+	<bean id="targetTrakWebExceptionHandler" class="com.target.trak.system.web.exception.TargetTrakWebExceptionHandler">
+		<property name="errorBuilder" ref="uiErrorBuilder" />
+	</bean>
+	
 	<bean id="loginController" class="com.target.trak.system.web.controllers.security.LoginController" />
 
 	<bean id="forgotPasswordController" class="com.target.trak.system.web.controllers.security.ForgotPasswordController">
