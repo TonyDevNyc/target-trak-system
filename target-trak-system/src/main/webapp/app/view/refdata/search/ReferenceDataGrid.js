@@ -5,7 +5,7 @@ Ext.define('TGT.view.refdata.search.ReferenceDataGrid', {
 	itemId : 'referenceDataGrid',
 	loadMask : true,
 	autoScroll : true,
-	width : 1275,
+	width : 1100,
 	viewConfig : {
 		enableTextSelection : true
 	},
@@ -13,7 +13,7 @@ Ext.define('TGT.view.refdata.search.ReferenceDataGrid', {
 	columns : [ 
         {
 			xtype : 'actioncolumn',
-			width : 100,
+			width : 80,
 			text : 'Actions',
 			align : 'center',
 			items: [
@@ -43,7 +43,7 @@ Ext.define('TGT.view.refdata.search.ReferenceDataGrid', {
 			xtype : 'gridcolumn',
 			dataIndex : 'type',
 			text : 'Type',
-			width : 160
+			width : 110
 		},
 		{
 			xtype : 'gridcolumn',
@@ -55,13 +55,13 @@ Ext.define('TGT.view.refdata.search.ReferenceDataGrid', {
 			xtype : 'gridcolumn',
 			dataIndex : 'value',
 			text : 'Value',
-			width : 180
+			width : 125
 		}, 
 		{
 			xtype : 'gridcolumn',
 			dataIndex : 'createdBy',
 			text : 'Created By',
-			width : 160
+			width : 140
 		}, 
 		{
 			xtype : 'gridcolumn',
@@ -73,7 +73,7 @@ Ext.define('TGT.view.refdata.search.ReferenceDataGrid', {
 			xtype : 'gridcolumn',
 			dataIndex : 'lastUpdatedBy',
 			text : 'Last Updated By',
-			width : 160
+			width : 140
 		}, 
 		{
 			xtype : 'gridcolumn',

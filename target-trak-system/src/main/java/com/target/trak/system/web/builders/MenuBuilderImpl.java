@@ -17,7 +17,7 @@ import com.target.trak.system.web.views.ui.menu.MenuItem;
 public class MenuBuilderImpl implements MenuBuilder {
 
 	private static final String MENU_XTYPE = "menu";
-	private static final String MENU_BUTTON_XTYPE = "button";
+	private static final String MENU_ITEM_XTYPE = "menuitem";
 	private static final String ICON_POSITION = "left";
 
 	@Override
@@ -30,7 +30,7 @@ public class MenuBuilderImpl implements MenuBuilder {
 		List<MenuItem> childMenuItems = null;
 		for (Map.Entry<MenuDto, List<MenuDto>> entry : map.entrySet()) {
 			MenuDto parentDto = entry.getKey();
-			parentMenuButton = buildMenuButton(MENU_BUTTON_XTYPE, parentDto.getText(), parentDto.getIconCss(), ICON_POSITION);
+			parentMenuButton = buildMenuButton(MENU_ITEM_XTYPE, parentDto.getText(), parentDto.getIconCss(), ICON_POSITION);
 			parentMenuButton.setDisplayOrder(parentDto.getDisplayOrder());
 
 			childMenu = new Menu(MENU_XTYPE);

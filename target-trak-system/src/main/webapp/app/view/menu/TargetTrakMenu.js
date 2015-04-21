@@ -1,6 +1,8 @@
 Ext.define('TGT.view.menu.TargetTrakMenu', {
-	extend : 'Ext.toolbar.Toolbar',
+	extend : 'Ext.menu.Menu',
 	alias : 'widget.view.menu.targettrakmenu',
+	floating : false,
+	//height : 350,
 	initComponent : function() {
 		this.callParent(arguments);
 	}, 

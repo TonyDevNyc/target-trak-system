@@ -5,7 +5,7 @@ Ext.define('TGT.view.layout.CenterRegion', {
     items: [
         {
         	xtype: 'panel',
-        	title: 'Hi',
+        	html: 'Welcome to the Target-Trak',
         	activeItem: 0
         }
     ]
