@@ -7,35 +7,27 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 
 import com.target.trak.system.security.audit.dao.AuditEventDao;
 import com.target.trak.system.security.audit.domain.AuditEvent;
 
-@Repository
 public class AuditEventDaoImpl implements AuditEventDao {
 
 	private final Logger logger = Logger.getLogger(getClass());
-	
+
 	private NamedParameterJdbcTemplate auditEventTemplate;
-	
-	@Qualifier("auditEventQueries")
-	@Autowired
+
 	private Properties auditEventQueries;
-	
-	
-	@Autowired
-	public AuditEventDaoImpl(@Qualifier("securityDataSource") DataSource dataSource) {
+
+	public AuditEventDaoImpl(DataSource dataSource) {
 		auditEventTemplate = new NamedParameterJdbcTemplate(dataSource);
 	}
-	
+
 	@Override
 	public AuditEvent insertAuditEvent(final AuditEvent auditEvent) {
 		String sql = auditEventQueries.getProperty("insertAuditEventSql");
@@ -46,7 +38,7 @@ public class AuditEventDaoImpl implements AuditEventDao {
 		params.addValue("timestamp", auditEvent.getTimestamp());
 		params.addValue("success", auditEvent.isSuccess());
 		params.addValue("errorMessage", auditEvent.getErrorMessage());
-		
+
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		int count = auditEventTemplate.update(sql, params, keyHolder);
 
@@ -55,8 +47,12 @@ public class AuditEventDaoImpl implements AuditEventDao {
 		} else {
 			logger.error("Audit Event was not created");
 		}
-		
+
 		return auditEvent;
+	}
+
+	public void setAuditEventQueries(Properties auditEventQueries) {
+		this.auditEventQueries = auditEventQueries;
 	}
 
 	private final class AuditEventRowMapper implements RowMapper<AuditEvent> {
@@ -71,9 +67,9 @@ public class AuditEventDaoImpl implements AuditEventDao {
 			event.setTimestamp(rs.getTimestamp("timestamp"));
 			event.setSuccess(rs.getBoolean("success"));
 			event.setErrorMessage(rs.getString("error_message"));
-			
+
 			return event;
 		}
-		
+
 	}
 }
