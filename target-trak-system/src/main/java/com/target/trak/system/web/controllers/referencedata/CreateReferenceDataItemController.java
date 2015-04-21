@@ -4,8 +4,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,14 +19,10 @@ import com.target.trak.system.service.dto.referencedata.ReferenceDataDto;
 @Controller
 public class CreateReferenceDataItemController {
 
-	@Qualifier("createReferenceDataService")
-	@Autowired
 	private TargetTrakService<ReferenceDataApiRequest, ReferenceDataApiResponse> createReferenceDataService;
-	
-	@Qualifier("userContext")
-	@Autowired
+
 	private UserContext securityUserContext;
-	
+
 	@RequestMapping(value = "/refdata/createReferenceData.json", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody
 	Map<String, Object> createReferenceData(@RequestParam String type, @RequestParam String label, @RequestParam String value) {
@@ -39,7 +33,7 @@ public class CreateReferenceDataItemController {
 		jsonResponse.put("success", response.isSuccess());
 		return jsonResponse;
 	}
-	
+
 	private ReferenceDataDto buildCreateReferenceDataDto(final String type, final String label, final String value) {
 		ReferenceDataDto dto = new ReferenceDataDto();
 		dto.setType(type);
@@ -53,5 +47,13 @@ public class CreateReferenceDataItemController {
 		dto.setLastUpdatedBy(currentUser);
 		dto.setLastUpdatedDateTime(currentTime);
 		return dto;
+	}
+
+	public void setCreateReferenceDataService(TargetTrakService<ReferenceDataApiRequest, ReferenceDataApiResponse> createReferenceDataService) {
+		this.createReferenceDataService = createReferenceDataService;
+	}
+
+	public void setSecurityUserContext(UserContext securityUserContext) {
+		this.securityUserContext = securityUserContext;
 	}
 }

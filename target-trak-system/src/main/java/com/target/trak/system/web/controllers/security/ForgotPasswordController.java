@@ -3,8 +3,6 @@ package com.target.trak.system.web.controllers.security;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -30,8 +28,6 @@ public class ForgotPasswordController {
 
 	private Logger logger = Logger.getLogger(getClass());
 
-	@Qualifier("forgotPasswordService")
-	@Autowired
 	private ForgotPasswordService forgotPasswordService;
 
 	@RequestMapping(value = "/forgotPassword.htm", method = RequestMethod.GET)
@@ -64,5 +60,9 @@ public class ForgotPasswordController {
 		for (TargetTrakValidationError validationError : validationErrors) {
 			result.rejectValue(validationError.getFieldName(), validationError.getErrorMessage());
 		}
+	}
+
+	public void setForgotPasswordService(ForgotPasswordService forgotPasswordService) {
+		this.forgotPasswordService = forgotPasswordService;
 	}
 }

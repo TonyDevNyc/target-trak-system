@@ -2,7 +2,6 @@ package com.target.trak.system.web.controllers.homepage;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,13 +18,10 @@ import com.target.trak.system.web.views.ui.menu.MenuButton;
 @Controller
 public class MenuController {
 
-	@Autowired
 	private UserContext userContext;
 
-	@Autowired
 	private MenuService menuService;
 
-	@Autowired
 	private MenuBuilder menuBuilder;
 
 	@RequestMapping(value = "/buildUserMenu.json", method = RequestMethod.GET, produces = "application/json")
@@ -39,4 +35,15 @@ public class MenuController {
 		return allowableMenuButtons;
 	}
 
+	public void setUserContext(UserContext userContext) {
+		this.userContext = userContext;
+	}
+
+	public void setMenuService(MenuService menuService) {
+		this.menuService = menuService;
+	}
+
+	public void setMenuBuilder(MenuBuilder menuBuilder) {
+		this.menuBuilder = menuBuilder;
+	}
 }

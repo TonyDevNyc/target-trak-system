@@ -4,8 +4,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,12 +19,8 @@ import com.target.trak.system.service.dto.referencedata.ReferenceDataDto;
 @Controller
 public class UpdateReferenceDataItemController {
 
-	@Qualifier("updateReferenceDataService")
-	@Autowired
 	private TargetTrakService<ReferenceDataApiRequest, ReferenceDataApiResponse> updateReferenceDataService;
 	
-	@Qualifier("userContext")
-	@Autowired
 	private UserContext securityUserContext;
 	
 	@RequestMapping(value = "/refdata/updateReferenceData.json", method = RequestMethod.POST, produces = "application/json")
@@ -49,5 +43,13 @@ public class UpdateReferenceDataItemController {
 		dto.setLastUpdatedBy(securityUserContext.getCurrentUser().getUsername());
 		dto.setLastUpdatedDateTime(Calendar.getInstance());
 		return dto;
+	}
+
+	public void setUpdateReferenceDataService(TargetTrakService<ReferenceDataApiRequest, ReferenceDataApiResponse> updateReferenceDataService) {
+		this.updateReferenceDataService = updateReferenceDataService;
+	}
+
+	public void setSecurityUserContext(UserContext securityUserContext) {
+		this.securityUserContext = securityUserContext;
 	}
 }

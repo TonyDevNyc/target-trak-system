@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomepageController {
 
-private Logger logger = Logger.getLogger(getClass());
-	
+	private Logger logger = Logger.getLogger(getClass());
+
 	private static final String HOMEPAGE = "index";
-	
-	@RequestMapping(value="/index.htm", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/index.htm", method = RequestMethod.GET)
 	public String showHomepage() {
 		logger.info("Forwarding authenticated user to homepage screen");
 		return HOMEPAGE;

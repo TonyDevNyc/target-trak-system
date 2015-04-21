@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -31,7 +30,6 @@ public class RegisterController {
 	
 	private Logger logger = Logger.getLogger(getClass());
 
-	@Autowired
 	private RegistrationService registrationService;
 
 	@RequestMapping(value = "/register.htm", method = RequestMethod.GET)
@@ -61,7 +59,6 @@ public class RegisterController {
 			logger.error(e.getMessage(), e);
 			returnPage = REGISTER_PAGE;
 		}
-
 		return returnPage;
 	}
 	
@@ -83,5 +80,9 @@ public class RegisterController {
 		user.setRepeatedPassword(registrationForm.getRepeatedPassword());
 		user.setRegistrationDate(Calendar.getInstance());
 		return user;
+	}
+
+	public void setRegistrationService(RegistrationService registrationService) {
+		this.registrationService = registrationService;
 	}
 }

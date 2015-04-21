@@ -4,8 +4,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,12 +19,8 @@ import com.target.trak.system.service.dto.referencedata.ReferenceDataDto;
 @Controller
 public class DeleteReferenceDataItemController {
 
-	@Qualifier("deleteReferenceDataService")
-	@Autowired
 	private TargetTrakService<ReferenceDataApiRequest, ReferenceDataApiResponse> deleteReferenceDataService;
 	
-	@Qualifier("userContext")
-	@Autowired
 	private UserContext securityUserContext;
 	
 	@RequestMapping(value = "/refdata/deleteReferenceData.json", method = RequestMethod.POST, produces = "application/json")
@@ -49,5 +43,13 @@ public class DeleteReferenceDataItemController {
 		dto.setLastUpdatedBy(securityUserContext.getCurrentUser().getUsername());
 		dto.setLastUpdatedDateTime(Calendar.getInstance());
 		return dto;
+	}
+
+	public void setDeleteReferenceDataService(TargetTrakService<ReferenceDataApiRequest, ReferenceDataApiResponse> deleteReferenceDataService) {
+		this.deleteReferenceDataService = deleteReferenceDataService;
+	}
+
+	public void setSecurityUserContext(UserContext securityUserContext) {
+		this.securityUserContext = securityUserContext;
 	}
 }

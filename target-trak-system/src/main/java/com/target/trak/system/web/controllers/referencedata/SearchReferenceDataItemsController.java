@@ -9,15 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.target.trak.system.security.context.UserContext;
 import com.target.trak.system.service.TargetTrakService;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataApiRequest;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataApiResponse;
@@ -28,13 +25,7 @@ import com.target.trak.system.web.views.ui.models.ReferenceDataModel;
 @Controller
 public class SearchReferenceDataItemsController {
 
-	@Qualifier("referenceDataByCriteriaService")
-	@Autowired
 	private TargetTrakService<ReferenceDataApiRequest, ReferenceDataApiResponse> referenceDataByCriteriaService;
-
-	@Qualifier("userContext")
-	@Autowired
-	private UserContext securityUserContext;
 	
 	@RequestMapping(value = "/refdata/searchReferenceData.json", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody
@@ -99,4 +90,7 @@ public class SearchReferenceDataItemsController {
 		return iso8601Date;
 	}
 
+	public void setReferenceDataByCriteriaService(TargetTrakService<ReferenceDataApiRequest, ReferenceDataApiResponse> referenceDataByCriteriaService) {
+		this.referenceDataByCriteriaService = referenceDataByCriteriaService;
+	}
 }

@@ -5,14 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.target.trak.system.security.context.UserContext;
 import com.target.trak.system.service.TargetTrakService;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataApiRequest;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataApiResponse;
@@ -22,12 +19,6 @@ import com.target.trak.system.web.views.ui.common.NameValuePair;
 @Controller
 public class GetReferenceDataTypesController {
 
-	@Qualifier("userContext")
-	@Autowired
-	private UserContext securityUserContext;
-	
-	@Qualifier("referenceDataTypesService")
-	@Autowired
 	private TargetTrakService<ReferenceDataApiRequest, ReferenceDataApiResponse> referenceDataTypesService;
 
 	@RequestMapping(value = "/refdata/getReferenceDataTypes.json", method = RequestMethod.GET, produces = "application/json")
@@ -48,5 +39,9 @@ public class GetReferenceDataTypesController {
 			list.add(nvp);
 		}
 		return list;
+	}
+
+	public void setReferenceDataTypesService(TargetTrakService<ReferenceDataApiRequest, ReferenceDataApiResponse> referenceDataTypesService) {
+		this.referenceDataTypesService = referenceDataTypesService;
 	}	
 }
