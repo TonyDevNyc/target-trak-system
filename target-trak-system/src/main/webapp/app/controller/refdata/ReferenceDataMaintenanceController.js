@@ -56,12 +56,7 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
 	
 	onLaunch : function() {
 		var referenceDatasStore = this.getReferenceDatasStore();
-		referenceDatasStore.load({
-			params : {
-				start : 0,
-				limit : 15
-			}
-		});
+		referenceDatasStore.load();
 		
 		var typesStore = this.getReferenceDataTypesStore();
 		typesStore.load();
