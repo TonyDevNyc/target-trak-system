@@ -3,10 +3,7 @@ package com.target.trak.system.service.impl.company;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,21 +22,16 @@ import com.target.trak.system.validations.TargetTrakValidationException;
 import com.target.trak.system.validations.impl.CompanyValidatorImpl;
 
 @Transactional(value = "dwTransactionManager", propagation = Propagation.REQUIRED)
-@Service("createCompanyService")
 public class CreateCompanyServiceImpl extends BaseTargetTrakService implements TargetTrakService<CompanyApiRequest, CompanyApiResponse> {
 
 	private final Logger logger = Logger.getLogger(getClass());
 
-	@Autowired
 	private CompanyDao companyDao;
-	
-	@Qualifier("companyValidator")
-	@Autowired
+
 	private CompanyValidatorImpl validator;
-	
-	@Autowired
+
 	private ConversionService conversionService;
-	
+
 	@Override
 	public CompanyApiResponse executeRequest(final CompanyApiRequest request) throws TargetTrakException {
 		CompanyApiResponse response = new CompanyApiResponse();
@@ -50,7 +42,7 @@ public class CreateCompanyServiceImpl extends BaseTargetTrakService implements T
 			TargetTrakException exception = generateServiceException(response, validationErrors, TargetTrakErrorTypeEnum.VALIDATION, "A validation error has occurred. Please fix the errors below");
 			throw exception;
 		}
-		
+
 		try {
 			CompanyDomain domain = companyDao.insertCompany(conversionService.convert(request.getCompany(), CompanyDomain.class));
 			response.setCompany(conversionService.convert(domain, CompanyDto.class));
@@ -67,10 +59,22 @@ public class CreateCompanyServiceImpl extends BaseTargetTrakService implements T
 	public List<TargetTrakValidationError> validateRequest(final CompanyApiRequest request) throws TargetTrakException {
 		List<TargetTrakValidationError> errors = null;
 		try {
-			errors =  validator.validate(request);
+			errors = validator.validate(request);
 		} catch (TargetTrakValidationException e) {
 			logger.error("Validation error", e);
 		}
 		return errors;
+	}
+
+	public void setCompanyDao(CompanyDao companyDao) {
+		this.companyDao = companyDao;
+	}
+
+	public void setValidator(CompanyValidatorImpl validator) {
+		this.validator = validator;
+	}
+
+	public void setConversionService(ConversionService conversionService) {
+		this.conversionService = conversionService;
 	}
 }

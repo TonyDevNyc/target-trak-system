@@ -3,8 +3,6 @@ package com.target.trak.system.service.impl.company;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,14 +24,10 @@ public class GetCompanyServiceImpl extends BaseTargetTrakService implements Targ
 
 	private final Logger logger = Logger.getLogger(getClass());
 
-	@Autowired
 	private CompanyDao companyDao;
 	
-	@Qualifier("companyValidator")
-	@Autowired
 	private CompanyValidatorImpl validator;
 	
-	@Autowired
 	private ConversionService conversionService;
 	
 	@Override
@@ -55,5 +49,17 @@ public class GetCompanyServiceImpl extends BaseTargetTrakService implements Targ
 	public List<TargetTrakValidationError> validateRequest(final CompanyApiRequest request) throws TargetTrakException {
 		
 		return null;
+	}
+
+	public void setCompanyDao(CompanyDao companyDao) {
+		this.companyDao = companyDao;
+	}
+
+	public void setValidator(CompanyValidatorImpl validator) {
+		this.validator = validator;
+	}
+
+	public void setConversionService(ConversionService conversionService) {
+		this.conversionService = conversionService;
 	}
 }
