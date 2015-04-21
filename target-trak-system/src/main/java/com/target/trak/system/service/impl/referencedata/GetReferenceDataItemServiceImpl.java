@@ -4,12 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.target.trak.system.dao.ReferenceDataDao;
 import com.target.trak.system.domain.ReferenceDataDomain;
@@ -25,20 +20,14 @@ import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.validations.TargetTrakValidationException;
 import com.target.trak.system.validations.impl.ReferenceDataValidatorImpl;
 
-@Transactional(value = "dwTransactionManager", propagation = Propagation.REQUIRED)
-@Service("referenceDataByIdService")
 public class GetReferenceDataItemServiceImpl extends BaseTargetTrakService implements TargetTrakService<ReferenceDataApiRequest, ReferenceDataApiResponse> {
 
 	private final Logger logger = Logger.getLogger(getClass());
 
-	@Autowired
 	private ReferenceDataDao referenceDataDao;
 
-	@Autowired
 	private ConversionService conversionService;
 
-	@Qualifier("referenceDataValidator")
-	@Autowired
 	private ReferenceDataValidatorImpl validator;
 
 	@Override

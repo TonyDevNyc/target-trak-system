@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.stereotype.Service;
 
 import com.target.trak.system.dao.ReferenceDataDao;
 import com.target.trak.system.domain.ReferenceDataDomain;
@@ -19,15 +17,12 @@ import com.target.trak.system.service.dto.referencedata.ReferenceDataDto;
 import com.target.trak.system.service.exception.TargetTrakException;
 import com.target.trak.system.validations.TargetTrakValidationError;
 
-@Service("referenceDataTypesService")
 public class GetReferenceDataTypesServiceImpl extends BaseTargetTrakService implements TargetTrakService<ReferenceDataApiRequest, ReferenceDataApiResponse> {
 
 	private final Logger logger = Logger.getLogger(getClass());
 
-	@Autowired
 	private ReferenceDataDao referenceDataDao;
 
-	@Autowired
 	private ConversionService conversionService;
 	
 	@Override
@@ -58,5 +53,13 @@ public class GetReferenceDataTypesServiceImpl extends BaseTargetTrakService impl
 			dtos.add(conversionService.convert(domain, ReferenceDataDto.class));
 		}
 		return dtos;
+	}
+
+	public void setReferenceDataDao(ReferenceDataDao referenceDataDao) {
+		this.referenceDataDao = referenceDataDao;
+	}
+
+	public void setConversionService(ConversionService conversionService) {
+		this.conversionService = conversionService;
 	}
 }

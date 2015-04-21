@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,19 +23,14 @@ import com.target.trak.system.validations.TargetTrakValidationException;
 import com.target.trak.system.validations.impl.ReferenceDataValidatorImpl;
 
 @Transactional(value = "dwTransactionManager", propagation = Propagation.REQUIRED)
-@Service("referenceDataByCriteriaService")
 public class GetReferenceDataItemsByCriteriaServiceImpl extends BaseTargetTrakService implements TargetTrakService<ReferenceDataApiRequest, ReferenceDataApiResponse> {
 
 	private final Logger logger = Logger.getLogger(getClass());
 
-	@Autowired
 	private ReferenceDataDao referenceDataDao;
 
-	@Autowired
 	private ConversionService conversionService;
 
-	@Qualifier("referenceDataValidator")
-	@Autowired
 	private ReferenceDataValidatorImpl validator;
 
 	@Override
@@ -79,5 +71,17 @@ public class GetReferenceDataItemsByCriteriaServiceImpl extends BaseTargetTrakSe
 			dtos.add(conversionService.convert(domain, ReferenceDataDto.class));
 		}
 		return dtos;
+	}
+
+	public void setReferenceDataDao(ReferenceDataDao referenceDataDao) {
+		this.referenceDataDao = referenceDataDao;
+	}
+
+	public void setConversionService(ConversionService conversionService) {
+		this.conversionService = conversionService;
+	}
+
+	public void setValidator(ReferenceDataValidatorImpl validator) {
+		this.validator = validator;
 	}
 }

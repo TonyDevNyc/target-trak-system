@@ -3,10 +3,7 @@ package com.target.trak.system.service.impl.referencedata;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,20 +22,15 @@ import com.target.trak.system.validations.TargetTrakValidationException;
 import com.target.trak.system.validations.impl.ReferenceDataValidatorImpl;
 
 @Transactional(value = "dwTransactionManager", propagation = Propagation.REQUIRED)
-@Service("createReferenceDataService")
 public class CreateReferenceDataServiceImpl extends BaseTargetTrakService implements TargetTrakService<ReferenceDataApiRequest, ReferenceDataApiResponse> {
 
 	private final Logger logger = Logger.getLogger(getClass());
 
-	@Autowired
 	private ReferenceDataDao referenceDataDao;
 
-	@Autowired
 	private ConversionService conversionService;
 
-	@Qualifier("referenceDataValidator")
-	@Autowired
-	private ReferenceDataValidatorImpl validator;
+	private ReferenceDataValidatorImpl referenceDataValidator;
 	
 	@Override
 	public ReferenceDataApiResponse executeRequest(ReferenceDataApiRequest request) throws TargetTrakException {
@@ -67,11 +59,22 @@ public class CreateReferenceDataServiceImpl extends BaseTargetTrakService implem
 	public List<TargetTrakValidationError> validateRequest(ReferenceDataApiRequest request) throws TargetTrakException {
 		List<TargetTrakValidationError> validationErrors = null;
 		try {
-			validationErrors =  validator.validate(request);
+			validationErrors =  referenceDataValidator.validate(request);
 		} catch (TargetTrakValidationException e) {
 			logger.error(e);
 		}
 		return validationErrors;
 	}
 
+	public void setReferenceDataDao(ReferenceDataDao referenceDataDao) {
+		this.referenceDataDao = referenceDataDao;
+	}
+
+	public void setConversionService(ConversionService conversionService) {
+		this.conversionService = conversionService;
+	}
+
+	public void setReferenceDataValidator(ReferenceDataValidatorImpl referenceDataValidator) {
+		this.referenceDataValidator = referenceDataValidator;
+	}
 }
