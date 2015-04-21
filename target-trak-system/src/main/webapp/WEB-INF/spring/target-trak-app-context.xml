@@ -17,62 +17,83 @@
 
 	<context:component-scan base-package="com.target.trak.system" />
 
-	<tx:annotation-driven transaction-manager="securityTransactionManager"/>
+	<tx:annotation-driven transaction-manager="dwTransactionManager"/>
+	
+	<aop:aspectj-autoproxy/>
 	
 	<bean id="dwTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dwDataSource" />
 	</bean>
 	
-	<jee:jndi-lookup id="dwDataSource" jndi-name="java:comp/env/jdbc/TargetTrakDwLocalDataSource"/>
+	<bean id="createReferenceDataService" class="com.target.trak.system.service.impl.referencedata.CreateReferenceDataServiceImpl">
+		<property name="referenceDataDao" ref="referenceDataDao" />
+		<property name="referenceDataValidator" ref="referenceDataValidator" />
+		<property name="conversionService" ref="conversionService" />
+	</bean>
 	
-	<util:properties id="referenceDataQueries" location="classpath:/dw-queries/reference-data-queries.xml" />
-	<util:properties id="companyQueries" location="classpath:/dw-queries/company-queries.xml" />
+	<bean id="deleteReferenceDataService" class="com.target.trak.system.service.impl.referencedata.DeleteReferenceDataItemServiceImpl">
+		<property name="referenceDataDao" ref="referenceDataDao" />
+		<property name="validator" ref="referenceDataValidator" />
+		<property name="conversionService" ref="conversionService" />
+	</bean>
 	
-	<util:properties id="errorMessages" location="classpath:/properties/error-messages.properties" />
-	<util:properties id="dwValidationProps" location="classpath:/properties/dw-validation-codes.properties" />
+	<bean id="referenceDataByCriteriaService" class="com.target.trak.system.service.impl.referencedata.GetReferenceDataItemsByCriteriaServiceImpl">
+		<property name="referenceDataDao" ref="referenceDataDao" />
+		<property name="validator" ref="referenceDataValidator" />
+		<property name="conversionService" ref="conversionService" />
+	</bean>
 	
-	<!-- Common Beans -->
+	<bean id="referenceDataTypesService" class="com.target.trak.system.service.impl.referencedata.GetReferenceDataTypesServiceImpl">
+		<property name="referenceDataDao" ref="referenceDataDao" />
+		<property name="conversionService" ref="conversionService" />
+	</bean>
 	
+	<bean id="updateReferenceDataService" class="com.target.trak.system.service.impl.referencedata.UpdateReferenceDataItemServiceImpl">
+		<property name="referenceDataDao" ref="referenceDataDao" />
+		<property name="validator" ref="referenceDataValidator" />
+		<property name="conversionService" ref="conversionService" />
+	</bean>
 	
-	<!-- Common Beans -->
+	<bean id="createCompanyService" class="com.target.trak.system.service.impl.company.CreateCompanyServiceImpl">
+		<property name="companyDao" ref="companyDao" />
+		<property name="validator" ref="companyValidator" />
+		<property name="conversionService" ref="conversionService" />
+	</bean>
+	
+	<bean id="companiesByCriteriaService" class="com.target.trak.system.service.impl.company.GetCompaniesByCriteriaServiceImpl">
+		<property name="companyDao" ref="companyDao" />
+		<property name="validator" ref="companyValidator" />
+		<property name="conversionService" ref="conversionService" />
+	</bean>
+	
+	<bean id="getCompanyService" class="com.target.trak.system.service.impl.company.GetCompanyServiceImpl">
+		<property name="companyDao" ref="companyDao" />
+		<property name="validator" ref="companyValidator" />
+		<property name="conversionService" ref="conversionService" />
+	</bean>
+	
+	<bean id="updateCompanyService" class="com.target.trak.system.service.impl.company.UpdateCompanyServiceImpl">
+		<property name="companyDao" ref="companyDao" />
+		<property name="validator" ref="companyValidator" />
+		<property name="conversionService" ref="conversionService" />
+	</bean>
 	
 	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
 		<property name="converters">
 			<set>
-				<bean id="targetTrakUserConverter" class="com.target.trak.system.security.converters.TargetTrakUserConverter" />
+				<bean id="targetTrakUserConverter" class="com.target.trak.system.security.converters.TargetTrakUserConverter">
+					<property name="encoder" ref="encoder" />
+				</bean>
 				<bean id="menuDtoConverter" class="com.target.trak.system.security.converters.MenuDtoConverter" />
 				<bean id="userDtoConverter" class="com.target.trak.system.security.converters.UserDtoConverter" />
-				
 				<bean id="referenceDataDomainDtoConverter" class="com.target.trak.system.service.converters.referencedata.ReferenceDataDomainDtoConverter " />
 				<bean id="referenceDataDtoDomainConverter" class="com.target.trak.system.service.converters.referencedata.ReferenceDataDtoDomainConverter" />
 				<bean id="referenceDataSearchCriteriaConverter" class="com.target.trak.system.service.converters.referencedata.ReferenceDataSearchCriteriaDtoDomainConverter" />
-				
 				<bean id="companyDomainDtoConverter" class="com.target.trak.system.service.converters.company.CompanyDomainDtoConverter" />
 				<bean id="companyDtoDomainConverter" class="com.target.trak.system.service.converters.company.CompanyDtoDomainConverter" />
 				<bean id="companyDataSearchCriteriaConverter" class="com.target.trak.system.service.converters.company.CompanySearchCriteriaConverter" />
 			</set>
 		</property>
 	</bean>
-
-	<!-- Security Beans -->
 	
-	<aop:aspectj-autoproxy/>
-	
-	<jee:jndi-lookup id="securityDataSource" jndi-name="java:comp/env/jdbc/TargetTrakSecurityLocalDataSource"/>
-
-	<util:properties id="userDetailQueries" location="classpath:/security-queries/user-detail-queries.xml" />
-	<util:properties id="userRoleQueries" location="classpath:/security-queries/user-role-queries.xml" />
-	<util:properties id="rolePrivilegesQueries" location="classpath:/security-queries/role-privileges-queries.xml" />
-	<util:properties id="menuQueries" location="classpath:/security-queries/menu-queries.xml" />
-	<util:properties id="validationProps" location="classpath:/properties/security-validation-codes.properties" />
-	<util:properties id="auditEventQueries" location="classpath:/security-queries/audit-event-queries.xml" />
-	
-	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
-	
-	<tx:annotation-driven transaction-manager="securityTransactionManager"/>
-	
-	<bean id="securityTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="securityDataSource" />
-	</bean>
-
 </beans>
