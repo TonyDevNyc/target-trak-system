@@ -103,7 +103,7 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
     			url : '/target-trak-system/sys/refdata/createReferenceData.json',
 				method : 'POST',
 				headers : {
-					'X-CSRF-TOKEN': TGT.security.CsrfToken.getCsrfToken()
+					'X-CSRF-TOKEN' : TGT.security.CsrfToken.getCsrfToken()
 				},
                 waitMsg : 'Creating Reference Data Please Wait...',
                 success : function(form, action) {
