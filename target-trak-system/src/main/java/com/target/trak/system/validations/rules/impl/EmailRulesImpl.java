@@ -3,23 +3,16 @@ package com.target.trak.system.validations.rules.impl;
 import java.util.Properties;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.target.trak.system.security.dao.UserDetailsDao;
 import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.validations.rules.EmailRules;
 
-@Component("emailRules")
 public class EmailRulesImpl implements EmailRules {
 
-	@Autowired
-	@Qualifier("validationProps")
 	private Properties validationProps;
 	
-	@Autowired
 	private UserDetailsDao userDetailsDao;
 	
 	@Override
@@ -62,5 +55,13 @@ public class EmailRulesImpl implements EmailRules {
 			return new TargetTrakValidationError("email", "EMAIL_017");
 		}
 		return null;
+	}
+
+	public void setValidationProps(Properties validationProps) {
+		this.validationProps = validationProps;
+	}
+
+	public void setUserDetailsDao(UserDetailsDao userDetailsDao) {
+		this.userDetailsDao = userDetailsDao;
 	}
 }

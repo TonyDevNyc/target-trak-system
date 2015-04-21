@@ -2,23 +2,16 @@ package com.target.trak.system.validations.rules.impl;
 
 import java.util.Properties;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.target.trak.system.dao.ReferenceDataDao;
 import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.validations.rules.ReferenceDataRules;
 
-@Component("referenceDataRules")
 public class ReferenceDataRulesImpl implements ReferenceDataRules {
 
-	@Autowired
-	@Qualifier("dwValidationProps")
-	private Properties dwValidationProps;
+	private Properties validationProps;
 
-	@Autowired
 	private ReferenceDataDao referenceDataDao;
 
 	// TODO implement regex for special characters after bus req updatedSS
@@ -41,7 +34,8 @@ public class ReferenceDataRulesImpl implements ReferenceDataRules {
 
 	@Override
 	public TargetTrakValidationError isTypeValidLength(final String type) {
-		int maxLength = Integer.parseInt((String) dwValidationProps.get("type.maxlength"));
+		String strLength = (String) validationProps.get("type.maxlength");
+		int maxLength = Integer.parseInt(strLength);
 		if (type.length() > maxLength) {
 			return new TargetTrakValidationError("type", "REFERENCE_DATA_002");
 		}
@@ -66,7 +60,7 @@ public class ReferenceDataRulesImpl implements ReferenceDataRules {
 
 	@Override
 	public TargetTrakValidationError isLabelValidLength(final String label) {
-		int maxLength = Integer.parseInt((String) dwValidationProps.get("label.maxlength"));
+		int maxLength = Integer.parseInt((String) validationProps.get("label.maxlength"));
 		if (label.length() > maxLength) {
 			return new TargetTrakValidationError("label", "REFERENCE_DATA_005");
 		}
@@ -91,7 +85,7 @@ public class ReferenceDataRulesImpl implements ReferenceDataRules {
 
 	@Override
 	public TargetTrakValidationError isValueValidLength(final String value) {
-		int maxLength = Integer.parseInt((String) dwValidationProps.get("value.maxlength"));
+		int maxLength = Integer.parseInt((String) validationProps.get("value.maxlength"));
 		if (value.length() > maxLength) {
 			return new TargetTrakValidationError("value", "REFERENCE_DATA_008");
 		}
@@ -114,5 +108,13 @@ public class ReferenceDataRulesImpl implements ReferenceDataRules {
 			return new TargetTrakValidationError("api", "REFERENCE_DATA_010");
 		}
 		return null;
+	}
+
+	public void setValidationProps(Properties validationProps) {
+		this.validationProps = validationProps;
+	}
+
+	public void setReferenceDataDao(ReferenceDataDao referenceDataDao) {
+		this.referenceDataDao = referenceDataDao;
 	}
 }

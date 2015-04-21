@@ -2,19 +2,13 @@ package com.target.trak.system.validations.rules.impl;
 
 import java.util.Properties;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.validations.rules.PasswordRules;
 
-@Component("passwordRules")
 public class PasswordRulesImpl implements PasswordRules {
 
-	@Autowired
-	@Qualifier("validationProps")
 	private Properties validationProps;
 
 	@Override
@@ -48,5 +42,9 @@ public class PasswordRulesImpl implements PasswordRules {
 			return new TargetTrakValidationError("password", "REGISTRATION_006");
 		}
 		return null;
+	}
+
+	public void setValidationProps(Properties validationProps) {
+		this.validationProps = validationProps;
 	}
 }

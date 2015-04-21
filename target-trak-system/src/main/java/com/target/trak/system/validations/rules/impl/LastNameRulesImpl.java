@@ -2,19 +2,13 @@ package com.target.trak.system.validations.rules.impl;
 
 import java.util.Properties;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.validations.rules.LastNameRules;
 
-@Component("lastNameRules")
 public class LastNameRulesImpl implements LastNameRules {
 
-	@Autowired
-	@Qualifier("validationProps")
 	private Properties validationProps;
 
 	@Override
@@ -40,5 +34,9 @@ public class LastNameRulesImpl implements LastNameRules {
 			return new TargetTrakValidationError("lastName", "REGISTRATION_012");
 		}
 		return null;
+	}
+
+	public void setValidationProps(Properties validationProps) {
+		this.validationProps = validationProps;
 	}
 }
