@@ -2,11 +2,9 @@ package com.target.trak.system.security.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.target.trak.system.security.dao.RolePrivilegesDao;
@@ -15,16 +13,12 @@ import com.target.trak.system.security.dao.UserRoleDao;
 import com.target.trak.system.security.domain.TargetTrakRole;
 import com.target.trak.system.security.domain.TargetTrakUser;
 
-@Service("targetTrakUserDetailsService")
 public class TargetTrakUserDetailsServiceImpl implements UserDetailsService {
 
-	@Autowired
 	private UserDetailsDao userDetailsDao;
 
-	@Autowired
 	private UserRoleDao userRoleDao;
 
-	@Autowired
 	private RolePrivilegesDao rolePrivilegesDao;
 
 	@Override
@@ -32,7 +26,7 @@ public class TargetTrakUserDetailsServiceImpl implements UserDetailsService {
 		if (StringUtils.isEmpty(username)) {
 			throw new UsernameNotFoundException("Username: [" + username + "] not found");
 		}
-		
+
 		TargetTrakUser user = (TargetTrakUser) userDetailsDao.getUserByUsername(username.toLowerCase());
 		if (user == null) {
 			throw new UsernameNotFoundException("Username: [" + username + "] not found");
@@ -45,5 +39,17 @@ public class TargetTrakUserDetailsServiceImpl implements UserDetailsService {
 			role.setPrivileges(rolePrivilegesDao.getPrivilegesByRoleId(role.getRoleId()));
 		}
 		return user;
+	}
+
+	public void setUserDetailsDao(UserDetailsDao userDetailsDao) {
+		this.userDetailsDao = userDetailsDao;
+	}
+
+	public void setUserRoleDao(UserRoleDao userRoleDao) {
+		this.userRoleDao = userRoleDao;
+	}
+
+	public void setRolePrivilegesDao(RolePrivilegesDao rolePrivilegesDao) {
+		this.rolePrivilegesDao = rolePrivilegesDao;
 	}
 }

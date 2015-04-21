@@ -5,12 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.stereotype.Service;
 
-import com.target.trak.system.security.audit.AuditableEvent;
-import com.target.trak.system.security.audit.TargetTrakAuditEventCode;
 import com.target.trak.system.security.dao.MenuDao;
 import com.target.trak.system.security.domain.TargetTrakMenu;
 import com.target.trak.system.security.dto.PrivilegeDto;
@@ -22,26 +18,27 @@ import com.target.trak.system.security.dto.menu.MenuDto;
 import com.target.trak.system.security.exceptions.TargetTrakSecurityException;
 import com.target.trak.system.security.service.MenuService;
 
-@Service("menuService")
 public class MenuServiceImpl implements MenuService {
 
-	@Autowired
 	private MenuDao menuDao;
-	
-	@Autowired
+
 	private ConversionService conversionService;
-	
-	//@AuditableEvent(auditableEventCode=TargetTrakAuditEventCode.BUILD_USER_MENU)
+
+	public MenuServiceImpl(MenuDao menuDao) {
+		this.menuDao = menuDao;
+	}
+
+	// @AuditableEvent(auditableEventCode=TargetTrakAuditEventCode.BUILD_USER_MENU)
 	@Override
 	public MenuApiResponse getMenuItemsForUser(final MenuApiRequest request) throws TargetTrakSecurityException {
 		MenuApiResponse response = new MenuApiResponse();
 		List<MenuDto> menuList = new ArrayList<MenuDto>();
 		UserDto currentUser = request.getCurrentUser();
-		
+
 		if (currentUser == null) {
 			throw new TargetTrakSecurityException("User is null");
 		}
-		
+
 		List<RoleDto> roles = currentUser.getRoles();
 		if (roles == null || roles.isEmpty()) {
 			response.setSuccess(false);
@@ -49,7 +46,7 @@ public class MenuServiceImpl implements MenuService {
 			response.setMenuItems(menuList);
 			return response;
 		}
-		
+
 		List<Long> privilegeIds = buildPrivilegeList(roles);
 		List<TargetTrakMenu> menuItems = menuDao.selectMenuItemsByPrivileges(privilegeIds);
 		menuList = buildMenuList(menuItems);
@@ -57,7 +54,7 @@ public class MenuServiceImpl implements MenuService {
 		response.setMenuItems(menuList);
 		return response;
 	}
-	
+
 	private List<MenuDto> buildMenuList(List<TargetTrakMenu> menuItems) {
 		List<MenuDto> dtos = new ArrayList<MenuDto>();
 		for (TargetTrakMenu menuItem : menuItems) {
@@ -65,7 +62,7 @@ public class MenuServiceImpl implements MenuService {
 		}
 		return dtos;
 	}
-	
+
 	private List<Long> buildPrivilegeList(List<RoleDto> roles) {
 		List<Long> privilegeIds = new ArrayList<Long>();
 		Map<Long, Long> map = new HashMap<Long, Long>();
@@ -78,4 +75,7 @@ public class MenuServiceImpl implements MenuService {
 		return privilegeIds;
 	}
 
+	public void setConversionService(ConversionService conversionService) {
+		this.conversionService = conversionService;
+	}
 }
