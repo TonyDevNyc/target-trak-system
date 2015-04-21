@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<jee:jndi-lookup id="dwDataSource" jndi-name="java:comp/env/jdbc/TargetTrakDwLocalDataSource"/>
+	
+	<util:properties id="referenceDataQueries" location="classpath:/dw-queries/reference-data-queries.xml" />
+	<util:properties id="companyQueries" location="classpath:/dw-queries/company-queries.xml" />
+	
+	<bean id="referenceDataQueryBuilder" class="com.target.trak.system.dao.builder.ReferenceDataQueryBuilder">
+		<property name="referenceDataQueries" ref="referenceDataQueries" />
+	</bean>
+	
+	<bean id="companyQueryBuilder" class="com.target.trak.system.dao.builder.CompanyQueryBuilder">
+		<property name="companyQueries" ref="companyQueries" />
+	</bean>
+	
+	<bean id="referenceDataDao" class="com.target.trak.system.dao.impl.ReferenceDataDaoImpl">
+		<constructor-arg ref="dwDataSource" />
+		<property name="referenceDataQueries" ref="referenceDataQueries" />
+		<property name="refDataQueryBuilder" ref="referenceDataQueryBuilder" />
+	</bean>
+	
+	<bean id="companyDao" class="com.target.trak.system.dao.impl.CompanyDaoImpl">
+		<constructor-arg ref="dwDataSource" />
+		<property name="companyQueries" ref="companyQueries" />
+		<property name="companyQueryBuilder" ref="companyQueryBuilder" />
+	</bean>
+
+</beans>
