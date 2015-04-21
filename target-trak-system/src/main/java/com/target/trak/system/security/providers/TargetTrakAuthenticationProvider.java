@@ -2,8 +2,6 @@ package com.target.trak.system.security.providers;
 
 import java.util.Collection;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,20 +10,14 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
 
 import com.target.trak.system.security.domain.TargetTrakUser;
 import com.target.trak.system.security.service.impl.TargetTrakUserDetailsServiceImpl;
 
-@Component("targetTrakAuthenticationProvider")
 public class TargetTrakAuthenticationProvider implements AuthenticationProvider {
 	
-	@Qualifier("targetTrakUserDetailsService")
-	@Autowired
 	private TargetTrakUserDetailsServiceImpl userDetailsService;
 	
-	@Qualifier("encoder")
-	@Autowired
 	private BCryptPasswordEncoder encoder;
 
 	@Override
@@ -49,6 +41,14 @@ public class TargetTrakAuthenticationProvider implements AuthenticationProvider 
 	@Override
 	public boolean supports(Class<?> authentication) {
 		return authentication.equals(UsernamePasswordAuthenticationToken.class);
+	}
+
+	public void setUserDetailsService(TargetTrakUserDetailsServiceImpl userDetailsService) {
+		this.userDetailsService = userDetailsService;
+	}
+
+	public void setEncoder(BCryptPasswordEncoder encoder) {
+		this.encoder = encoder;
 	}
 
 }
