@@ -61,6 +61,13 @@
 		<logout delete-cookies="JSESSIONID"/>
 	</http>
 	
+	<beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+	
+	<beans:bean id="targetTrakAuthenticationProvider" class="com.target.trak.system.security.providers.TargetTrakAuthenticationProvider">
+		<beans:property name="userDetailsService" ref="targetTrakUserDetailsService" />
+		<beans:property name="encoder" ref="encoder" />
+	</beans:bean>
+	
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider ref="targetTrakAuthenticationProvider" />
 	</authentication-manager>
