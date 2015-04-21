@@ -9,8 +9,6 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
@@ -18,30 +16,23 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 
 import com.target.trak.system.dao.CompanyDao;
 import com.target.trak.system.dao.builder.CompanyQueryBuilder;
 import com.target.trak.system.domain.CompanyDomain;
 import com.target.trak.system.domain.criteria.CompanySearchCriteria;
 
-@Repository
 public class CompanyDaoImpl implements CompanyDao {
 
 	private final Logger logger = Logger.getLogger(getClass());
 
-	@Qualifier("companyQueries")
-	@Autowired
 	private Properties companyQueries;
 
-	@Qualifier("companyQueryBuilder")
-	@Autowired
 	private CompanyQueryBuilder companyQueryBuilder;
 
 	private NamedParameterJdbcTemplate companyTemplate;
 
-	@Autowired
-	public CompanyDaoImpl(@Qualifier("dwDataSource") DataSource dataSource) {
+	public CompanyDaoImpl(DataSource dataSource) {
 		companyTemplate = new NamedParameterJdbcTemplate(dataSource);
 	}
 
@@ -108,7 +99,7 @@ public class CompanyDaoImpl implements CompanyDao {
 		params.addValue("lastUpdatedBy", company.getLastUpdatedBy());
 		params.addValue("lastUpdatedTimestamp", company.getLastUpdatedTimestamp());
 		params.addValue("id", company.getId());
-		
+
 		String sql = companyQueries.getProperty("updateCompanySql");
 		int count = companyTemplate.update(sql, params);
 		if (count != 1) {
@@ -138,6 +129,14 @@ public class CompanyDaoImpl implements CompanyDao {
 				return companies;
 			}
 		});
+	}
+
+	public void setCompanyQueries(Properties companyQueries) {
+		this.companyQueries = companyQueries;
+	}
+
+	public void setCompanyQueryBuilder(CompanyQueryBuilder companyQueryBuilder) {
+		this.companyQueryBuilder = companyQueryBuilder;
 	}
 
 	private final class CompanyRowMapper implements RowMapper<CompanyDomain> {

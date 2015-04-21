@@ -9,8 +9,6 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
@@ -18,30 +16,23 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 
 import com.target.trak.system.dao.ReferenceDataDao;
 import com.target.trak.system.dao.builder.ReferenceDataQueryBuilder;
 import com.target.trak.system.domain.ReferenceDataDomain;
 import com.target.trak.system.domain.criteria.ReferenceDataSearchCriteria;
 
-@Repository
 public class ReferenceDataDaoImpl implements ReferenceDataDao {
 
 	private final Logger logger = Logger.getLogger(getClass());
 
-	@Qualifier("referenceDataQueries")
-	@Autowired
 	private Properties referenceDataQueries;
 
-	@Qualifier("referenceDataQueryBuilder")
-	@Autowired
 	private ReferenceDataQueryBuilder refDataQueryBuilder;
 
 	private NamedParameterJdbcTemplate refDataTemplate;
 
-	@Autowired
-	public ReferenceDataDaoImpl(@Qualifier("dwDataSource") DataSource dataSource) {
+	public ReferenceDataDaoImpl(DataSource dataSource) {
 		refDataTemplate = new NamedParameterJdbcTemplate(dataSource);
 	}
 
@@ -159,6 +150,14 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 		} else {
 			logger.info("Reference Data was deleted successfully");
 		}
+	}
+
+	public void setReferenceDataQueries(Properties referenceDataQueries) {
+		this.referenceDataQueries = referenceDataQueries;
+	}
+
+	public void setRefDataQueryBuilder(ReferenceDataQueryBuilder refDataQueryBuilder) {
+		this.refDataQueryBuilder = refDataQueryBuilder;
 	}
 
 	private final class ReferenceDataDomainRowMapper implements RowMapper<ReferenceDataDomain> {
