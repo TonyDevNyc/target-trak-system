@@ -24,6 +24,6 @@ public interface TargetTrakApiResponse {
 
 	public TargetTrakErrorTypeEnum getErrorType();
 
-	public void setErrorType(TargetTrakErrorTypeEnum errorType);
+	public void setErrorType(final TargetTrakErrorTypeEnum errorType);
 
 }
