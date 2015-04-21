@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<util:properties id="dwValidationProps" location="classpath:/properties/dw-validation-codes.properties" />
+	<util:properties id="validationProps" location="classpath:/properties/security-validation-codes.properties" />
+	
+	<bean id="emailRules" class="com.target.trak.system.validations.rules.impl.EmailRulesImpl">
+		<property name="validationProps" ref="validationProps" />
+		<property name="userDetailsDao" ref="userDetailsDao" />
+	</bean>
+
+	<bean id="firstNameRules" class="com.target.trak.system.validations.rules.impl.FirstNameRulesImpl">
+		<property name="validationProps" ref="validationProps" />
+	</bean>
+	
+	<bean id="lastNameRules" class="com.target.trak.system.validations.rules.impl.LastNameRulesImpl">
+		<property name="validationProps" ref="validationProps" />
+	</bean>
+	
+	<bean id="passwordRules" class="com.target.trak.system.validations.rules.impl.PasswordRulesImpl">
+		<property name="validationProps" ref="validationProps" />
+	</bean>
+	
+	<bean id="phoneNumberRules" class="com.target.trak.system.validations.rules.impl.PhoneNumberRulesImpl">
+		<property name="validationProps" ref="validationProps" />
+	</bean>
+	
+	<bean id="referenceDataRules" class="com.target.trak.system.validations.rules.impl.ReferenceDataRulesImpl">
+		<property name="validationProps" ref="dwValidationProps" />
+		<property name="referenceDataDao" ref="referenceDataDao" />
+	</bean>
+	
+	<bean id="usernameRules" class="com.target.trak.system.validations.rules.impl.UsernameRulesImpl">
+		<property name="validationProps" ref="validationProps" />
+		<property name="userDetailsDao" ref="userDetailsDao" />
+	</bean>
+
+	<bean id="forgotPasswordValidator" class="com.target.trak.system.validations.impl.ForgotPasswordValidatorImpl">
+		<constructor-arg ref="emailRules" />
+	</bean>
+
+	<bean id="referenceDataValidator" class="com.target.trak.system.validations.impl.ReferenceDataValidatorImpl">
+		<constructor-arg ref="referenceDataRules" />
+	</bean>
+	
+	<bean id="companyValidator" class="com.target.trak.system.validations.impl.CompanyValidatorImpl" />
+	
+	<bean id="userRegistrationValidator" class="com.target.trak.system.validations.impl.UserRegistrationValidatorImpl">
+		<property name="usernameRules" ref="usernameRules" />
+		<property name="passwordRules" ref="passwordRules" />
+		<property name="firstNameRules" ref="firstNameRules" />
+		<property name="lastNameRules" ref="lastNameRules" />
+		<property name="phoneNumberRules" ref="phoneNumberRules" />
+		<property name="emailRules" ref="emailRules" />
+	</bean>
+	
+	
+</beans>
