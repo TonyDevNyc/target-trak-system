@@ -16,7 +16,12 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring/target-trak-app-context.xml,
-			/WEB-INF/spring/target-trak-security-context.xml</param-value>
+			/WEB-INF/spring/target-trak-data-access-beans.xml,
+			/WEB-INF/spring/target-trak-validation-beans.xml,
+			/WEB-INF/spring/target-trak-security-service-beans.xml,			
+			/WEB-INF/spring/target-trak-security-context.xml,
+			/WEB-INF/spring/target-trak-security-data-access-beans.xml
+		</param-value>
 	</context-param>
 
 	<servlet>
