@@ -2,8 +2,6 @@ package com.target.trak.system.security.converters;
 
 import java.sql.Timestamp;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -12,8 +10,6 @@ import com.target.trak.system.security.dto.UserDto;
 
 public class TargetTrakUserConverter implements Converter<UserDto, TargetTrakUser> {
 
-	@Qualifier("encoder")
-	@Autowired
 	private BCryptPasswordEncoder encoder;
 
 	@Override
@@ -35,4 +31,7 @@ public class TargetTrakUserConverter implements Converter<UserDto, TargetTrakUse
 		return user;
 	}
 
+	public void setEncoder(BCryptPasswordEncoder encoder) {
+		this.encoder = encoder;
+	}
 }

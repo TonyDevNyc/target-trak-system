@@ -7,30 +7,23 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 import com.target.trak.system.security.dao.UserDetailsDao;
 import com.target.trak.system.security.domain.TargetTrakUser;
 
-@Repository
 public class UserDetailsDaoImpl implements UserDetailsDao {
 
 	private static final Logger logger = Logger.getLogger(UserDetailsDaoImpl.class);
 
 	private NamedParameterJdbcTemplate userDetailTemplate;
 
-	@Qualifier("userDetailQueries")
-	@Autowired
 	private Properties userDetailQueries;
 
-	@Autowired
-	public UserDetailsDaoImpl(@Qualifier("securityDataSource") DataSource dataSource) {
+	public UserDetailsDaoImpl(DataSource dataSource) {
 		userDetailTemplate = new NamedParameterJdbcTemplate(dataSource);
 	}
 
@@ -78,6 +71,10 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 			logger.error("No results found for email: " + email, e);
 		}
 		return user;
+	}
+
+	public void setUserDetailQueries(Properties userDetailQueries) {
+		this.userDetailQueries = userDetailQueries;
 	}
 
 	private final class TargetTrakUserRowMapper implements RowMapper<TargetTrakUser> {

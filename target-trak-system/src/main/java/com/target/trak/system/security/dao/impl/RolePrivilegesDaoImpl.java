@@ -8,30 +8,23 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 import com.target.trak.system.security.dao.RolePrivilegesDao;
 import com.target.trak.system.security.domain.TargetTrakPrivilege;
 
-@Repository
 public class RolePrivilegesDaoImpl implements RolePrivilegesDao {
 
 private Logger logger = Logger.getLogger(getClass());
 	
 	private NamedParameterJdbcTemplate rolePrivilegesTemplate;
 
-	@Qualifier("rolePrivilegesQueries")
-	@Autowired
 	private Properties rolePrivilegesQueries;
 
-	@Autowired
-	public RolePrivilegesDaoImpl(@Qualifier("securityDataSource") DataSource dataSource) {
+	public RolePrivilegesDaoImpl(DataSource dataSource) {
 		rolePrivilegesTemplate = new NamedParameterJdbcTemplate(dataSource);
 	}
 	
@@ -44,7 +37,6 @@ private Logger logger = Logger.getLogger(getClass());
 	}
 
 	@Override
-
 	public List<TargetTrakPrivilege> getPrivilegesByRoleId(final Long roleId) {
 		String sql = rolePrivilegesQueries.getProperty("getPrivilegesByRoleIdSql");
 		MapSqlParameterSource params = new MapSqlParameterSource();
@@ -56,6 +48,10 @@ private Logger logger = Logger.getLogger(getClass());
 			logger.error("No privileges found for role: " + roleId, e);
 		}
 		return privileges;
+	}
+
+	public void setRolePrivilegesQueries(Properties rolePrivilegesQueries) {
+		this.rolePrivilegesQueries = rolePrivilegesQueries;
 	}
 
 	private final class TargetTrakPrivilegeRowMapper implements RowMapper<TargetTrakPrivilege> {

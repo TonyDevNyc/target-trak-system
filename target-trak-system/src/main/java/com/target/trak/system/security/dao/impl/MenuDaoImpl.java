@@ -7,27 +7,20 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 import com.target.trak.system.security.dao.MenuDao;
 import com.target.trak.system.security.domain.TargetTrakMenu;
 
-@Repository
 public class MenuDaoImpl implements MenuDao {
 
 	private NamedParameterJdbcTemplate menuTemplate;
 
-	@Qualifier("menuQueries")
-	@Autowired
 	private Properties menuQueries;
 	
-	@Autowired
-	public MenuDaoImpl(@Qualifier("securityDataSource") DataSource dataSource) {
+	public MenuDaoImpl(DataSource dataSource) {
 		menuTemplate = new NamedParameterJdbcTemplate(dataSource);
 	}
 	
@@ -37,6 +30,10 @@ public class MenuDaoImpl implements MenuDao {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("privilegeIds", privilegeIds);
 		return menuTemplate.query(sql, params, new TargetTrakMenuRowMapper());
+	}
+
+	public void setMenuQueries(Properties menuQueries) {
+		this.menuQueries = menuQueries;
 	}
 
 	private final class TargetTrakMenuRowMapper implements RowMapper<TargetTrakMenu> {
