@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,12 +23,7 @@ public class TargetTrakWebExceptionHandler {
 	private static final String JSON_ERRORS = "errors";
 	private static final String JSON_MESSAGE = "message";
 
-	@Autowired
 	private UIErrorBuilder errorBuilder;
-
-	@Qualifier("messageSource")
-	@Autowired
-	private MessageSource messageSource;
 	
 	private Logger logger = Logger.getLogger(getClass());
 	
@@ -87,5 +79,9 @@ public class TargetTrakWebExceptionHandler {
 		Map<String, Object> response = new HashMap<String, Object>();
 		response.put(JSON_MESSAGE, apiResponse.getMessage());
 		return response;
+	}
+
+	public void setErrorBuilder(UIErrorBuilder errorBuilder) {
+		this.errorBuilder = errorBuilder;
 	}
 }
