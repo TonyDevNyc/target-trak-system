@@ -3,8 +3,6 @@ package com.target.trak.system.security.audit.service.impl;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,23 +13,19 @@ import com.target.trak.system.security.audit.service.AuditService;
 import com.target.trak.system.security.context.UserContext;
 import com.target.trak.system.service.dto.common.TargetTrakApiResponse;
 
-
-@Transactional(propagation=Propagation.REQUIRES_NEW)
-@Service("auditEventService")
+@Transactional(propagation = Propagation.REQUIRES_NEW)
 public class AuditServiceImpl implements AuditService {
 
-	@Autowired
 	private AuditEventDao auditEventDao;
-	
-	@Autowired
+
 	private UserContext userContext;
-	
+
 	@Override
 	public void createAuditEvent(final AuditableEvent auditableEvent, final TargetTrakApiResponse response) {
 		AuditEvent auditEvent = buildAuditEvent(auditableEvent, response);
 		auditEventDao.insertAuditEvent(auditEvent);
 	}
-	
+
 	private AuditEvent buildAuditEvent(final AuditableEvent auditableEvent, final TargetTrakApiResponse response) {
 		AuditEvent auditEvent = new AuditEvent();
 		auditEvent.setAuditEventCode(auditableEvent.auditableEventCode().toString());
@@ -48,7 +42,7 @@ public class AuditServiceImpl implements AuditService {
 		}
 		return auditEvent;
 	}
-	
+
 	private String getCurrentUser() {
 		if (userContext == null || userContext.getCurrentUser() == null) {
 			return "Anonymous User";
@@ -57,6 +51,11 @@ public class AuditServiceImpl implements AuditService {
 		}
 	}
 
+	public void setAuditEventDao(AuditEventDao auditEventDao) {
+		this.auditEventDao = auditEventDao;
+	}
 
-
+	public void setUserContext(UserContext userContext) {
+		this.userContext = userContext;
+	}
 }
