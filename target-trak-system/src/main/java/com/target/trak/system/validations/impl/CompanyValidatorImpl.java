@@ -3,15 +3,12 @@ package com.target.trak.system.validations.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
 import com.target.trak.system.service.dto.company.CompanyApiRequest;
 import com.target.trak.system.service.dto.company.CompanyDto;
 import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.validations.TargetTrakValidationException;
 import com.target.trak.system.validations.TargetTrakValidator;
 
-@Component("companyValidator")
 public class CompanyValidatorImpl implements TargetTrakValidator<CompanyApiRequest> {
 
 	@Override

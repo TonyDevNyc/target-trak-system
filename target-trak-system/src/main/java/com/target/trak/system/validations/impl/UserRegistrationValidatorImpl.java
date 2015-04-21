@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.target.trak.system.security.dto.UserDto;
 import com.target.trak.system.security.dto.registration.RegistrationApiRequest;
 import com.target.trak.system.validations.TargetTrakValidationError;
@@ -19,25 +16,18 @@ import com.target.trak.system.validations.rules.PasswordRules;
 import com.target.trak.system.validations.rules.PhoneNumberRules;
 import com.target.trak.system.validations.rules.UsernameRules;
 
-@Component("registrationValidator")
 public class UserRegistrationValidatorImpl implements TargetTrakValidator<RegistrationApiRequest> {
 
-	@Autowired
 	private UsernameRules usernameRules;
 
-	@Autowired
 	private PasswordRules passwordRules;
 
-	@Autowired
 	private FirstNameRules firstNameRules;
 
-	@Autowired
 	private LastNameRules lastNameRules;
 
-	@Autowired
 	private PhoneNumberRules phoneNumberRules;
 
-	@Autowired
 	private EmailRules emailRules;
 
 	@Override
@@ -150,4 +140,27 @@ public class UserRegistrationValidatorImpl implements TargetTrakValidator<Regist
 		return errors;
 	}
 
+	public void setUsernameRules(UsernameRules usernameRules) {
+		this.usernameRules = usernameRules;
+	}
+
+	public void setPasswordRules(PasswordRules passwordRules) {
+		this.passwordRules = passwordRules;
+	}
+
+	public void setFirstNameRules(FirstNameRules firstNameRules) {
+		this.firstNameRules = firstNameRules;
+	}
+
+	public void setLastNameRules(LastNameRules lastNameRules) {
+		this.lastNameRules = lastNameRules;
+	}
+
+	public void setPhoneNumberRules(PhoneNumberRules phoneNumberRules) {
+		this.phoneNumberRules = phoneNumberRules;
+	}
+
+	public void setEmailRules(EmailRules emailRules) {
+		this.emailRules = emailRules;
+	}
 }

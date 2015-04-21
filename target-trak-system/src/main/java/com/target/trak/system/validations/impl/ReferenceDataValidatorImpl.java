@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.target.trak.system.service.dto.referencedata.ReferenceDataApiRequest;
@@ -17,12 +14,13 @@ import com.target.trak.system.validations.TargetTrakValidationException;
 import com.target.trak.system.validations.TargetTrakValidator;
 import com.target.trak.system.validations.rules.ReferenceDataRules;
 
-@Component("referenceDataValidator")
 public class ReferenceDataValidatorImpl implements TargetTrakValidator<ReferenceDataApiRequest> {
 
-	@Qualifier("referenceDataRules")
-	@Autowired
 	private ReferenceDataRules referenceDataRules;
+	
+	public ReferenceDataValidatorImpl(ReferenceDataRules referenceDataRules) {
+		this.referenceDataRules = referenceDataRules;
+	}
 
 	@Override
 	public List<TargetTrakValidationError> validate(final ReferenceDataApiRequest request) throws TargetTrakValidationException {

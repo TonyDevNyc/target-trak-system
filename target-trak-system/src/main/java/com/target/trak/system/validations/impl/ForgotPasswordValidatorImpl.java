@@ -4,22 +4,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
-
 import com.target.trak.system.security.dto.credentials.ForgotPasswordApiRequest;
 import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.validations.TargetTrakValidationException;
 import com.target.trak.system.validations.TargetTrakValidator;
 import com.target.trak.system.validations.rules.EmailRules;
 
-@Component("forgotPasswordValidator")
 public class ForgotPasswordValidatorImpl implements TargetTrakValidator<ForgotPasswordApiRequest> {
 
-	@Qualifier("emailRules")
-	@Autowired
 	private EmailRules emailRules;
+
+	public ForgotPasswordValidatorImpl(EmailRules emailRules) {
+		this.emailRules = emailRules;
+	}
 
 	@Override
 	public List<TargetTrakValidationError> validate(final ForgotPasswordApiRequest request) throws TargetTrakValidationException {
@@ -39,5 +36,4 @@ public class ForgotPasswordValidatorImpl implements TargetTrakValidator<ForgotPa
 		errors.removeAll(Collections.singleton(null));
 		return errors;
 	}
-
 }
