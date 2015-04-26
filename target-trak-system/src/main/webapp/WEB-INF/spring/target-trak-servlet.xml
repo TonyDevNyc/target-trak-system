@@ -44,7 +44,7 @@
 		</property>
 	</bean>
 	
-	<bean id="menuBuilder" class="com.target.trak.system.web.builders.MenuBuilderImpl" />
+	<bean id="menuBuilder" class="com.target.trak.system.web.views.builders.MenuBuilderImpl" />
 
 	 <bean id="uiErrorBuilder" class="com.target.trak.system.web.views.ui.common.UIErrorBuilderImpl">
 		<property name="messageSource" ref="messageSource" />
@@ -99,5 +99,10 @@
 		<property name="companiesByCriteriaService" ref="companiesByCriteriaService" />
 	</bean>
 	
+	<bean id="getMattersStatusPieChartController" class="com.target.trak.system.web.controllers.matters.GetMatterStatusPieChartController" />
+	
+	<bean id="getWeeklyOpenMattersChartController" class="com.target.trak.system.web.controllers.matters.GetWeeklyOpenMattersChartController" />
+	
+	<bean id="getOpenMatterTasksController" class="com.target.trak.system.web.controllers.matters.GetOpenMatterTasksController" />
 	
 </beans>
