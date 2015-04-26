@@ -1,7 +1,8 @@
 Ext.define('TGT.controller.App', {
     extend: 'TGT.controller.BaseController',
     views: [ 
-        'TGT.view.refdata.search.ReferenceDataMaintenance'
+        'TGT.view.refdata.search.ReferenceDataMaintenance',    
+        'TGT.view.landing.MattersDashboard'
     ],
     refs: [
         {
@@ -36,11 +37,18 @@ Ext.define('TGT.controller.App', {
 				},
 				'menuitem#deleteRefDataItem' : {
 					click : this.addHistory
+				},
+				'menuitem#logoutItem' : {
+					click : this.logout
 				}
             },
             global: {},
             store: {}  
         });
+    },
+    
+    logout : function() {
+    	Ext.msg.alert('Logout', 'Logout');
     },
     
 	addHistory: function(item, e, opts) {
@@ -75,9 +83,7 @@ Ext.define('TGT.controller.App', {
                 break;
             default: 
             	config = {
-                    xtype: 'panel',
-                    title: 'Page Under Construction',
-                    html: 'Come back soon' 
+                    xtype: 'landing.mattersdashboard'
                 };
                 break;
         }
