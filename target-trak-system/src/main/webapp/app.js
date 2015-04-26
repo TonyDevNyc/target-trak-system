@@ -16,16 +16,18 @@ Ext.application({
        'TGT.store.ReferenceDataTypes',
        'TGT.store.ReferenceDatas',
        'TGT.controller.BaseController',
-       'TGT.controller.refdata.ReferenceDataMaintenanceController'
+       'TGT.controller.refdata.ReferenceDataMaintenanceController',
+       'TGT.controller.matters.MattersDashboardController'
     ],
 	
-    stores: ['ReferenceDataTypes', 'ReferenceDatas'],
+    stores: ['ReferenceDataTypes', 'ReferenceDatas', 'MatterStatusCharts'],
     
     controllers: [
         'App', 
         'BaseController',
         'TargetTrakMenuController', 
-        'refdata.ReferenceDataMaintenanceController'
+        'refdata.ReferenceDataMaintenanceController',
+        'matters.MattersDashboardController'
     ],
 	
 	autoCreateViewport: true,
