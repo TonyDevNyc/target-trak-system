@@ -12,8 +12,8 @@ import com.target.trak.system.security.dto.UserDto;
 import com.target.trak.system.security.dto.menu.MenuApiRequest;
 import com.target.trak.system.security.dto.menu.MenuApiResponse;
 import com.target.trak.system.security.service.MenuService;
-import com.target.trak.system.web.builders.MenuBuilder;
-import com.target.trak.system.web.views.ui.menu.MenuButton;
+import com.target.trak.system.web.views.builders.MenuBuilder;
+import com.target.trak.system.web.views.ui.menu.ExtJsParentMenu;
 
 @Controller
 public class MenuController {
@@ -25,14 +25,13 @@ public class MenuController {
 	private MenuBuilder menuBuilder;
 
 	@RequestMapping(value = "/buildUserMenu.json", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<MenuButton> buildUserMenu() throws Exception {
+	public @ResponseBody 
+	List<ExtJsParentMenu> buildUserMenu() throws Exception {
 		MenuApiRequest request = new MenuApiRequest();
 		UserDto currentUser = userContext.getCurrentUser();
 		request.setCurrentUser(currentUser);
 		MenuApiResponse response = menuService.getMenuItemsForUser(request);
-		
-		List<MenuButton> allowableMenuButtons = menuBuilder.buildUserMenu(response.getMenuItems());
-		return allowableMenuButtons;
+		return menuBuilder.buildUserInterfaceMenu(response.getMenuItems());
 	}
 
 	public void setUserContext(UserContext userContext) {
