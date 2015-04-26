@@ -23,7 +23,7 @@
 							</p>
 						</div>
 					</c:if>
-					<c:if test="${not empty param.out}">
+					<c:if test="${not empty param.logout}">
 						<div>
 							<p class="error_messages">
 								<label>You've been successfully logged out</label>
