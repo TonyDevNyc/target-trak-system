@@ -5,7 +5,7 @@ Ext.define('TGT.view.refdata.search.ReferenceDataGrid', {
 	itemId : 'referenceDataGrid',
 	loadMask : true,
 	autoScroll : true,
-	width : 1100,
+	width : 1098,
 	viewConfig : {
 		enableTextSelection : true
 	},

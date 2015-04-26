@@ -9,7 +9,7 @@ Ext.define('TGT.view.refdata.search.ReferenceDataSearchForm', {
     ],
 	bodyStyle : 'padding:10px 10px 0',
 	width : 1100,
-	height: 225,
+	height: 195,
 	fieldDefaults : {
 		msgTarget : 'side'
 	},
