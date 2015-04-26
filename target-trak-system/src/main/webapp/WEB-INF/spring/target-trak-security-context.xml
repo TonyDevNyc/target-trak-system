@@ -65,7 +65,6 @@
 		<intercept-url pattern="/sys/forgotPassword.htm" access="permitAll" />
 		<intercept-url pattern="/sys/handleForgotPasswordEmail.htm" access="permitAll" />
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
-		
 	</http>
 	
 	<beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
