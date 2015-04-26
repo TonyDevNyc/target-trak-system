@@ -7,7 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="/target-trak-system/resources/css/css-ext-overrides.css">
 		<link rel="stylesheet" type="text/css" href="/target-trak-system/resources/css/app.css">
 		<link rel="stylesheet" type="text/css" href="/target-trak-system/resources/css/target-trak-icons.css">
-		<link rel="stylesheet" type="text/css" href="/target-trak-system/resources/ext/resources/ext-theme-neptune/ext-theme-neptune-all.css">
+		<link rel="stylesheet" type="text/css" href="/target-trak-system/resources/ext/resources/ext-theme-gray/ext-theme-gray-all.css">
 		
 		
 	    <script type="text/javascript" src="/target-trak-system/resources/ext/ext-all-dev.js"></script>
