@@ -41,15 +41,22 @@
 			default-target-url="/sys/index.htm" 
 			always-use-default-target="true"
 			authentication-failure-url="/sys/login.htm?access-denied=access-denied" />
+			
+		<logout
+    		logout-success-url="/sys/logout.htm"
+    		logout-url="/sys/login.htm?logout=logout"
+    		delete-cookies="JSESSIONID" />
 		
 		<intercept-url pattern="/sys/refdata/deleteReferenceData.json" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/sys/refdata/updateReferenceData.json" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/sys/refdata/getReferenceDataTypes.json" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/sys/refdata/getReferenceData.json" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/sys/buildUserMenu.json" access="permitAll" />
+		<intercept-url pattern="/sys/matters/getMatterStatusBreakdown.json" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/sys/matters/getWeeklyOpenMatters.json" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/sys/matters/getMatterTasks.json" access="hasRole('ROLE_USER')" />
 
+		<intercept-url pattern="/sys/buildUserMenu.json" access="permitAll" />
 		<intercept-url pattern="/sys/user/getUserDetails.json" access="permitAll" />
-		
 		<intercept-url pattern="/sys/index.htm" access="permitAll" />
 		<intercept-url pattern="/sys/login.htm" access="permitAll" />
 		<intercept-url pattern="/sys/register.htm" access="permitAll" />
@@ -58,7 +65,7 @@
 		<intercept-url pattern="/sys/forgotPassword.htm" access="permitAll" />
 		<intercept-url pattern="/sys/handleForgotPasswordEmail.htm" access="permitAll" />
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
-		<logout delete-cookies="JSESSIONID"/>
+		
 	</http>
 	
 	<beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
