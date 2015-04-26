@@ -1,7 +1,7 @@
 Ext.define('TGT.store.ReferenceDatas', {
 	extend : 'Ext.data.Store',
 	model : 'TGT.model.ReferenceData',
-	pageSize: 10,
+	pageSize: 15,
 	proxy : {
 		sortParam: 'sortField',
 		type : 'ajax',
