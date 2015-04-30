@@ -13,14 +13,12 @@ Ext.application({
 	   'TGT.security.CsrfToken',
        'TGT.controller.TargetTrakMenuController', 
        'TGT.view.menu.TargetTrakMenu',
-       'TGT.store.ReferenceDataTypes',
-       'TGT.store.ReferenceDatas',
        'TGT.controller.BaseController',
        'TGT.controller.refdata.ReferenceDataMaintenanceController',
        'TGT.controller.matters.MattersDashboardController'
     ],
 	
-    stores: ['ReferenceDataTypes', 'ReferenceDatas', 'MatterStatusCharts'],
+    stores: ['ReferenceDataTypes', 'ReferenceDatas', 'MatterStatusCharts', 'ReferenceDataStatuses'],
     
     controllers: [
         'App', 
