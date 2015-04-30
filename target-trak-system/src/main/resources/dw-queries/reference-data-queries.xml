@@ -4,8 +4,8 @@
 <properties>
 	<entry key="insertReferenceDataSql">
 	    <![CDATA[
-	     	INSERT INTO target_trak_dw.reference_data (reference_data_type, reference_data_label, reference_data_value, created_by, created_timestamp, last_updated_by, last_updated_timestamp)
-			VALUES (:referenceDataType, :referenceDataLabel, :referenceDataValue, :createdBy, :createdTimestamp, :lastUpdatedBy, :lastUpdatedTimestamp)
+	     	INSERT INTO target_trak_dw.reference_data (reference_data_type, reference_data_label, reference_data_value, status, created_by, created_timestamp, last_updated_by, last_updated_timestamp)
+			VALUES (:referenceDataType, :referenceDataLabel, :referenceDataValue, :status, :createdBy, :createdTimestamp, :lastUpdatedBy, :lastUpdatedTimestamp)
        ]]>
 	</entry>
 	<entry key="selectCountOfAllReferenceDataSql">
@@ -15,7 +15,7 @@
 	</entry>
 	<entry key="baseReferenceDataPagingSql">
 	    <![CDATA[
-	     	SELECT id, reference_data_type, reference_data_label, reference_data_value, created_by, created_timestamp, last_updated_by, last_updated_timestamp
+	     	SELECT id, reference_data_type, reference_data_label, reference_data_value, status, created_by, created_timestamp, last_updated_by, last_updated_timestamp
 	     	FROM target_trak_dw.reference_data 
        ]]>
 	</entry>
@@ -41,13 +41,31 @@
 	     		SET reference_data_label = :label,
 	     			reference_data_value = :value,
 	     			last_updated_by = :lastUpdatedBy,
-	     			last_updated_timestamp = :lastUpdatedTimestamp
+	     			last_updated_timestamp = :lastUpdatedTimestamp,
+	     			status = :status
    			WHERE id = :id
        ]]>
 	</entry>
 	<entry key="deleteReferenceTypesSql">
 	    <![CDATA[
 	     	DELETE FROM target_trak_dw.reference_data WHERE id = :id
+       ]]>
+	</entry>
+	<entry key="selectReferenceDataByTypeSql">
+	    <![CDATA[
+	     	SELECT id, reference_data_type, reference_data_label, reference_data_value, status, created_by, created_timestamp, last_updated_by, last_updated_timestamp
+			FROM target_trak_dw.reference_data 
+			WHERE reference_data_type = :referenceDataType 
+			ORDER BY reference_data_label;
+       ]]>
+	</entry>
+	<entry key="selectReferenceDataByFieldsSql">
+	    <![CDATA[
+	     	SELECT id, reference_data_type, reference_data_label, reference_data_value, status, created_by, created_timestamp, last_updated_by, last_updated_timestamp
+			FROM target_trak_dw.reference_data 
+			WHERE reference_data_type = :type
+	     	AND reference_data_label = :label
+	     	AND reference_data_value = :value
        ]]>
 	</entry>
 </properties>
