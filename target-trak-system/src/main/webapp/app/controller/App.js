@@ -40,6 +40,9 @@ Ext.define('TGT.controller.App', {
 				},
 				'menuitem#logoutItem' : {
 					click : this.logout
+				},
+				'menuitem#homePageItem' : {
+					click : this.addHistory
 				}
             },
             global: {},
@@ -48,7 +51,32 @@ Ext.define('TGT.controller.App', {
     },
     
     logout : function() {
-    	Ext.msg.alert('Logout', 'Logout');
+    	Ext.MessageBox.show({
+	           title: 'Logout',
+	           msg: 'Are you sure you want to logout?',
+	           width : 300,
+	           buttons : Ext.MessageBox.OKCANCEL,    
+	           icon : Ext.MessageBox.QUESTION,
+	           fn : function(buttonId) {
+	               if (buttonId === "ok") {
+	            	   	Ext.Ajax.request({
+		           		    url : '/target-trak-system/sys/logout.htm',
+		           		    method : 'POST',
+		           		    scope: this,
+		           		    headers : {
+		           				'X-CSRF-TOKEN': TGT.security.CsrfToken.getCsrfToken()
+		           			},
+		           			success : function(response) {
+		           				
+		           			},
+		           			failure : function(response) {
+		           				Ext.example.msg('Error',  'Error occurred!');
+		           			}
+	            	   	});
+	               	}
+	           }
+		});
+    	
     },
     
 	addHistory: function(item, e, opts) {
@@ -81,6 +109,10 @@ Ext.define('TGT.controller.App', {
                     html: 'Generate Affidavits' 
                 };
                 break;
+            case 'homePageItem':
+            	config = {
+            		xtype: 'landing.mattersdashboard'
+            	};
             default: 
             	config = {
                     xtype: 'landing.mattersdashboard'
@@ -91,12 +123,13 @@ Ext.define('TGT.controller.App', {
     },
     
     updateCenterRegion: function(config) {
-        var me = this,
+    	
+        var me = this;
         center = me.getCenterRegion();
 
         // remove all existing content
-        center.removeAll( true );
+        center.removeAll(true);
         // add new content
-        center.add( config );
+        center.add(config);    
     }
 });
