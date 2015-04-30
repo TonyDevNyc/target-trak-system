@@ -43,6 +43,8 @@ public class GetReferenceDataItemsByCriteriaServiceImpl extends BaseTargetTrakSe
 				List<ReferenceDataDomain> data = referenceDataDao.selectPaginatedReferenceDataBySearchCriteria(criteria);
 				List<ReferenceDataDto> dtos = convertListOfDomains(data);
 				response.setReferenceDataList(dtos);
+			} else {
+				response.setReferenceDataList(new ArrayList<ReferenceDataDto>());
 			}
 			response.setTotalSize(totalSize);
 			response.setSuccess(Boolean.TRUE);
