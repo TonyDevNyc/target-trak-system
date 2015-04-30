@@ -44,7 +44,9 @@
 		</property>
 	</bean>
 	
-	<bean id="menuBuilder" class="com.target.trak.system.web.views.builders.MenuBuilderImpl" />
+	<bean id="menuBuilder" class="com.target.trak.system.web.views.builders.MenuBuilderImpl">
+		<property name="securityContext" ref="userContext" />
+	</bean>
 
 	 <bean id="uiErrorBuilder" class="com.target.trak.system.web.views.ui.common.UIErrorBuilderImpl">
 		<property name="messageSource" ref="messageSource" />
@@ -95,6 +97,10 @@
 		<property name="securityUserContext" ref="userContext" />
 	</bean>
 	
+	<bean id="getReferenceDataStatusesController" class="com.target.trak.system.web.controllers.referencedata.GetReferenceDataStatusesController">
+		<property name="referenceDataService" ref="getReferenceDataByTypeService" />
+	</bean>
+	
 	<bean id="searchCompanyController" class="com.target.trak.system.web.controllers.company.SearchCompaniesController">
 		<property name="companiesByCriteriaService" ref="companiesByCriteriaService" />
 	</bean>
@@ -104,5 +110,8 @@
 	<bean id="getWeeklyOpenMattersChartController" class="com.target.trak.system.web.controllers.matters.GetWeeklyOpenMattersChartController" />
 	
 	<bean id="getOpenMatterTasksController" class="com.target.trak.system.web.controllers.matters.GetOpenMatterTasksController" />
+	
+	<bean id="logoutController" class="com.target.trak.system.web.controllers.security.LogoutController" />
+	
 	
 </beans>
