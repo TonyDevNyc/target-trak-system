@@ -77,9 +77,7 @@ public class ReferenceDataValidatorImpl implements TargetTrakValidator<Reference
 		validateValue(validationErrors, value);
 		validateId(validationErrors, id);
 
-		if (!StringUtils.isEmpty(type) && !StringUtils.isEmpty(label) && !StringUtils.isEmpty(value)) {
-			validationErrors.add(referenceDataRules.referenceDataAlreadyExists(type, label, value));
-		}
+		validationErrors.add(referenceDataRules.checkReferenceDataConstraint(id, type, label, value));
 		return validationErrors;
 	}
 

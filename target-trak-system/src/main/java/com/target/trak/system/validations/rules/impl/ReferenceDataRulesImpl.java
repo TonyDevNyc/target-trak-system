@@ -5,6 +5,7 @@ import java.util.Properties;
 import org.springframework.util.StringUtils;
 
 import com.target.trak.system.dao.ReferenceDataDao;
+import com.target.trak.system.domain.ReferenceDataDomain;
 import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.validations.rules.ReferenceDataRules;
 
@@ -109,6 +110,19 @@ public class ReferenceDataRulesImpl implements ReferenceDataRules {
 		}
 		return null;
 	}
+	
+	@Override
+	public TargetTrakValidationError checkReferenceDataConstraint(final Long requestId, final String type, final String label, final String value) {
+		ReferenceDataDomain domain = referenceDataDao.selectReferenceDataByFields(type, label, value);
+		if (domain == null) {
+			return null;
+		}
+		
+		if (domain.getId() != requestId) {
+			return new TargetTrakValidationError("api", "REFERENCE_DATA_010");
+		}
+		return null;
+	}
 
 	public void setValidationProps(Properties validationProps) {
 		this.validationProps = validationProps;
@@ -117,4 +131,6 @@ public class ReferenceDataRulesImpl implements ReferenceDataRules {
 	public void setReferenceDataDao(ReferenceDataDao referenceDataDao) {
 		this.referenceDataDao = referenceDataDao;
 	}
+
+	
 }

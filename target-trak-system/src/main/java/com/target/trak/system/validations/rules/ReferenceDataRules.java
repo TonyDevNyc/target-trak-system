@@ -25,4 +25,6 @@ public interface ReferenceDataRules {
 	public TargetTrakValidationError valueContainsAllowableChars(final String value);
 	
 	public TargetTrakValidationError referenceDataAlreadyExists(final String type, final String label, final String value);
+	
+	public TargetTrakValidationError checkReferenceDataConstraint(final Long requestId, final String type, final String label, final String value);
 }
