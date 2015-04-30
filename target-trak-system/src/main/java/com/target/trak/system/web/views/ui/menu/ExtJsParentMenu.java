@@ -1,6 +1,6 @@
 package com.target.trak.system.web.views.ui.menu;
 
-public class ExtJsParentMenu extends ExtJsComponent {
+public class ExtJsParentMenu extends ExtJsComponent implements Comparable<ExtJsParentMenu> {
 
 	private String text;
 	private String iconCls;
@@ -46,5 +46,10 @@ public class ExtJsParentMenu extends ExtJsComponent {
 
 	public void setMenu(ExtJsChildMenu menu) {
 		this.menu = menu;
+	}
+
+	@Override
+	public int compareTo(ExtJsParentMenu parentMenu) {
+		return this.displayOrder - parentMenu.getDisplayOrder();
 	}
 }
