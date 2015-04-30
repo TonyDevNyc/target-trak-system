@@ -10,6 +10,11 @@ Ext.define('TGT.view.refdata.search.ReferenceDataGrid', {
 		enableTextSelection : true
 	},
 	layout : 'fit',
+	listeners: {
+		render : function(grid) {
+        	grid.getStore().load();
+        }
+    },
 	columns : [ 
         {
 			xtype : 'actioncolumn',
@@ -49,19 +54,25 @@ Ext.define('TGT.view.refdata.search.ReferenceDataGrid', {
 			xtype : 'gridcolumn',
 			dataIndex : 'label',
 			text : 'Label',
-			width : 180
-		}, 
+			width : 170
+		},
 		{
 			xtype : 'gridcolumn',
 			dataIndex : 'value',
 			text : 'Value',
-			width : 125
-		}, 
+			width : 115
+		},
+		{
+			xtype : 'gridcolumn',
+			dataIndex : 'status',
+			text : 'Status',
+			width : 100
+		},
 		{
 			xtype : 'gridcolumn',
 			dataIndex : 'createdBy',
 			text : 'Created By',
-			width : 140
+			width : 100
 		}, 
 		{
 			xtype : 'gridcolumn',
@@ -73,7 +84,7 @@ Ext.define('TGT.view.refdata.search.ReferenceDataGrid', {
 			xtype : 'gridcolumn',
 			dataIndex : 'lastUpdatedBy',
 			text : 'Last Updated By',
-			width : 140
+			width : 100
 		}, 
 		{
 			xtype : 'gridcolumn',
@@ -86,6 +97,7 @@ Ext.define('TGT.view.refdata.search.ReferenceDataGrid', {
 		xtype : 'pagingtoolbar',
 		store : 'ReferenceDatas',
 		displayInfo : true,
+		displayMsg : 'Displaying {0} - {1} of {2}',
 		width : 1275,
 		items : [
 	        '-', 

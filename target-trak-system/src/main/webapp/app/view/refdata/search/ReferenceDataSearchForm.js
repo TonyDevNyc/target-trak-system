@@ -5,7 +5,8 @@ Ext.define('TGT.view.refdata.search.ReferenceDataSearchForm', {
 		'Ext.form.Panel',
 		'Ext.layout.container.Anchor',
 		'TGT.store.ReferenceDataTypes',
-		'TGT.view.refdata.common.ReferenceDataTypeCombo'
+		'TGT.view.refdata.common.ReferenceDataTypeCombo',
+		'TGT.view.refdata.common.ReferenceDataStatusCombo'
     ],
 	bodyStyle : 'padding:10px 10px 0',
 	width : 1100,
@@ -20,6 +21,16 @@ Ext.define('TGT.view.refdata.search.ReferenceDataSearchForm', {
 		layout : 'anchor'
 	},
 	layout : 'hbox',
+	listeners: {
+        afterrender : function(form) {
+    		form.down('[xtype=refdata.common.referencedatatypecombo]').getStore().load();
+    		form.down('[xtype=refdata.common.referencedatastatuscombo]').getStore().load({
+    			params : {
+    				referenceDataType : 'status'
+    			}
+    		});
+        }
+    },
 	items: [
         {
         	items: [
@@ -29,20 +40,15 @@ Ext.define('TGT.view.refdata.search.ReferenceDataSearchForm', {
 				    width: 350
 				}
             ]
+		}, {
+            items: [
+	            {
+	            	xtype: 'refdata.common.referencedatastatuscombo',
+	            	labelWidth: 175,
+	            	name: 'status'
+	            }
+            ]
 		}
-//        , {
-//            items: [
-//                {
-//	                xtype:'textfield',
-//	                fieldLabel: 'Company Name',
-//	                name: 'companyName',
-//	                width: 350
-//	            },
-//	            {
-//	            	xtype: 'refdata.common.referencedatatypecombo'
-//	            }
-//            ]
-//		}
 	],
 	buttons: [
         '->', 
