@@ -17,6 +17,7 @@ public class ReferenceDataSearchCriteriaDtoDomainConverter implements Converter<
 		criteria.setEnd(searchCriteriaDto.getEnd());
 		criteria.setSortDirection(searchCriteriaDto.getSortDirection());
 		criteria.setSortField(searchCriteriaDto.getSortField());
+		criteria.setStatus(searchCriteriaDto.getStatus());
 		return criteria;
 	}
 

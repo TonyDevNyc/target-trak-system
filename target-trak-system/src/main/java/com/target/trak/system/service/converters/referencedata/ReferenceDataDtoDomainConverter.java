@@ -17,6 +17,8 @@ public class ReferenceDataDtoDomainConverter implements Converter<ReferenceDataD
 		domain.setReferenceDataLabel(dto.getLabel());
 		domain.setReferenceDataValue(dto.getValue());
 		domain.setCreatedBy(dto.getCreatedBy());
+		domain.setStatus(dto.getStatus());
+		
 		if (dto.getCreatedDateTime() != null) {
 			Timestamp createTimestamp = new Timestamp(dto.getCreatedDateTime().getTimeInMillis());
 			domain.setCreatedTimestamp(createTimestamp);
