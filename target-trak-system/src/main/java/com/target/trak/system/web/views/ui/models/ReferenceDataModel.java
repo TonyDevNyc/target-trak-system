@@ -6,6 +6,7 @@ public class ReferenceDataModel {
 	private String type;
 	private String label;
 	private String value;
+	private String status;
 	private String createdBy;
 	private String createdDateTime;
 	private String lastUpdatedBy;
@@ -75,4 +76,11 @@ public class ReferenceDataModel {
 		this.lastUpdatedDateTime = lastUpdatedDateTime;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }
