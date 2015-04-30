@@ -29,10 +29,10 @@ public class SearchReferenceDataItemsController {
 	
 	@RequestMapping(value = "/refdata/searchReferenceData.json", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody
-	Map<String, Object> searchForReferenceData(@RequestParam String referenceDataType, @RequestParam int page, @RequestParam int start, @RequestParam int limit) {
+	Map<String, Object> searchForReferenceData(@RequestParam String referenceDataType, @RequestParam String status, @RequestParam int page, @RequestParam int start, @RequestParam int limit) {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
 		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
-		request.setSearchCriteria(buildCriteria(referenceDataType, page, start, limit));
+		request.setSearchCriteria(buildCriteria(referenceDataType, status, page, start, limit));
 		ReferenceDataApiResponse response = referenceDataByCriteriaService.executeRequest(request);
 		jsonResponse.put("data", buildReferenceDataModel(response.getReferenceDataList()));
 		jsonResponse.put("success", response.isSuccess());
@@ -45,7 +45,7 @@ public class SearchReferenceDataItemsController {
 	Map<String, Object> getPagedReferenceData(@RequestParam int page, @RequestParam int start, @RequestParam int limit) {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
 		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
-		request.setSearchCriteria(buildCriteria(null, page, start, limit));
+		request.setSearchCriteria(buildCriteria(null, null, page, start, limit));
 		ReferenceDataApiResponse response = referenceDataByCriteriaService.executeRequest(request);
 		jsonResponse.put("data", buildReferenceDataModel(response.getReferenceDataList()));
 		jsonResponse.put("success", response.isSuccess());
@@ -53,12 +53,13 @@ public class SearchReferenceDataItemsController {
 		return jsonResponse;
 	}
 	
-	private ReferenceDataSearchCriteriaDto buildCriteria(String referenceDataType, int page, int start, int limit) {
+	private ReferenceDataSearchCriteriaDto buildCriteria(String referenceDataType, String status, int page, int start, int limit) {
 		ReferenceDataSearchCriteriaDto criteria = new ReferenceDataSearchCriteriaDto();
 		criteria.setReferenceDataType(referenceDataType);
 		criteria.setPage(page);
 		criteria.setStart(start);
 		criteria.setEnd(limit);
+		criteria.setStatus(status);
 		return criteria;
 	}
 	
@@ -70,6 +71,7 @@ public class SearchReferenceDataItemsController {
 			model.setId(dto.getId());
 			model.setType(dto.getType());
 			model.setLabel(dto.getLabel());
+			model.setStatus(dto.getStatus());
 			model.setValue(dto.getValue());
 			model.setCreatedBy(dto.getCreatedBy());
 			model.setCreatedDateTime(convertDateToIso8601(dto.getCreatedDateTime()));

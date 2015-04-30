@@ -25,21 +25,22 @@ public class UpdateReferenceDataItemController {
 	
 	@RequestMapping(value = "/refdata/updateReferenceData.json", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody
-	Map<String, Object> updateReferenceData(@RequestParam Long id, @RequestParam String type, @RequestParam String label, @RequestParam String value) {
+	Map<String, Object> updateReferenceData(@RequestParam Long id, @RequestParam String type, @RequestParam String label, @RequestParam String value, @RequestParam String status) {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
 		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
-		request.setReferenceDataDto(buildReferenceDataDto(id, type, label, value));
+		request.setReferenceDataDto(buildReferenceDataDto(id, type, label, value, status));
 		ReferenceDataApiResponse response = updateReferenceDataService.executeRequest(request);
 		jsonResponse.put("success", response.isSuccess());
 		return jsonResponse;
 	}
 	
-	private ReferenceDataDto buildReferenceDataDto(final Long id, final String type, final String label, final String value) {
+	private ReferenceDataDto buildReferenceDataDto(final Long id, final String type, final String label, final String value, final String status) {
 		ReferenceDataDto dto = new ReferenceDataDto();
 		dto.setId(id);
 		dto.setType(type);
 		dto.setLabel(label);
 		dto.setValue(value);
+		dto.setStatus(status);
 		dto.setLastUpdatedBy(securityUserContext.getCurrentUser().getUsername());
 		dto.setLastUpdatedDateTime(Calendar.getInstance());
 		return dto;
