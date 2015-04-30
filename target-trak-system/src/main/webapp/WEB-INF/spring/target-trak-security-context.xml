@@ -42,9 +42,9 @@
 			always-use-default-target="true"
 			authentication-failure-url="/sys/login.htm?access-denied=access-denied" />
 			
-		<logout
-    		logout-success-url="/sys/logout.htm"
-    		logout-url="/sys/login.htm?logout=logout"
+		<logout invalidate-session="true"
+			logout-url="/sys/logout.htm"
+    		logout-success-url="/sys/login.htm?logout=logout"
     		delete-cookies="JSESSIONID" />
 		
 		<intercept-url pattern="/sys/refdata/deleteReferenceData.json" access="hasRole('ROLE_USER')" />
