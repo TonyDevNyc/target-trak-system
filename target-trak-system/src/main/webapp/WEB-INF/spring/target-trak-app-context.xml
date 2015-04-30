@@ -54,6 +54,11 @@
 		<property name="conversionService" ref="conversionService" />
 	</bean>
 	
+	<bean id="getReferenceDataByTypeService" class="com.target.trak.system.service.impl.referencedata.GetReferenceDataByTypeServiceImpl">
+		<property name="referenceDataDao" ref="referenceDataDao" />
+		<property name="conversionService" ref="conversionService" />
+	</bean>
+	
 	<bean id="createCompanyService" class="com.target.trak.system.service.impl.company.CreateCompanyServiceImpl">
 		<property name="companyDao" ref="companyDao" />
 		<property name="validator" ref="companyValidator" />
