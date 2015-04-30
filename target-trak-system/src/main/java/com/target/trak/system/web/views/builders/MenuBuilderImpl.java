@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.target.trak.system.security.context.UserContext;
 import com.target.trak.system.security.dto.menu.MenuDto;
 import com.target.trak.system.web.views.ui.menu.ExtJsChildMenu;
 import com.target.trak.system.web.views.ui.menu.ExtJsMenuItem;
@@ -17,14 +18,24 @@ public class MenuBuilderImpl implements MenuBuilder {
 	private static final String MENU_XTYPE = "menu";
 	private static final String MENU_ITEM_XTYPE = "menuitem";
 	private static final String ICON_POSITION = "left";
+	
+	private UserContext securityContext;
 
 	@Override
 	public List<ExtJsParentMenu> buildUserInterfaceMenu(final List<MenuDto> menuItems) {
 		List<ExtJsParentMenu> menuList = buildParentChildList(menuItems);
-		for (ExtJsParentMenu menuItem : menuList) {
-			System.out.println(menuItem.getText() + " Display Order: " + menuItem.getDisplayOrder());
-		}
+		setHomeToUsername(menuList);
 		return menuList;
+	}
+	
+	private void setHomeToUsername(List<ExtJsParentMenu> menuList) {
+		ExtJsParentMenu homeMenuItem = menuList.get(0);
+		StringBuilder builder = new StringBuilder();
+		builder.append(securityContext.getCurrentUser().getFirstName());
+		builder.append(" ");
+		builder.append(securityContext.getCurrentUser().getLastName());
+		
+		homeMenuItem.setText(builder.toString());
 	}
 
 	private List<MenuDto> getParentMenuItems(final List<MenuDto> permissibleMenuItems) {
@@ -81,12 +92,14 @@ public class MenuBuilderImpl implements MenuBuilder {
 			menuItem = buildSubMenuItem(childItem);
 			menuItems.add(menuItem);
 		}
+		Collections.sort(menuItems);
 		menu.setItems(menuItems);
 		return menu;
 	}
 
 	private ExtJsMenuItem buildSubMenuItem(MenuDto childItem) {
 		ExtJsMenuItem menuItem = new ExtJsMenuItem();
+		menuItem.setDisplayOrder(childItem.getDisplayOrder());
 		menuItem.setText(childItem.getText());
 		menuItem.setItemId(childItem.getItemId());
 		menuItem.setIconCls(childItem.getIconCss());
@@ -102,6 +115,10 @@ public class MenuBuilderImpl implements MenuBuilder {
 			}
 		}
 		return childList;
+	}
+
+	public void setSecurityContext(UserContext securityContext) {
+		this.securityContext = securityContext;
 	}
 
 }
