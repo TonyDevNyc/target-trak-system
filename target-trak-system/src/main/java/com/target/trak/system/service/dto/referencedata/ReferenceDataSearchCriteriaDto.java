@@ -6,6 +6,7 @@ public class ReferenceDataSearchCriteriaDto extends TargetTrakPagingCriteria {
 
 	private String referenceDataType;
 	private String referenceDataLabel;
+	private String status;
 
 	public String getReferenceDataType() {
 		return referenceDataType;
@@ -23,4 +24,11 @@ public class ReferenceDataSearchCriteriaDto extends TargetTrakPagingCriteria {
 		this.referenceDataLabel = referenceDataLabel;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

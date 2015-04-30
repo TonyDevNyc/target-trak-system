@@ -12,6 +12,7 @@ public class ReferenceDataDto {
 	private Calendar createdDateTime;
 	private String lastUpdatedBy;
 	private Calendar lastUpdatedDateTime;
+	private String status;
 
 	public Long getId() {
 		return id;
@@ -75,6 +76,14 @@ public class ReferenceDataDto {
 
 	public void setLastUpdatedDateTime(Calendar lastUpdatedDateTime) {
 		this.lastUpdatedDateTime = lastUpdatedDateTime;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }
