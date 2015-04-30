@@ -3,7 +3,8 @@ Ext.define('TGT.view.refdata.edit.EditReferenceDataForm', {
 	alias : 'widget.refdata.edit.editreferencedataform',
 	requires : [ 
 		'Ext.form.Panel',
-		'Ext.layout.container.Anchor'
+		'Ext.layout.container.Anchor',
+		'TGT.view.refdata.common.ReferenceDataStatusCombo'
     ],
 	width : 800,
 	defaults : {
@@ -39,6 +40,10 @@ Ext.define('TGT.view.refdata.edit.EditReferenceDataForm', {
 		    labelWidth: 150,
 		    name: 'value',
 		    width: 450
+		},
+		{
+			xtype : 'refdata.common.referencedatastatuscombo',
+			labelWidth: 150,
 		}
 	],
 	buttons: [
