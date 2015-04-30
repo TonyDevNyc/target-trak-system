@@ -13,6 +13,7 @@ public class ReferenceDataQueryBuilder {
 	private static final String DEFAULT_SORT_ORDER = " ORDER BY reference_data_type, reference_data_label ASC ";
 	private static final String REFERENCE_DATA_TYPE_COLUMN = "reference_data_type";
 	private static final String REFERENCE_DATA_LABEL_COLUMN = "reference_data_label";
+	private static final String STATUS_COLUMN = "status";
 
 	private Logger logger = Logger.getLogger(getClass());
 
@@ -47,6 +48,11 @@ public class ReferenceDataQueryBuilder {
 			builder.append(QueryConstantsEnum.AND.value).append(REFERENCE_DATA_LABEL_COLUMN).append(QueryConstantsEnum.EQUALS.value).append(":referenceDataLabel");
 			params.addValue("referenceDataLabel", criteria.getReferenceDataLabel());
 		}
+		
+		if (!StringUtils.isEmpty(criteria.getStatus())) {
+			builder.append(QueryConstantsEnum.AND.value).append(STATUS_COLUMN).append(QueryConstantsEnum.EQUALS.value).append(":status");
+			params.addValue("status", criteria.getStatus());
+		}
 
 		if (StringUtils.isEmpty(criteria.getSortField())) {
 			builder.append(DEFAULT_SORT_ORDER);
@@ -76,6 +82,11 @@ public class ReferenceDataQueryBuilder {
 		if (!StringUtils.isEmpty(criteria.getReferenceDataLabel())) {
 			builder.append(QueryConstantsEnum.AND.value).append(REFERENCE_DATA_LABEL_COLUMN).append(QueryConstantsEnum.EQUALS.value).append(":referenceDataLabel");
 			params.addValue("referenceDataLabel", criteria.getReferenceDataLabel());
+		}
+		
+		if (!StringUtils.isEmpty(criteria.getStatus())) {
+			builder.append(QueryConstantsEnum.AND.value).append(STATUS_COLUMN).append(QueryConstantsEnum.EQUALS.value).append(":status");
+			params.addValue("status", criteria.getStatus());
 		}
 
 		if (StringUtils.isEmpty(criteria.getSortField())) {

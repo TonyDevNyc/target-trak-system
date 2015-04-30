@@ -24,4 +24,8 @@ public interface ReferenceDataDao {
 	public ReferenceDataDomain updateReferenceData(final ReferenceDataDomain referenceData);
 	
 	public void deleteReferenceData(final ReferenceDataDomain referenceData);
+	
+	public List<ReferenceDataDomain> selectReferenceDataByType(final String referenceDataType);
+	
+	public ReferenceDataDomain selectReferenceDataByFields(final String type, final String label, final String value);
 }

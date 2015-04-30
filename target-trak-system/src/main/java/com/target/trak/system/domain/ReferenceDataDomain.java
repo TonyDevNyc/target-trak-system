@@ -15,6 +15,7 @@ public class ReferenceDataDomain implements Serializable {
 	private Timestamp createdTimestamp;
 	private String lastUpdatedBy;
 	private Timestamp lastUpdatedTimestamp;
+	private String status;
 
 	public Long getId() {
 		return id;
@@ -80,6 +81,14 @@ public class ReferenceDataDomain implements Serializable {
 		this.lastUpdatedTimestamp = lastUpdatedTimestamp;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -92,6 +101,7 @@ public class ReferenceDataDomain implements Serializable {
 		result = prime * result + ((referenceDataLabel == null) ? 0 : referenceDataLabel.hashCode());
 		result = prime * result + ((referenceDataType == null) ? 0 : referenceDataType.hashCode());
 		result = prime * result + ((referenceDataValue == null) ? 0 : referenceDataValue.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		return result;
 	}
 
@@ -143,6 +153,11 @@ public class ReferenceDataDomain implements Serializable {
 			if (other.referenceDataValue != null)
 				return false;
 		} else if (!referenceDataValue.equals(other.referenceDataValue))
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
 			return false;
 		return true;
 	}

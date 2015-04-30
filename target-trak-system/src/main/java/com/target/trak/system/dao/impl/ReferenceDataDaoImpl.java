@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -46,6 +47,7 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 		params.addValue("createdTimestamp", referenceData.getCreatedTimestamp());
 		params.addValue("lastUpdatedBy", referenceData.getLastUpdatedBy());
 		params.addValue("lastUpdatedTimestamp", referenceData.getLastUpdatedTimestamp());
+		params.addValue("status", referenceData.getStatus());
 
 		String sql = referenceDataQueries.getProperty("insertReferenceDataSql");
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -126,6 +128,7 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 		params.addValue("id", referenceData.getId());
 		params.addValue("lastUpdatedBy", referenceData.getLastUpdatedBy());
 		params.addValue("lastUpdatedTimestamp", referenceData.getLastUpdatedTimestamp());
+		params.addValue("status", referenceData.getStatus());
 
 		int count = refDataTemplate.update(sql, params);
 		if (count != 1) {
@@ -152,6 +155,33 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 		}
 	}
 
+	@Override
+	public List<ReferenceDataDomain> selectReferenceDataByType(final String referenceDataType) {
+		String sql = referenceDataQueries.getProperty("selectReferenceDataByTypeSql");
+		logger.info("Executing: "+ sql);
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("referenceDataType", referenceDataType);
+		
+		return refDataTemplate.query(sql, params, new ReferenceDataDomainRowMapper());
+	}
+	
+	@Override
+	public ReferenceDataDomain selectReferenceDataByFields(final String type, final String label, final String value) {
+		String sql = referenceDataQueries.getProperty("selectReferenceDataByFieldsSql");
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("type", type);
+		params.addValue("label", label);
+		params.addValue("value", value);
+		ReferenceDataDomain domain = null;
+		
+		try {
+			domain = refDataTemplate.queryForObject(sql, params, new ReferenceDataDomainRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			logger.error("No refererence data found for ["+type+", "+label+", "+value+"]", e);
+		}
+		return domain;
+	}
+
 	public void setReferenceDataQueries(Properties referenceDataQueries) {
 		this.referenceDataQueries = referenceDataQueries;
 	}
@@ -173,7 +203,10 @@ public class ReferenceDataDaoImpl implements ReferenceDataDao {
 			domain.setCreatedTimestamp(rs.getTimestamp("created_timestamp"));
 			domain.setLastUpdatedBy(rs.getString("last_updated_by"));
 			domain.setLastUpdatedTimestamp(rs.getTimestamp("last_updated_timestamp"));
+			domain.setStatus(rs.getString("status"));
 			return domain;
 		}
 	}
+
+
 }
