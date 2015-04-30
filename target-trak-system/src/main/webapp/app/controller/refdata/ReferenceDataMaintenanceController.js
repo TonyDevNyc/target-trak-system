@@ -5,15 +5,16 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
 	requires : [
        'TGT.store.ReferenceDataTypes',
        'TGT.store.ReferenceDatas',
+       'TGT.store.ReferenceDataStatuses',
        'TGT.view.refdata.edit.EditReferenceDataWindow',
        'TGT.view.refdata.edit.EditReferenceDataForm',
        'TGT.view.refdata.create.CreateReferenceDataWindow',
        'TGT.view.refdata.create.CreateReferenceDataForm'
     ],
 
-	stores : [ 'ReferenceDatas', 'ReferenceDataTypes'],
+	stores : [ 'ReferenceDatas', 'ReferenceDataTypes', 'ReferenceDataStatuses'],
 
-	models : [ 'ReferenceData', 'ReferenceDataType' ],
+	models : [ 'ReferenceData', 'ReferenceDataType', 'ReferenceDataStatus' ],
 
 	views : [ 
         'refdata.search.ReferenceDataMaintenance', 
@@ -55,11 +56,6 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
     ],
 	
 	onLaunch : function() {
-		var referenceDatasStore = this.getReferenceDatasStore();
-		referenceDatasStore.load();
-		
-		var typesStore = this.getReferenceDataTypesStore();
-		typesStore.load();
 	},
 
 	init : function() {
@@ -112,7 +108,10 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
                 		Ext.Array.each(errorsArray, function(errorObject) {
                 			var fieldName = errorObject.fieldName;
                 			var errorMsg = errorObject.errorMessage;
-                			form.findField(fieldName).markInvalid(errorMsg);
+                			var field = form.findField(fieldName);
+                			if (field) {
+                				field.markInvalid(errorMsg);
+                			}
                 		});
                 	}
                 	Ext.example.msg('Create Reference Data Error', action.result.message);
@@ -182,7 +181,10 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
                 		Ext.Array.each(errorsArray, function(errorObject) {
                 			var fieldName = errorObject.fieldName;
                 			var errorMsg = errorObject.errorMessage;
-                			form.findField(fieldName).markInvalid(errorMsg);
+                			var field = form.findField(fieldName);
+                			if (field) {
+                				field.markInvalid(errorMsg);
+                			}
                 		});
                 	}
                 	Ext.example.msg('Update Reference Data Error', action.result.message);
