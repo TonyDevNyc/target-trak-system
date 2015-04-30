@@ -13,6 +13,9 @@ Ext.define('TGT.model.ReferenceData', {
 			name : 'value',
 			type : 'string'
 		}, {
+			name : 'status',
+			type : 'string'
+		}, {
 			name : 'createdBy',
 			type : 'string'
 		},{
