@@ -101,6 +101,7 @@ Ext.define('TGT.controller.refdata.ReferenceDataMaintenanceController', {
                 	Ext.example.msg('Create Reference Data Success', 'Reference Data Item was created successfully');
                 	me.getCreateReferenceDataWindow().close();
                 	me.getReferenceDataGrid().getStore().reload();
+                	me.getReferenceDataTypesStore().reload();
                 },
                 failure : function(form, action) {
                 	var errorsArray = action.result.errors;
