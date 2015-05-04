@@ -77,6 +77,24 @@
     background-image:url('/target-trak-system/resources/images/add-refdata.png') !important;
 }
 
+.icon-contacts {
+	width: 16px !important;
+    height: 16px !important;
+    background-image:url('/target-trak-system/resources/images/contacts-icon.png') !important;
+}
+
+.icon-company {
+	width: 16px !important;
+    height: 16px !important;
+    background-image:url('/target-trak-system/resources/images/company-icon.png') !important;
+}
+
+.icon-contact {
+	width: 16px !important;
+    height: 16px !important;
+    background-image:url('/target-trak-system/resources/images/contact-icon.png') !important;
+}
+
 .icon-sec-admin {
 	width: 16px !important;
     height: 16px !important;
