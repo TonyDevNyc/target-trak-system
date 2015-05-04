@@ -110,16 +110,42 @@ public class ReferenceDataRulesImpl implements ReferenceDataRules {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public TargetTrakValidationError checkReferenceDataConstraint(final Long requestId, final String type, final String label, final String value) {
 		ReferenceDataDomain domain = referenceDataDao.selectReferenceDataByFields(type, label, value);
 		if (domain == null) {
 			return null;
 		}
-		
+
 		if (domain.getId() != requestId) {
 			return new TargetTrakValidationError("api", "REFERENCE_DATA_010");
+		}
+		return null;
+	}
+
+	@Override
+	public TargetTrakValidationError isStatusEmpty(final String status) {
+		if (StringUtils.isEmpty(status)) {
+			return new TargetTrakValidationError("status", "REFERENCE_DATA_012");
+		}
+		return null;
+	}
+
+	@Override
+	public TargetTrakValidationError isStatusValidLength(final String status) {
+		int statusLength = status.length();
+		int maxLength = Integer.parseInt((String) validationProps.get("status.maxlength"));
+		if (statusLength > maxLength) {
+			return new TargetTrakValidationError("status", "REFERENCE_DATA_013");
+		}
+		return null;
+	}
+
+	@Override
+	public TargetTrakValidationError containsAllowableStatus(final String status) {
+		if (!"In-active".equals(status) && !"Active".equals(status)) {
+			return new TargetTrakValidationError("status", "REFERENCE_DATA_014");
 		}
 		return null;
 	}
@@ -132,5 +158,4 @@ public class ReferenceDataRulesImpl implements ReferenceDataRules {
 		this.referenceDataDao = referenceDataDao;
 	}
 
-	
 }

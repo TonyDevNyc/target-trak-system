@@ -27,4 +27,10 @@ public interface ReferenceDataRules {
 	public TargetTrakValidationError referenceDataAlreadyExists(final String type, final String label, final String value);
 	
 	public TargetTrakValidationError checkReferenceDataConstraint(final Long requestId, final String type, final String label, final String value);
+	
+	public TargetTrakValidationError isStatusEmpty(final String status);
+	
+	public TargetTrakValidationError isStatusValidLength(final String status);
+	
+	public TargetTrakValidationError containsAllowableStatus(final String status);
 }
