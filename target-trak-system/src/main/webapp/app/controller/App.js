@@ -2,7 +2,8 @@ Ext.define('TGT.controller.App', {
     extend: 'TGT.controller.BaseController',
     views: [ 
         'TGT.view.refdata.search.ReferenceDataMaintenance',    
-        'TGT.view.landing.MattersDashboard'
+        'TGT.view.landing.MattersDashboard',
+        'TGT.view.company.search.CompanyAdministration'
     ],
     refs: [
         {
@@ -23,25 +24,16 @@ Ext.define('TGT.controller.App', {
                 }
             },
             component: {
-            	'menuitem#viewRefDataItem' : {
-					click : this.addHistory
-				},
-				'menuitem#createRefDataItem' : {
-					click : this.addHistory
-				},
 				'menuitem#administerRefDataItem' : {
-					click : this.addHistory
-				},
-				'menuitem#editRefDataItem' : {
-					click : this.addHistory
-				},
-				'menuitem#deleteRefDataItem' : {
 					click : this.addHistory
 				},
 				'menuitem#logoutItem' : {
 					click : this.logout
 				},
 				'menuitem#homePageItem' : {
+					click : this.addHistory
+				},
+				'menuitem#companyAdminItem' : {
 					click : this.addHistory
 				}
             },
@@ -90,34 +82,15 @@ Ext.define('TGT.controller.App', {
         var me = this, config;
        
         switch(token) {
-            case 'administerRefDataItem':
-                config = {
-                    xtype: 'refdata.search.maintenance'
-                };
-                break;
-            case 'createMatterItem':
-                config = {
-                    xtype: 'panel',
-                    title: 'Create Matter',
-                    html: 'Create Matters'
-                };
-                break;
-            case 'generateAffidavitItem':
-                config = {
-                    xtype: 'panel',
-                    title: 'Generate Affidavit',
-                    html: 'Generate Affidavits' 
-                };
-                break;
-            case 'homePageItem':
-            	config = {
-            		xtype: 'landing.mattersdashboard'
-            	};
-            default: 
-            	config = {
-                    xtype: 'landing.mattersdashboard'
-                };
-                break;
+            
+            case 'administerRefDataItem' : config = { xtype: 'refdata.search.maintenance' }; break;
+            
+            case 'homePageItem' :  config = { xtype: 'landing.mattersdashboard' }; break;
+            
+            case 'companyAdminItem' : config = { xtype: 'company.search.administration' }; break;
+            	 
+            default : config = { xtype: 'landing.mattersdashboard' }; break;
+            	
         }
         me.updateCenterRegion(config);
     },
