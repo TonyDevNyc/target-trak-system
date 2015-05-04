@@ -17,7 +17,7 @@ import com.target.trak.system.validations.rules.ReferenceDataRules;
 public class ReferenceDataValidatorImpl implements TargetTrakValidator<ReferenceDataApiRequest> {
 
 	private ReferenceDataRules referenceDataRules;
-	
+
 	public ReferenceDataValidatorImpl(ReferenceDataRules referenceDataRules) {
 		this.referenceDataRules = referenceDataRules;
 	}
@@ -36,24 +36,24 @@ public class ReferenceDataValidatorImpl implements TargetTrakValidator<Reference
 		}
 
 		switch (request.getRequestType()) {
-		case CREATE:
-			validationErrors.addAll(validateCreate(referenceDataDto));
-			break;
-		case READ_PAGING:
-			validationErrors.addAll(validateReadPaging(request.getSearchCriteria()));
-			break;
-		case UPDATE:
-			validationErrors.addAll(validateUpdate(referenceDataDto));
-			break;
-		case READ_BY_ID:
-			System.out.println("Implementation in progress.");
-			break;
-		case DELETE:
-			validationErrors.addAll(validateDelete(referenceDataDto));
-			break;
-		default:
-			System.out.println("No implementation available");
-			break;
+			case CREATE:
+				validationErrors.addAll(validateCreate(referenceDataDto));
+				break;
+			case READ_PAGING:
+				validationErrors.addAll(validateReadPaging(request.getSearchCriteria()));
+				break;
+			case UPDATE:
+				validationErrors.addAll(validateUpdate(referenceDataDto));
+				break;
+			case READ_BY_ID:
+				System.out.println("Implementation in progress.");
+				break;
+			case DELETE:
+				validationErrors.addAll(validateDelete(referenceDataDto));
+				break;
+			default:
+				System.out.println("No implementation available");
+				break;
 		}
 		validationErrors.removeAll(Collections.singleton(null));
 		return validationErrors;
@@ -71,11 +71,13 @@ public class ReferenceDataValidatorImpl implements TargetTrakValidator<Reference
 		String label = referenceDataDto.getLabel();
 		String value = referenceDataDto.getValue();
 		Long id = referenceDataDto.getId();
+		String status = referenceDataDto.getStatus();
 
 		validateType(validationErrors, type);
 		validateLabel(validationErrors, label);
 		validateValue(validationErrors, value);
 		validateId(validationErrors, id);
+		validateStatus(validationErrors, status);
 
 		validationErrors.add(referenceDataRules.checkReferenceDataConstraint(id, type, label, value));
 		return validationErrors;
@@ -92,10 +94,12 @@ public class ReferenceDataValidatorImpl implements TargetTrakValidator<Reference
 		String type = referenceDataDto.getType();
 		String label = referenceDataDto.getLabel();
 		String value = referenceDataDto.getValue();
+		String status = referenceDataDto.getStatus();
 
 		validateType(validationErrors, type);
 		validateLabel(validationErrors, label);
 		validateValue(validationErrors, value);
+		validateStatus(validationErrors, status);
 
 		if (!StringUtils.isEmpty(type) && !StringUtils.isEmpty(label) && !StringUtils.isEmpty(value)) {
 			validationErrors.add(referenceDataRules.referenceDataAlreadyExists(type, label, value));
@@ -137,6 +141,16 @@ public class ReferenceDataValidatorImpl implements TargetTrakValidator<Reference
 			validationErrors.add(referenceDataRules.valueContainsAllowableChars(value));
 		} else {
 			validationErrors.add(valueError);
+		}
+	}
+
+	private void validateStatus(final List<TargetTrakValidationError> validationErrors, final String status) {
+		TargetTrakValidationError statusError = referenceDataRules.isStatusEmpty(status);
+		if (statusError == null) {
+			validationErrors.add(referenceDataRules.isStatusValidLength(status));
+			validationErrors.add(referenceDataRules.containsAllowableStatus(status));
+		} else {
+			validationErrors.add(statusError);
 		}
 	}
 }
