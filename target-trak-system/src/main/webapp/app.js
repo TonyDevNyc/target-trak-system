@@ -15,17 +15,25 @@ Ext.application({
        'TGT.view.menu.TargetTrakMenu',
        'TGT.controller.BaseController',
        'TGT.controller.refdata.ReferenceDataMaintenanceController',
-       'TGT.controller.matters.MattersDashboardController'
+       'TGT.controller.matters.MattersDashboardController',
+       'TGT.controller.company.CompanyAdministrationController'
     ],
 	
-    stores: ['ReferenceDataTypes', 'ReferenceDatas', 'MatterStatusCharts', 'ReferenceDataStatuses'],
+    stores: [
+         'ReferenceDataTypes', 
+         'ReferenceDatas', 
+         'MatterStatusCharts', 
+         'ReferenceDataStatuses',
+         'Companies', 'Cities', 'Countries', 'States'
+    ],
     
     controllers: [
         'App', 
         'BaseController',
         'TargetTrakMenuController', 
         'refdata.ReferenceDataMaintenanceController',
-        'matters.MattersDashboardController'
+        'matters.MattersDashboardController',
+        'company.CompanyAdministrationController'
     ],
 	
 	autoCreateViewport: true,
