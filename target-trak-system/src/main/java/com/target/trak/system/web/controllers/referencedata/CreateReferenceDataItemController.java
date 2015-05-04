@@ -25,20 +25,21 @@ public class CreateReferenceDataItemController {
 
 	@RequestMapping(value = "/refdata/createReferenceData.json", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody
-	Map<String, Object> createReferenceData(@RequestParam String type, @RequestParam String label, @RequestParam String value) {
+	Map<String, Object> createReferenceData(@RequestParam String type, @RequestParam String label, @RequestParam String value, @RequestParam String status) {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
 		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
-		request.setReferenceDataDto(buildCreateReferenceDataDto(type, label, value));
+		request.setReferenceDataDto(buildCreateReferenceDataDto(type, label, value, status));
 		ReferenceDataApiResponse response = createReferenceDataService.executeRequest(request);
 		jsonResponse.put("success", response.isSuccess());
 		return jsonResponse;
 	}
 
-	private ReferenceDataDto buildCreateReferenceDataDto(final String type, final String label, final String value) {
+	private ReferenceDataDto buildCreateReferenceDataDto(String type, String label, String value, String status) {
 		ReferenceDataDto dto = new ReferenceDataDto();
 		dto.setType(type);
 		dto.setLabel(label);
 		dto.setValue(value);
+		dto.setStatus(status);
 
 		Calendar currentTime = Calendar.getInstance();
 		String currentUser = securityUserContext.getCurrentUser().getUsername();
