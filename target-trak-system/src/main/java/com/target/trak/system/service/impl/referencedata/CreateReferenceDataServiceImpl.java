@@ -19,6 +19,7 @@ import com.target.trak.system.service.dto.referencedata.ReferenceDataDto;
 import com.target.trak.system.service.exception.TargetTrakException;
 import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.validations.TargetTrakValidationException;
+import com.target.trak.system.validations.TargetTrakValidator;
 import com.target.trak.system.validations.impl.ReferenceDataValidatorImpl;
 
 @Transactional(value = "dwTransactionManager", propagation = Propagation.REQUIRED)
@@ -30,7 +31,7 @@ public class CreateReferenceDataServiceImpl extends BaseTargetTrakService implem
 
 	private ConversionService conversionService;
 
-	private ReferenceDataValidatorImpl referenceDataValidator;
+	private TargetTrakValidator<ReferenceDataApiRequest> referenceDataValidator;
 	
 	@Override
 	public ReferenceDataApiResponse executeRequest(ReferenceDataApiRequest request) throws TargetTrakException {
