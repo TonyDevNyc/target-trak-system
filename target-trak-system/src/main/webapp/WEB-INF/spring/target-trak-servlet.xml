@@ -113,5 +113,7 @@
 	
 	<bean id="logoutController" class="com.target.trak.system.web.controllers.security.LogoutController" />
 	
-	
+	<bean id="getReferenceDataValuesByTypeController" class="com.target.trak.system.web.controllers.common.GetReferenceDataValuesByTypeController">
+		<property name="service" ref="getReferenceDataByTypeService"/>
+	</bean>
 </beans>
