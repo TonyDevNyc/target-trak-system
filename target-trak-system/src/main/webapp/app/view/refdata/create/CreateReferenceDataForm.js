@@ -34,6 +34,11 @@ Ext.define('TGT.view.refdata.create.CreateReferenceDataForm', {
 		    labelWidth: 150,
 		    name: 'value',
 		    width: 450
+		},
+		{
+			xtype : 'refdata.common.referencedatastatuscombo',
+			labelWidth: 150,
+			name : 'status'
 		}
 	],
 	buttons: [
