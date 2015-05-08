@@ -2,12 +2,13 @@ package com.target.trak.system.validations.rules.impl;
 
 import java.util.Properties;
 
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.target.trak.system.dao.ReferenceDataDao;
 import com.target.trak.system.domain.ReferenceDataDomain;
 import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.validations.rules.ReferenceDataRules;
+import com.target.trak.system.validations.util.ValidationsUtil;
 
 public class ReferenceDataRulesImpl implements ReferenceDataRules {
 
@@ -15,20 +16,18 @@ public class ReferenceDataRulesImpl implements ReferenceDataRules {
 
 	private ReferenceDataDao referenceDataDao;
 
-	// TODO implement regex for special characters after bus req updatedSS
-
 	@Override
 	public TargetTrakValidationError isIdEmpty(final Long id) {
 		if (id == null || id == 0L) {
-			return new TargetTrakValidationError("id", "REFERENCE_DATA_011");
+			return new TargetTrakValidationError("id", validationProps.getProperty("reference.data.id.empty.error"));
 		}
 		return null;
 	}
 
 	@Override
 	public TargetTrakValidationError isTypeEmpty(final String type) {
-		if (StringUtils.isEmpty(type)) {
-			return new TargetTrakValidationError("type", "REFERENCE_DATA_001");
+		if (StringUtils.isBlank(type)) {
+			return new TargetTrakValidationError("type", validationProps.getProperty("type.empty.error"));
 		}
 		return null;
 	}
@@ -38,23 +37,30 @@ public class ReferenceDataRulesImpl implements ReferenceDataRules {
 		String strLength = (String) validationProps.get("type.maxlength");
 		int maxLength = Integer.parseInt(strLength);
 		if (type.length() > maxLength) {
-			return new TargetTrakValidationError("type", "REFERENCE_DATA_002");
+			return new TargetTrakValidationError("type", validationProps.getProperty("type.maxlength.error"));
 		}
 		return null;
 	}
 
 	@Override
 	public TargetTrakValidationError typeContainsAllowableChars(final String type) {
-		// String pattern = "a-zA-Z0-9~@#\^\$&\*\(\)-_\+=\[\]\{\}\|\\,\.\?\s]*";
-		// [a-zA-Z0-9\\s\\,\\-\\.]+
-		// TODO implementation in progress
+		String allowableChars = validationProps.getProperty("type.allowable.chars");
+
+		if (!StringUtils.isAlpha(type)) {
+			String nonAlphaChars = ValidationsUtil.getNonAlphaCharacters(type);
+			char[] allowableSpecialChars = allowableChars.toCharArray();
+
+			if (!ValidationsUtil.containsAllowableSpecialChars(nonAlphaChars, allowableSpecialChars)) {
+				return new TargetTrakValidationError("type", validationProps.getProperty("type.allowable.chars.error"));
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public TargetTrakValidationError isLabelEmpty(final String label) {
-		if (StringUtils.isEmpty(label)) {
-			return new TargetTrakValidationError("label", "REFERENCE_DATA_004");
+		if (StringUtils.isBlank(label)) {
+			return new TargetTrakValidationError("label", validationProps.getProperty("label.empty.error"));
 		}
 		return null;
 	}
@@ -63,23 +69,30 @@ public class ReferenceDataRulesImpl implements ReferenceDataRules {
 	public TargetTrakValidationError isLabelValidLength(final String label) {
 		int maxLength = Integer.parseInt((String) validationProps.get("label.maxlength"));
 		if (label.length() > maxLength) {
-			return new TargetTrakValidationError("label", "REFERENCE_DATA_005");
+			return new TargetTrakValidationError("label", validationProps.getProperty("label.maxlength.error"));
 		}
 		return null;
 	}
 
 	@Override
 	public TargetTrakValidationError labelContainsAllowableChars(final String label) {
-		// String pattern = "a-zA-Z0-9~@#\^\$&\*\(\)-_\+=\[\]\{\}\|\\,\.\?\s]*";
-		// [a-zA-Z0-9\\s\\,\\-\\.]+
-		// TODO implementation in progress
+		String allowableChars = validationProps.getProperty("label.allowable.chars");
+
+		if (!StringUtils.isAlpha(label)) {
+			String nonAlphaChars = ValidationsUtil.getNonAlphaCharacters(label);
+			char[] allowableSpecialChars = allowableChars.toCharArray();
+
+			if (!ValidationsUtil.containsAllowableSpecialChars(nonAlphaChars, allowableSpecialChars)) {
+				return new TargetTrakValidationError("label", validationProps.getProperty("label.allowable.chars.error"));
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public TargetTrakValidationError isValueEmpty(final String value) {
-		if (StringUtils.isEmpty(value)) {
-			return new TargetTrakValidationError("value", "REFERENCE_DATA_007");
+		if (StringUtils.isBlank(value)) {
+			return new TargetTrakValidationError("value", validationProps.getProperty("value.empty.error"));
 		}
 		return null;
 	}
@@ -88,17 +101,23 @@ public class ReferenceDataRulesImpl implements ReferenceDataRules {
 	public TargetTrakValidationError isValueValidLength(final String value) {
 		int maxLength = Integer.parseInt((String) validationProps.get("value.maxlength"));
 		if (value.length() > maxLength) {
-			return new TargetTrakValidationError("value", "REFERENCE_DATA_008");
+			return new TargetTrakValidationError("value", validationProps.getProperty("value.maxlength.error"));
 		}
 		return null;
 	}
 
 	@Override
 	public TargetTrakValidationError valueContainsAllowableChars(final String value) {
-		// String pattern = "a-zA-Z0-9~@#\^\$&\*\(\)-_\+=\[\]\{\}\|\\,\.\?\s]*";
-		// String pattern = "a-zA-Z0-9~@#\^\$&\*\(\)-_\+=\[\]\{\}\|\\,\.\?\s]*";
-		// [a-zA-Z0-9\\s\\,\\-\\.]+
-		// TODO implementation in progress
+		String allowableChars = validationProps.getProperty("value.allowable.chars");
+
+		if (!StringUtils.isAlpha(value)) {
+			String nonAlphaChars = ValidationsUtil.getNonAlphaCharacters(value);
+			char[] allowableSpecialChars = allowableChars.toCharArray();
+
+			if (!ValidationsUtil.containsAllowableSpecialChars(nonAlphaChars, allowableSpecialChars)) {
+				return new TargetTrakValidationError("value", validationProps.getProperty("value.allowable.chars.error"));
+			}
+		}
 		return null;
 	}
 
@@ -106,7 +125,7 @@ public class ReferenceDataRulesImpl implements ReferenceDataRules {
 	public TargetTrakValidationError referenceDataAlreadyExists(final String type, final String label, final String value) {
 		boolean exists = referenceDataDao.referenceDataAlreadyExists(type, label, value);
 		if (exists) {
-			return new TargetTrakValidationError("api", "REFERENCE_DATA_010");
+			return new TargetTrakValidationError("api", validationProps.getProperty("reference.data.already.exists.error"));
 		}
 		return null;
 	}
@@ -119,15 +138,15 @@ public class ReferenceDataRulesImpl implements ReferenceDataRules {
 		}
 
 		if (domain.getId() != requestId) {
-			return new TargetTrakValidationError("api", "REFERENCE_DATA_010");
+			return new TargetTrakValidationError("api", validationProps.getProperty("reference.data.already.exists.error"));
 		}
 		return null;
 	}
 
 	@Override
 	public TargetTrakValidationError isStatusEmpty(final String status) {
-		if (StringUtils.isEmpty(status)) {
-			return new TargetTrakValidationError("status", "REFERENCE_DATA_012");
+		if (StringUtils.isBlank(status)) {
+			return new TargetTrakValidationError("status", validationProps.getProperty("status.empty.error"));
 		}
 		return null;
 	}
@@ -137,7 +156,7 @@ public class ReferenceDataRulesImpl implements ReferenceDataRules {
 		int statusLength = status.length();
 		int maxLength = Integer.parseInt((String) validationProps.get("status.maxlength"));
 		if (statusLength > maxLength) {
-			return new TargetTrakValidationError("status", "REFERENCE_DATA_013");
+			return new TargetTrakValidationError("status", validationProps.getProperty("status.maxlength.error"));
 		}
 		return null;
 	}
@@ -145,7 +164,7 @@ public class ReferenceDataRulesImpl implements ReferenceDataRules {
 	@Override
 	public TargetTrakValidationError containsAllowableStatus(final String status) {
 		if (!"In-active".equals(status) && !"Active".equals(status)) {
-			return new TargetTrakValidationError("status", "REFERENCE_DATA_014");
+			return new TargetTrakValidationError("status", validationProps.getProperty("status.allowable.values.error"));
 		}
 		return null;
 	}
@@ -157,5 +176,4 @@ public class ReferenceDataRulesImpl implements ReferenceDataRules {
 	public void setReferenceDataDao(ReferenceDataDao referenceDataDao) {
 		this.referenceDataDao = referenceDataDao;
 	}
-
 }
