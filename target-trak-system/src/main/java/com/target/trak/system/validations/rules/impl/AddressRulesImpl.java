@@ -104,7 +104,11 @@ public class AddressRulesImpl implements AddressRules {
 	@Override
 	public TargetTrakValidationError cityContainsValidChars(final String city) {
 		if (!StringUtils.isAlpha(city)) {
-			return new TargetTrakValidationError("city", validationProps.getProperty("city.allowable.chars.error"));
+			String nonAlphaChars = ValidationsUtil.getNonAlphaCharacters(city);
+			
+			if (!ValidationsUtil.specialCharactersAreWhitespacesOnly(nonAlphaChars)) {
+				return new TargetTrakValidationError("city", validationProps.getProperty("city.allowable.chars.error"));
+			}
 		}
 		return null;
 	}
@@ -133,7 +137,11 @@ public class AddressRulesImpl implements AddressRules {
 	@Override
 	public TargetTrakValidationError stateContainsValidChars(final String state) {
 		if (!StringUtils.isAlpha(state)) {
-			return new TargetTrakValidationError("state", validationProps.getProperty("state.allowable.chars.error"));
+			String nonAlphaChars = ValidationsUtil.getNonAlphaCharacters(state);
+			
+			if (!ValidationsUtil.specialCharactersAreWhitespacesOnly(nonAlphaChars)) {
+				return new TargetTrakValidationError("state", validationProps.getProperty("state.allowable.chars.error"));
+			}
 		}
 		return null;
 	}
@@ -206,5 +214,4 @@ public class AddressRulesImpl implements AddressRules {
 	public void setReferenceDataDao(ReferenceDataDao referenceDataDao) {
 		this.referenceDataDao = referenceDataDao;
 	}
-
 }

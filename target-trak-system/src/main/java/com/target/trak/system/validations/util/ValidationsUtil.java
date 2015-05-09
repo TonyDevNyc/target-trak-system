@@ -1,5 +1,7 @@
 package com.target.trak.system.validations.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 public final class ValidationsUtil {
 
 	private ValidationsUtil() {
@@ -45,5 +47,19 @@ public final class ValidationsUtil {
 			}
 		}
 		return builder.toString();
+	}
+	
+	public static boolean specialCharactersAreWhitespacesOnly(final String value) {
+		if (StringUtils.isEmpty(value)) {
+			return true;
+		}
+		
+		for (int i = 0; i < value.length(); i++) {
+			char c = value.charAt(i);
+			if (!Character.isWhitespace(c)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
