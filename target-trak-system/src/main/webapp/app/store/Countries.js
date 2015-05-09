@@ -3,7 +3,7 @@ Ext.define('TGT.store.Countries', {
 	model : 'TGT.model.LabelValuePair',
 	proxy : {
 		type : 'ajax',
-		url : '/target-trak-system/sys/common/getLabelValuesByType.json',
+		url : '/target-trak-system/sys/common/getReferenceDataValuesByType.json',
 		reader : {
 			type : 'json',
 			root : 'data'
