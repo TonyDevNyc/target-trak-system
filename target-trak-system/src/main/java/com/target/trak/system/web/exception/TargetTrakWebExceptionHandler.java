@@ -72,6 +72,10 @@ public class TargetTrakWebExceptionHandler {
 	}
 
 	private String getApiError(List<TargetTrakValidationError> errors) {
+		if (errors == null || errors.isEmpty()) {
+			return null;
+		}
+		
 		for (TargetTrakValidationError error : errors) {
 			if ("api".equals(error.getFieldName())) {
 				return error.getErrorMessage();
