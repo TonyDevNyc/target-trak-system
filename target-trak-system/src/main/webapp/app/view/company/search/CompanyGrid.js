@@ -11,20 +11,18 @@ Ext.define('TGT.view.company.search.CompanyGrid', {
 	},
 	layout : 'fit',
 	listeners: {
-		render : function(grid) {
-        	grid.getStore().load();
-        }
+		
     },
 	columns : [ 
         {
 			xtype : 'actioncolumn',
-			width : 55,
+			width : 75,
 			text : 'Actions',
 			align : 'center',
 			items: [
 		        {
 		        	icon: '/target-trak-system/resources/images/edit.gif',  
-                    tooltip: 'Edit Company',
+                    tooltip: 'Edit',
                     itemId: 'editCompany',
                     align: 'center',
                     getClass: 'x-action-col-icon',
@@ -39,19 +37,19 @@ Ext.define('TGT.view.company.search.CompanyGrid', {
 			xtype : 'gridcolumn',
 			dataIndex : 'name',
 			text : 'Name',
-			width : 165
+			width : 185
 		},
 		{
 			xtype : 'gridcolumn',
 			dataIndex : 'addressLine1',
 			text : 'Address Line 1',
-			width : 150
+			width : 125
 		},
 		{
 			xtype : 'gridcolumn',
 			dataIndex : 'addressLine2',
 			text : 'Address Line 2',
-			width : 115
+			width : 100
 		},
 		{
 			xtype : 'gridcolumn',
@@ -100,7 +98,7 @@ Ext.define('TGT.view.company.search.CompanyGrid', {
 	        '-', 
 	        {
                 text : 'Create Company',
-                itemId : 'createCompanyBtn', 
+                itemId : 'showCreateCompanyBtn', 
                 enableToggle : true,
                 icon : '/target-trak-system/resources/images/add-refdata.png'
 	        }
