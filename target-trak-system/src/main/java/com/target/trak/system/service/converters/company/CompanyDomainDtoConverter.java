@@ -19,7 +19,7 @@ public class CompanyDomainDtoConverter implements Converter<CompanyDomain, Compa
 		dto.setCity(domain.getCity());
 		dto.setState(domain.getState());
 		dto.setCountry(domain.getCountry());
-		dto.setZipcode(dto.getZipcode());
+		dto.setZipcode(domain.getZipcode());
 		dto.setCreatedBy(domain.getCreatedBy());
 
 		if (domain.getCreatedTimestamp() == null) {

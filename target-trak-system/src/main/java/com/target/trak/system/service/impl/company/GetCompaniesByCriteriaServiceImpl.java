@@ -21,7 +21,7 @@ import com.target.trak.system.service.dto.company.CompanyDto;
 import com.target.trak.system.service.exception.TargetTrakException;
 import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.validations.TargetTrakValidationException;
-import com.target.trak.system.validations.impl.CompanyValidatorImpl;
+import com.target.trak.system.validations.TargetTrakValidator;
 
 @Transactional(value = "dwTransactionManager", propagation = Propagation.REQUIRED)
 public class GetCompaniesByCriteriaServiceImpl extends BaseTargetTrakService implements TargetTrakService<CompanyApiRequest, CompanyApiResponse> {
@@ -30,7 +30,7 @@ public class GetCompaniesByCriteriaServiceImpl extends BaseTargetTrakService imp
 
 	private CompanyDao companyDao;
 
-	private CompanyValidatorImpl validator;
+	private TargetTrakValidator<CompanyApiRequest> validator;
 
 	private ConversionService conversionService;
 
@@ -65,7 +65,7 @@ public class GetCompaniesByCriteriaServiceImpl extends BaseTargetTrakService imp
 
 	@Override
 	public List<TargetTrakValidationError> validateRequest(final CompanyApiRequest request) throws TargetTrakException {
-		List<TargetTrakValidationError> errors = null;
+		List<TargetTrakValidationError> errors = new ArrayList<TargetTrakValidationError>();
 		try {
 			errors = validator.validate(request);
 		} catch (TargetTrakValidationException e) {
@@ -90,7 +90,7 @@ public class GetCompaniesByCriteriaServiceImpl extends BaseTargetTrakService imp
 		this.companyDao = companyDao;
 	}
 
-	public void setValidator(CompanyValidatorImpl validator) {
+	public void setValidator(TargetTrakValidator<CompanyApiRequest> validator) {
 		this.validator = validator;
 	}
 

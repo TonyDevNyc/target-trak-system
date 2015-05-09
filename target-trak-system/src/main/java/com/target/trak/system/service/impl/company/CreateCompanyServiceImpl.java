@@ -19,7 +19,7 @@ import com.target.trak.system.service.dto.company.CompanyDto;
 import com.target.trak.system.service.exception.TargetTrakException;
 import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.validations.TargetTrakValidationException;
-import com.target.trak.system.validations.impl.CompanyValidatorImpl;
+import com.target.trak.system.validations.TargetTrakValidator;
 
 @Transactional(value = "dwTransactionManager", propagation = Propagation.REQUIRED)
 public class CreateCompanyServiceImpl extends BaseTargetTrakService implements TargetTrakService<CompanyApiRequest, CompanyApiResponse> {
@@ -28,7 +28,7 @@ public class CreateCompanyServiceImpl extends BaseTargetTrakService implements T
 
 	private CompanyDao companyDao;
 
-	private CompanyValidatorImpl validator;
+	private TargetTrakValidator<CompanyApiRequest> validator;
 
 	private ConversionService conversionService;
 
@@ -70,7 +70,7 @@ public class CreateCompanyServiceImpl extends BaseTargetTrakService implements T
 		this.companyDao = companyDao;
 	}
 
-	public void setValidator(CompanyValidatorImpl validator) {
+	public void setValidator(TargetTrakValidator<CompanyApiRequest> validator) {
 		this.validator = validator;
 	}
 
