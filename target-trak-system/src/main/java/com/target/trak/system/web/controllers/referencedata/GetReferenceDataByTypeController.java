@@ -1,10 +1,6 @@
 package com.target.trak.system.web.controllers.referencedata;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +15,7 @@ import com.target.trak.system.service.TargetTrakService;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataApiRequest;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataApiResponse;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataDto;
+import com.target.trak.system.util.DateUtil;
 import com.target.trak.system.web.views.ui.models.ReferenceDataModel;
 
 @Controller
@@ -47,22 +44,11 @@ public class GetReferenceDataByTypeController {
 			model.setLabel(dto.getLabel());
 			model.setValue(dto.getValue());
 			model.setCreatedBy(dto.getCreatedBy());
-			model.setCreatedDateTime(convertDateToIso8601(dto.getCreatedDateTime()));
+			model.setCreatedDateTime(DateUtil.convertDateToIso8601(dto.getCreatedDateTime()));
 			model.setLastUpdatedBy(dto.getLastUpdatedBy());
-			model.setLastUpdatedDateTime(convertDateToIso8601(dto.getLastUpdatedDateTime()));
+			model.setLastUpdatedDateTime(DateUtil.convertDateToIso8601(dto.getLastUpdatedDateTime()));
 			models.add(model);
 		}
 		return models;
 	}
-	
-	private String convertDateToIso8601(final Calendar calendar) {
-		if (calendar == null) {
-			return "";
-		}
-
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
-		String iso8601Date = df.format(new Date(calendar.getTimeInMillis()));
-		return iso8601Date;
-	}
-	
 }
