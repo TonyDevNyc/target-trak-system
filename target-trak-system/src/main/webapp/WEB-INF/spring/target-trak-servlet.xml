@@ -116,4 +116,9 @@
 	<bean id="getReferenceDataValuesByTypeController" class="com.target.trak.system.web.controllers.common.GetReferenceDataValuesByTypeController">
 		<property name="service" ref="getReferenceDataByTypeService"/>
 	</bean>
+	
+	<bean id="createCompanyController" class="com.target.trak.system.web.controllers.company.CreateCompanyController">
+		<property name="service" ref="createCompanyService" />
+		<property name="securityUserContext" ref="userContext" />
+	</bean>
 </beans>
