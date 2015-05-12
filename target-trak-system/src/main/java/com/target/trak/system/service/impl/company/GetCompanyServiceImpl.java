@@ -12,6 +12,7 @@ import com.target.trak.system.domain.CompanyDomain;
 import com.target.trak.system.service.BaseTargetTrakService;
 import com.target.trak.system.service.TargetTrakService;
 import com.target.trak.system.service.dto.common.TargetTrakErrorTypeEnum;
+import com.target.trak.system.service.dto.common.TargetTrakRequestTypeEnum;
 import com.target.trak.system.service.dto.company.CompanyApiRequest;
 import com.target.trak.system.service.dto.company.CompanyApiResponse;
 import com.target.trak.system.service.dto.company.CompanyDto;
@@ -33,6 +34,7 @@ public class GetCompanyServiceImpl extends BaseTargetTrakService implements Targ
 	@Override
 	public CompanyApiResponse executeRequest(final CompanyApiRequest request) throws TargetTrakException {
 		CompanyApiResponse response = new CompanyApiResponse();
+		request.setRequestType(TargetTrakRequestTypeEnum.READ_BY_ID);
 		try {
 			CompanyDomain domain = companyDao.selectCompanyById(conversionService.convert(request.getCompany(), CompanyDomain.class));
 			response.setCompany(conversionService.convert(domain, CompanyDto.class));

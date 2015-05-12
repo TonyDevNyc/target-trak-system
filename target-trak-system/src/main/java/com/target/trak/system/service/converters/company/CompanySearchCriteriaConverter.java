@@ -13,6 +13,7 @@ public class CompanySearchCriteriaConverter implements Converter<CompanySearchCr
 		searchCriteria.setName(dto.getName());
 		searchCriteria.setState(dto.getState());
 		searchCriteria.setCountry(dto.getCountry());
+		searchCriteria.setCity(dto.getCity());
 		searchCriteria.setPage(dto.getPage());
 		searchCriteria.setStart(dto.getStart());
 		searchCriteria.setEnd(dto.getEnd());

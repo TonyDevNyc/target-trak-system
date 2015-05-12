@@ -76,6 +76,7 @@ public class SearchCompaniesController {
 		dto.setCountry(country);
 		dto.setName(name);
 		dto.setState(state);
+		dto.setCity(city);
 		dto.setPage(page);
 		dto.setStart(start);
 		dto.setEnd(limit);

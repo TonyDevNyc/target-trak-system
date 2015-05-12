@@ -7,6 +7,7 @@ public class CompanySearchCriteriaDto extends TargetTrakPagingCriteria {
 	private String name;
 	private String state;
 	private String country;
+	private String city;
 
 	public String getName() {
 		return name;
@@ -32,4 +33,11 @@ public class CompanySearchCriteriaDto extends TargetTrakPagingCriteria {
 		this.country = country;
 	}
 
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
 }

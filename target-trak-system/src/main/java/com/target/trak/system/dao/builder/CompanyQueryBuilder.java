@@ -13,6 +13,7 @@ public class CompanyQueryBuilder {
 	private static final String NAME_COLUMN = "name";
 	private static final String STATE_COLUMN = "state";
 	private static final String COUNTRY_COLUMN = "country";
+	private static final String CITY_COLUMN = "city";
 	private static final String DEFAULT_SORT_ORDER = " ORDER BY name ASC ";
 
 	private Logger logger = Logger.getLogger(getClass());
@@ -25,8 +26,10 @@ public class CompanyQueryBuilder {
 		builder.append(QueryConstantsEnum.WHERE_CLAUSE.value).append(QueryConstantsEnum.EMPTY_SPACE.value);
 
 		if (!StringUtils.isEmpty(criteria.getName())) {
-			builder.append(QueryConstantsEnum.AND.value).append(NAME_COLUMN).append(QueryConstantsEnum.EQUALS.value).append(":name");
-			params.addValue("name", criteria.getName());
+			builder.append(QueryConstantsEnum.AND.value).append(NAME_COLUMN)
+				.append(QueryConstantsEnum.LIKE.value)
+				.append(":name");
+			params.addValue("name", buildWildcardParameter(criteria.getName()));
 		}
 
 		if (!StringUtils.isEmpty(criteria.getState())) {
@@ -37,6 +40,14 @@ public class CompanyQueryBuilder {
 		if (!StringUtils.isEmpty(criteria.getCountry())) {
 			builder.append(QueryConstantsEnum.AND.value).append(COUNTRY_COLUMN).append(QueryConstantsEnum.EQUALS.value).append(":country");
 			params.addValue("country", criteria.getCountry());
+		}
+		
+		if (!StringUtils.isEmpty(criteria.getCity())) {
+			builder.append(QueryConstantsEnum.AND.value)
+				.append(CITY_COLUMN)
+				.append(QueryConstantsEnum.EQUALS.value)
+				.append(":city");
+			params.addValue("city", criteria.getCity());
 		}
 
 		logger.info("Company Paging Count Query Built: " + builder.toString());
@@ -49,8 +60,10 @@ public class CompanyQueryBuilder {
 		builder.append(QueryConstantsEnum.WHERE_CLAUSE.value).append(QueryConstantsEnum.EMPTY_SPACE.value);
 
 		if (!StringUtils.isEmpty(criteria.getName())) {
-			builder.append(QueryConstantsEnum.AND.value).append(NAME_COLUMN).append(QueryConstantsEnum.EQUALS.value).append(":name");
-			params.addValue("name", criteria.getName());
+			builder.append(QueryConstantsEnum.AND.value).append(NAME_COLUMN)
+				.append(QueryConstantsEnum.LIKE.value)
+				.append(":name");
+			params.addValue("name", buildWildcardParameter(criteria.getName()));
 		}
 
 		if (!StringUtils.isEmpty(criteria.getState())) {
@@ -61,6 +74,14 @@ public class CompanyQueryBuilder {
 		if (!StringUtils.isEmpty(criteria.getCountry())) {
 			builder.append(QueryConstantsEnum.AND.value).append(COUNTRY_COLUMN).append(QueryConstantsEnum.EQUALS.value).append(":country");
 			params.addValue("country", criteria.getCountry());
+		}
+		
+		if (!StringUtils.isEmpty(criteria.getCity())) {
+			builder.append(QueryConstantsEnum.AND.value)
+				.append(CITY_COLUMN)
+				.append(QueryConstantsEnum.EQUALS.value)
+				.append(":city");
+			params.addValue("city", criteria.getCity());
 		}
 
 		if (StringUtils.isEmpty(criteria.getSortField())) {
@@ -78,6 +99,14 @@ public class CompanyQueryBuilder {
 		return builder.toString();
 	}
 
+	private String buildWildcardParameter(final String parameterValue) {
+		StringBuilder builder = new StringBuilder();
+		builder.append(QueryConstantsEnum.WILDCARD.value)
+			.append(parameterValue)
+			.append(QueryConstantsEnum.WILDCARD.value);
+		return builder.toString();
+	}
+	
 	public void setCompanyQueries(Properties companyQueries) {
 		this.companyQueries = companyQueries;
 	}

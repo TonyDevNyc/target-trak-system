@@ -6,7 +6,7 @@ public enum QueryConstantsEnum {
 	AND (" AND "),
 	EQUALS(" = "),
 	LIKE(" LIKE "),
-	WILDCARD("% "),
+	WILDCARD("%"),
 	ORDER_BY_CLAUSE(" ORDER BY "),
 	ASCENDING_ORDER(" ASC "),
 	DESCENDING_ORDER(" DESC "),

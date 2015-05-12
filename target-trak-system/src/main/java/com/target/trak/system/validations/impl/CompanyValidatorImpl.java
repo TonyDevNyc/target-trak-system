@@ -27,25 +27,35 @@ public class CompanyValidatorImpl implements TargetTrakValidator<CompanyApiReque
 		}
 
 		final CompanyDto companyDto = request.getCompany();
-		if (companyDto == null) {
-			throw new TargetTrakValidationException("Company is null");
-		}
 
 		switch (request.getRequestType()) {
-		case CREATE:
-			validationErrors.addAll(validateCreate(companyDto));
-			break;
-		default:
-			System.out.println("No implementation available");
-			break;
-		}
+			case CREATE:
+				validationErrors.addAll(validateCreate(companyDto));
+				break;
+			case UPDATE:
+				validationErrors.addAll(validateUpdate(companyDto));
+			default:
+				System.out.println("No implementation available");
+				break;
+			}
 		validationErrors.removeAll(Collections.singleton(null));
 		return validationErrors;
 	}
 
 	private List<TargetTrakValidationError> validateCreate(final CompanyDto companyDto) {
 		List<TargetTrakValidationError> errors = new ArrayList<TargetTrakValidationError>();
-
+		validateCompanyName(errors, companyDto.getName());
+		validateAddressLine1(errors, companyDto.getAddressLine1());
+		validateAddressLine2(errors, companyDto.getAddressLine2());
+		validateCity(errors, companyDto.getCity());
+		validateState(errors, companyDto.getState());
+		validateZipcode(errors, companyDto.getZipcode());
+		validateCountry(errors, companyDto.getCountry());
+		return errors;
+	}
+	
+	private List<TargetTrakValidationError> validateUpdate(final CompanyDto companyDto) {
+		List<TargetTrakValidationError> errors = new ArrayList<TargetTrakValidationError>();
 		validateCompanyName(errors, companyDto.getName());
 		validateAddressLine1(errors, companyDto.getAddressLine1());
 		validateAddressLine2(errors, companyDto.getAddressLine2());

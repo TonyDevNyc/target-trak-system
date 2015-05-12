@@ -5,6 +5,7 @@ public class CompanySearchCriteria extends BaseSearchCriteria {
 	private String name;
 	private String state;
 	private String country;
+	private String city;
 
 	public String getName() {
 		return name;
@@ -30,4 +31,11 @@ public class CompanySearchCriteria extends BaseSearchCriteria {
 		this.country = country;
 	}
 
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
 }

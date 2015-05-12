@@ -37,7 +37,7 @@ public class GetCompaniesByCriteriaServiceImpl extends BaseTargetTrakService imp
 	@Override
 	public CompanyApiResponse executeRequest(final CompanyApiRequest request) throws TargetTrakException {
 		CompanyApiResponse response = new CompanyApiResponse();
-		request.setRequestType(TargetTrakRequestTypeEnum.CREATE);
+		request.setRequestType(TargetTrakRequestTypeEnum.READ_PAGING);
 		List<TargetTrakValidationError> validationErrors = validateRequest(request);
 
 		if (!validationErrors.isEmpty()) {
