@@ -37,7 +37,7 @@ Ext.define('TGT.view.company.search.CompanySearchForm', {
 		            items: [
 	                    {
 			                fieldLabel: 'Company Name',
-			                name: 'companyName',
+			                name: 'name',
 			                anchor: '55%'
 			            }, {
 			            	xtype : 'common.statescombo',
@@ -72,8 +72,8 @@ Ext.define('TGT.view.company.search.CompanySearchForm', {
         '->', 
         {
         	text: 'Search',
-        	name: 'searchCompany',
-        	action: 'searchCompany'
+        	name: 'searchCompanyBtn',
+        	itemId : 'searchCompanyBtn'
         }, 
         {
         	text: 'Clear',

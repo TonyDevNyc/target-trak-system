@@ -50,6 +50,7 @@ Ext.application({
     	/** Custom Application Events **/
     	this.addEvents('actionclick');
     	this.addEvents('handleDeleteReferenceData');
+    	this.addEvents('companyactionclick');
     	
     	/** Application Load Mask **/
         Ext.tip.QuickTipManager.init();

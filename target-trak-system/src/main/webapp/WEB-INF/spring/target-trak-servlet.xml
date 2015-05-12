@@ -121,4 +121,9 @@
 		<property name="service" ref="createCompanyService" />
 		<property name="securityUserContext" ref="userContext" />
 	</bean>
+	
+	<bean id="updateCompanyController" class="com.target.trak.system.web.controllers.company.UpdateCompanyController">
+		<property name="service" ref="updateCompanyService" />
+		<property name="securityUserContext" ref="userContext" />
+	</bean>
 </beans>

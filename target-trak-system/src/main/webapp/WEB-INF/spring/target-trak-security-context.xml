@@ -56,6 +56,7 @@
 		<intercept-url pattern="/sys/matters/getMatterTasks.json" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/sys/common/getReferenceDataValuesByType.json" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/sys/company/createCompany.json" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/sys/company/updateCompany.json" access="hasRole('ROLE_USER')" />
 
 		<intercept-url pattern="/sys/buildUserMenu.json" access="permitAll" />
 		<intercept-url pattern="/sys/user/getUserDetails.json" access="permitAll" />

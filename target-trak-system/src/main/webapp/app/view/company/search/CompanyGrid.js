@@ -19,6 +19,7 @@ Ext.define('TGT.view.company.search.CompanyGrid', {
 			width : 75,
 			text : 'Actions',
 			align : 'center',
+			itemId : 'editCompanyBtn',
 			items: [
 		        {
 		        	icon: '/target-trak-system/resources/images/edit.gif',  
@@ -28,7 +29,7 @@ Ext.define('TGT.view.company.search.CompanyGrid', {
                     getClass: 'x-action-col-icon',
                     handler: function(grid, rowIndex, colIndex) {
                     	var record = grid.getStore().getAt(rowIndex);
-                    	//TGT.app.fireEvent('actionclick', 'editReferenceData', record);
+                    	TGT.app.fireEvent('companyactionclick', record);
                     }
 	            }
             ]
