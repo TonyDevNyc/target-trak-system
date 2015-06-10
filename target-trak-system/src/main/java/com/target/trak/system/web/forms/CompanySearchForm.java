@@ -5,6 +5,7 @@ public class CompanySearchForm {
 	private String name;
 	private String state;
 	private String country;
+	private String city;
 
 	public String getName() {
 		return name;
@@ -28,6 +29,14 @@ public class CompanySearchForm {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 }
