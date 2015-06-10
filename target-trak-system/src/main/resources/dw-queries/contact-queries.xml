@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"> 
+
+<properties>
+	<entry key="insertContactSql">
+	    <![CDATA[
+	     	INSERT INTO target_trak_dw.contact (contact_type, title, first_name, last_name, middle_initial, suffix, telephone_number, email_address, 
+	     	company_id, active_at_company, created_by, created_ts, last_updated_by, last_updated_ts) 
+	     	VALUES (:contactType, :title, :firstName, :lastName, :middleInitial, :suffix, :telephoneNumber, :emailAddress, :companyId, :activeAtCompany, 
+	     	:createdBy, :createdTs, :lastUpdatedBy, :lastUpdatedTs)
+       ]]>
+	</entry>
+	<entry key="selectContactByIdSql">
+	    <![CDATA[
+	     	SELECT id, contact_type, title, first_name, last_name, middle_initial, suffix, telephone_number, email_address, 
+	     	company_id, active_at_company, created_by, created_ts, last_updated_by, last_updated_ts 
+	     	FROM target_trak_dw.contact 
+	     	WHERE id = :id
+       ]]>
+	</entry>
+	<entry key="selectContactsByCriteriaCountSql">
+	    <![CDATA[
+	     	SELECT COUNT(1) 
+	 		FROM target_trak_dw.contact 
+	 		WHERE 1 = 1
+       ]]>
+	</entry>
+	<entry key="selectContactsByCriteriaSql">
+	    <![CDATA[
+	     	SELECT id, contact_type, title, first_name, last_name, middle_initial, suffix, telephone_number, email_address, 
+	     	company_id, active_at_company, created_by, created_ts, last_updated_by, last_updated_ts 
+	     	FROM target_trak_dw.contact 
+	     	WHERE 1 = 1
+       ]]>
+	</entry>
+	<entry key="updateContactSql">
+	    <![CDATA[
+	     	UPDATE target_trak_dw.contact 
+	     	SET 
+	     		contact_type = :contactType, 
+	     		title = :title,
+	     		last_name = :lastName,
+	     		telephone_number = :telephoneNumber,
+	     		email_address = :emailAddress,
+	     		active_at_company = :activeAtCompany,
+	     		last_updated_by = :lastUpdatedBy,
+	     		last_updated_ts = :lastUpdatedTs
+	     	WHERE id = :id
+       ]]>
+	</entry>
+		
+</properties>
