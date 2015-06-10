@@ -12,10 +12,11 @@ public class ContactDomain implements Serializable {
 	private String title;
 	private String firstName;
 	private String lastName;
+	private String middleInitial;
 	private String suffix;
 	private String telephoneNumber;
 	private String emailAddress;
-	private Long companyId;
+	private CompanyDomain company;
 	private boolean activeAtCompany;
 	private String createdBy;
 	private Timestamp createdTimestamp;
@@ -62,6 +63,14 @@ public class ContactDomain implements Serializable {
 		this.lastName = lastName;
 	}
 
+	public String getMiddleInitial() {
+		return middleInitial;
+	}
+
+	public void setMiddleInitial(String middleInitial) {
+		this.middleInitial = middleInitial;
+	}
+
 	public String getSuffix() {
 		return suffix;
 	}
@@ -86,12 +95,12 @@ public class ContactDomain implements Serializable {
 		this.emailAddress = emailAddress;
 	}
 
-	public Long getCompanyId() {
-		return companyId;
+	public CompanyDomain getCompany() {
+		return company;
 	}
 
-	public void setCompanyId(Long companyId) {
-		this.companyId = companyId;
+	public void setCompany(CompanyDomain company) {
+		this.company = company;
 	}
 
 	public boolean isActiveAtCompany() {
@@ -139,7 +148,7 @@ public class ContactDomain implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (activeAtCompany ? 1231 : 1237);
-		result = prime * result + ((companyId == null) ? 0 : companyId.hashCode());
+		result = prime * result + ((company == null) ? 0 : company.hashCode());
 		result = prime * result + ((contactType == null) ? 0 : contactType.hashCode());
 		result = prime * result + ((createdBy == null) ? 0 : createdBy.hashCode());
 		result = prime * result + ((createdTimestamp == null) ? 0 : createdTimestamp.hashCode());
@@ -149,6 +158,7 @@ public class ContactDomain implements Serializable {
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((lastUpdatedBy == null) ? 0 : lastUpdatedBy.hashCode());
 		result = prime * result + ((lastUpdatedTimestamp == null) ? 0 : lastUpdatedTimestamp.hashCode());
+		result = prime * result + ((middleInitial == null) ? 0 : middleInitial.hashCode());
 		result = prime * result + ((suffix == null) ? 0 : suffix.hashCode());
 		result = prime * result + ((telephoneNumber == null) ? 0 : telephoneNumber.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
@@ -166,10 +176,10 @@ public class ContactDomain implements Serializable {
 		ContactDomain other = (ContactDomain) obj;
 		if (activeAtCompany != other.activeAtCompany)
 			return false;
-		if (companyId == null) {
-			if (other.companyId != null)
+		if (company == null) {
+			if (other.company != null)
 				return false;
-		} else if (!companyId.equals(other.companyId))
+		} else if (!company.equals(other.company))
 			return false;
 		if (contactType == null) {
 			if (other.contactType != null)
@@ -215,6 +225,11 @@ public class ContactDomain implements Serializable {
 			if (other.lastUpdatedTimestamp != null)
 				return false;
 		} else if (!lastUpdatedTimestamp.equals(other.lastUpdatedTimestamp))
+			return false;
+		if (middleInitial == null) {
+			if (other.middleInitial != null)
+				return false;
+		} else if (!middleInitial.equals(other.middleInitial))
 			return false;
 		if (suffix == null) {
 			if (other.suffix != null)
