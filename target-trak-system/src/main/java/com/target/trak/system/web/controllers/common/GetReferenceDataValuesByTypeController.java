@@ -31,7 +31,7 @@ public class GetReferenceDataValuesByTypeController {
 		request.setReferenceDataDto(dto);
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		ReferenceDataApiResponse response = service.executeRequest(request);
+		ReferenceDataApiResponse response = service.processRequest(request);
 		map.put("success", Boolean.TRUE);
 		map.put("data", convertReferenceDataList(response.getReferenceDataList()));
 		return map;
