@@ -86,11 +86,11 @@
 	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
 		<property name="converters">
 			<set>
-				<bean id="targetTrakUserConverter" class="com.target.trak.system.security.converters.TargetTrakUserConverter">
+				<bean id="targetTrakUserConverter" class="com.target.trak.system.security.service.converters.TargetTrakUserConverter">
 					<property name="encoder" ref="encoder" />
 				</bean>
-				<bean id="menuDtoConverter" class="com.target.trak.system.security.converters.MenuDtoConverter" />
-				<bean id="userDtoConverter" class="com.target.trak.system.security.converters.UserDtoConverter" />
+				<bean id="menuDtoConverter" class="com.target.trak.system.security.service.converters.MenuDtoConverter" />
+				<bean id="userDtoConverter" class="com.target.trak.system.security.service.converters.UserDtoConverter" />
 				<bean id="referenceDataDomainDtoConverter" class="com.target.trak.system.service.converters.referencedata.ReferenceDataDomainDtoConverter " />
 				<bean id="referenceDataDtoDomainConverter" class="com.target.trak.system.service.converters.referencedata.ReferenceDataDtoDomainConverter" />
 				<bean id="referenceDataSearchCriteriaConverter" class="com.target.trak.system.service.converters.referencedata.ReferenceDataSearchCriteriaDtoDomainConverter" />
