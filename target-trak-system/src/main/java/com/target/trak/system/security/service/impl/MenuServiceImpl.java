@@ -9,16 +9,18 @@ import org.springframework.core.convert.ConversionService;
 
 import com.target.trak.system.security.dao.MenuDao;
 import com.target.trak.system.security.domain.TargetTrakMenu;
-import com.target.trak.system.security.dto.PrivilegeDto;
-import com.target.trak.system.security.dto.RoleDto;
-import com.target.trak.system.security.dto.UserDto;
-import com.target.trak.system.security.dto.menu.MenuApiRequest;
-import com.target.trak.system.security.dto.menu.MenuApiResponse;
-import com.target.trak.system.security.dto.menu.MenuDto;
-import com.target.trak.system.security.exceptions.TargetTrakSecurityException;
-import com.target.trak.system.security.service.MenuService;
+import com.target.trak.system.security.service.dto.PrivilegeDto;
+import com.target.trak.system.security.service.dto.RoleDto;
+import com.target.trak.system.security.service.dto.UserDto;
+import com.target.trak.system.security.service.dto.menu.MenuApiRequest;
+import com.target.trak.system.security.service.dto.menu.MenuApiResponse;
+import com.target.trak.system.security.service.dto.menu.MenuDto;
+import com.target.trak.system.service.BaseTargetTrakService;
+import com.target.trak.system.service.TargetTrakService;
+import com.target.trak.system.service.exception.TargetTrakException;
+import com.target.trak.system.validations.TargetTrakValidationError;
 
-public class MenuServiceImpl implements MenuService {
+public class MenuServiceImpl extends BaseTargetTrakService implements TargetTrakService<MenuApiRequest, MenuApiResponse> {
 
 	private MenuDao menuDao;
 
@@ -27,16 +29,15 @@ public class MenuServiceImpl implements MenuService {
 	public MenuServiceImpl(MenuDao menuDao) {
 		this.menuDao = menuDao;
 	}
-
-	// @AuditableEvent(auditableEventCode=TargetTrakAuditEventCode.BUILD_USER_MENU)
+	
 	@Override
-	public MenuApiResponse getMenuItemsForUser(final MenuApiRequest request) throws TargetTrakSecurityException {
+	public MenuApiResponse processRequest(final MenuApiRequest request) throws TargetTrakException {
 		MenuApiResponse response = new MenuApiResponse();
 		List<MenuDto> menuList = new ArrayList<MenuDto>();
 		UserDto currentUser = request.getCurrentUser();
 
 		if (currentUser == null) {
-			throw new TargetTrakSecurityException("User is null");
+			throw new TargetTrakException("User is null");
 		}
 
 		List<RoleDto> roles = currentUser.getRoles();
@@ -55,6 +56,12 @@ public class MenuServiceImpl implements MenuService {
 		return response;
 	}
 
+	@Override
+	public List<TargetTrakValidationError> validateRequest(final MenuApiRequest request) throws TargetTrakException {
+		return null;
+	}
+
+	// @AuditableEvent(auditableEventCode=TargetTrakAuditEventCode.BUILD_USER_MENU)
 	private List<MenuDto> buildMenuList(List<TargetTrakMenu> menuItems) {
 		List<MenuDto> dtos = new ArrayList<MenuDto>();
 		for (TargetTrakMenu menuItem : menuItems) {

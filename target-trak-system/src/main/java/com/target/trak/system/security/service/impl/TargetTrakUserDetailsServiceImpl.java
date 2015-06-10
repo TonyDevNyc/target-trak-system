@@ -2,6 +2,7 @@ package com.target.trak.system.security.service.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +16,8 @@ import com.target.trak.system.security.domain.TargetTrakUser;
 
 public class TargetTrakUserDetailsServiceImpl implements UserDetailsService {
 
+	private Logger logger = Logger.getLogger(getClass());
+	
 	private UserDetailsDao userDetailsDao;
 
 	private UserRoleDao userRoleDao;
@@ -24,11 +27,13 @@ public class TargetTrakUserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		if (StringUtils.isEmpty(username)) {
-			throw new UsernameNotFoundException("Username: [" + username + "] not found");
+			logger.error("Username is empty");
+			throw new UsernameNotFoundException("Username is empty");
 		}
 
 		TargetTrakUser user = (TargetTrakUser) userDetailsDao.getUserByUsername(username.toLowerCase());
 		if (user == null) {
+			logger.error("Username: [" + username + "] not found");
 			throw new UsernameNotFoundException("Username: [" + username + "] not found");
 		}
 

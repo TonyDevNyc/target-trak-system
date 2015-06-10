@@ -4,22 +4,25 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.dao.DataAccessException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.target.trak.system.security.dao.UserDetailsDao;
 import com.target.trak.system.security.domain.TargetTrakUser;
-import com.target.trak.system.security.dto.registration.RegistrationApiRequest;
-import com.target.trak.system.security.dto.registration.RegistrationApiResponse;
 import com.target.trak.system.security.exceptions.TargetTrakSecurityException;
-import com.target.trak.system.security.service.RegistrationService;
+import com.target.trak.system.security.service.dto.registration.RegistrationApiRequest;
+import com.target.trak.system.security.service.dto.registration.RegistrationApiResponse;
+import com.target.trak.system.service.BaseTargetTrakService;
+import com.target.trak.system.service.TargetTrakService;
+import com.target.trak.system.service.dto.common.TargetTrakErrorTypeEnum;
+import com.target.trak.system.service.exception.TargetTrakException;
 import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.validations.TargetTrakValidationException;
+import com.target.trak.system.validations.TargetTrakValidator;
 import com.target.trak.system.validations.impl.UserRegistrationValidatorImpl;
 
 @Transactional(value = "securityTransactionManager", propagation = Propagation.REQUIRED, rollbackFor = TargetTrakSecurityException.class)
-public class RegistrationServiceImpl implements RegistrationService {
+public class RegistrationServiceImpl extends BaseTargetTrakService implements TargetTrakService<RegistrationApiRequest, RegistrationApiResponse> {
 
 	private static final Logger logger = Logger.getLogger(RegistrationServiceImpl.class);
 
@@ -27,35 +30,41 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 	private ConversionService conversionService;
 
-	private UserRegistrationValidatorImpl registrationValidator;
+	private TargetTrakValidator<RegistrationApiRequest> registrationValidator;
 
 	@Override
-	public RegistrationApiResponse registerUser(final RegistrationApiRequest request) throws TargetTrakSecurityException {
+	public RegistrationApiResponse processRequest(final RegistrationApiRequest request) throws TargetTrakException {
 		RegistrationApiResponse response = new RegistrationApiResponse();
-		List<TargetTrakValidationError> validations = null;
-		try {
-			validations = registrationValidator.validate(request);
-		} catch (TargetTrakValidationException e) {
-			logger.error(e.getMessage(), e);
-			throw new TargetTrakSecurityException(e.getMessage());
-		}
-
-		if (validations.isEmpty()) {
-			TargetTrakUser user = conversionService.convert(request.getUserRegistration(), TargetTrakUser.class);
+		List<TargetTrakValidationError> validationErrors = validateRequest(request);
+		
+		if (!validationErrors.isEmpty()) {
+			response.setSuccess(Boolean.FALSE);
+			response.setErrors(validationErrors);
+		} else {
 			try {
+				TargetTrakUser user = conversionService.convert(request.getUserRegistration(), TargetTrakUser.class);
 				userDetailsDao.insertTargetTrakUser(user);
 				response.setSuccess(Boolean.TRUE);
-			} catch (DataAccessException dae) {
-				logger.error("Error occurred while trying to register user", dae);
-				throw new TargetTrakSecurityException(dae.getMessage());
+			} catch (Throwable e) {
+				logger.error(e.getMessage(), e);
+				TargetTrakException exception = generateServiceException(response, validationErrors, TargetTrakErrorTypeEnum.ERROR, "An error has occurred trying to create Reference Data. <br /> If the error still occurs, contact your administrator");
+				throw exception;
 			}
-		} else {
-			response.setSuccess(Boolean.FALSE);
-			response.setErrors(validations);
 		}
 		return response;
 	}
 
+	@Override
+	public List<TargetTrakValidationError> validateRequest(final RegistrationApiRequest request) throws TargetTrakException {
+		List<TargetTrakValidationError> validationErrors = null;
+		try {
+			validationErrors = registrationValidator.validate(request);
+		} catch (TargetTrakValidationException e) {
+			logger.error(e);
+		}
+		return validationErrors;
+	}
+	
 	public void setUserDetailsDao(UserDetailsDao userDetailsDao) {
 		this.userDetailsDao = userDetailsDao;
 	}
@@ -67,5 +76,4 @@ public class RegistrationServiceImpl implements RegistrationService {
 	public void setRegistrationValidator(UserRegistrationValidatorImpl registrationValidator) {
 		this.registrationValidator = registrationValidator;
 	}
-
 }
