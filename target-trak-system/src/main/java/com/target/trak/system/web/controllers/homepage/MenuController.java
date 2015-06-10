@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.target.trak.system.security.context.UserContext;
-import com.target.trak.system.security.dto.UserDto;
-import com.target.trak.system.security.dto.menu.MenuApiRequest;
-import com.target.trak.system.security.dto.menu.MenuApiResponse;
-import com.target.trak.system.security.service.MenuService;
+import com.target.trak.system.security.service.dto.UserDto;
+import com.target.trak.system.security.service.dto.menu.MenuApiRequest;
+import com.target.trak.system.security.service.dto.menu.MenuApiResponse;
+import com.target.trak.system.service.TargetTrakService;
 import com.target.trak.system.web.views.builders.MenuBuilder;
 import com.target.trak.system.web.views.ui.menu.ExtJsParentMenu;
 
@@ -20,7 +20,7 @@ public class MenuController {
 
 	private UserContext userContext;
 
-	private MenuService menuService;
+	private TargetTrakService<MenuApiRequest, MenuApiResponse> menuService;
 
 	private MenuBuilder menuBuilder;
 
@@ -30,7 +30,7 @@ public class MenuController {
 		MenuApiRequest request = new MenuApiRequest();
 		UserDto currentUser = userContext.getCurrentUser();
 		request.setCurrentUser(currentUser);
-		MenuApiResponse response = menuService.getMenuItemsForUser(request);
+		MenuApiResponse response = menuService.processRequest(request);
 		return menuBuilder.buildUserInterfaceMenu(response.getMenuItems());
 	}
 
@@ -38,7 +38,7 @@ public class MenuController {
 		this.userContext = userContext;
 	}
 
-	public void setMenuService(MenuService menuService) {
+	public void setMenuService(TargetTrakService<MenuApiRequest, MenuApiResponse> menuService) {
 		this.menuService = menuService;
 	}
 
