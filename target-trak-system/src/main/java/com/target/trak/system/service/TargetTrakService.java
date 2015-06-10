@@ -9,7 +9,7 @@ import com.target.trak.system.validations.TargetTrakValidationError;
 
 public interface TargetTrakService<T extends TargetTrakApiRequest, S extends TargetTrakApiResponse> {
 
-	public S executeRequest(final T request) throws TargetTrakException;
+	public S processRequest(final T request) throws TargetTrakException;
 	
 	public List<TargetTrakValidationError> validateRequest(final T request) throws TargetTrakException;
 }
