@@ -16,7 +16,6 @@ import com.target.trak.system.security.audit.dao.AuditEventDao;
 import com.target.trak.system.security.audit.service.AuditService;
 import com.target.trak.system.service.dto.common.TargetTrakApiResponse;
 
-
 @Aspect
 @Component
 public class AuditAspect {
@@ -39,9 +38,13 @@ public class AuditAspect {
 
 		try {
 			logger.debug("proceed with original method invocation...");
+			long startTime = System.currentTimeMillis();
 			retVal = jp.proceed();
 			logger.debug("original method invocation completed for method '" + method.getName() + "'");
-		} catch (Throwable e) {
+			long elapsedTime = System.currentTimeMillis() - startTime;
+			logApiElapsedTime(method, elapsedTime);
+		} 
+		catch (Throwable e) {
 			exception = e;
 			logger.debug("original method invocation for '" + method.getName() + "' threw exception '" + e.getClass().getName() + "'!");
 		}
@@ -57,5 +60,11 @@ public class AuditAspect {
 			throw exception;
 		}
 		return retVal;
+	}
+	
+	private void logApiElapsedTime(final Method method, long elapsedTime) {
+		StringBuilder builder = new StringBuilder();
+		builder.append(method.getDeclaringClass().toString()).append(".").append(method.getName()).append(" elapsed time: ").append(elapsedTime);
+		logger.debug(builder.toString());
 	}
 }
