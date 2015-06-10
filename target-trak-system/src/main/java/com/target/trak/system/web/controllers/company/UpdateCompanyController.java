@@ -36,7 +36,7 @@ public class UpdateCompanyController {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
 		CompanyApiRequest request = new CompanyApiRequest();
 		request.setCompany(buildCompanyDto(id, name, addressLine1, addressLine2, city, state, zipcode, country));
-		CompanyApiResponse response = service.executeRequest(request);
+		CompanyApiResponse response = service.processRequest(request);
 		jsonResponse.put("success", response.isSuccess());
 		return jsonResponse;
 	}

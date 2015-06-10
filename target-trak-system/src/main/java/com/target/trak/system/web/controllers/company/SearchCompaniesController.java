@@ -29,7 +29,7 @@ public class SearchCompaniesController {
 	Map<String, Object> getCompanies(@RequestParam int page, @RequestParam int start, @RequestParam int limit) {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
 		CompanyApiRequest request = buildRequest(null, null, null, null, page, start, limit);
-		CompanyApiResponse response = companiesByCriteriaService.executeRequest(request);
+		CompanyApiResponse response = companiesByCriteriaService.processRequest(request);
 		jsonResponse.put("data", buildUiCompanies(response.getCompanies()));
 		jsonResponse.put("success", response.isSuccess());
 		return jsonResponse;
@@ -40,7 +40,7 @@ public class SearchCompaniesController {
 	Map<String, Object> searchCompaniesByCriteria(@RequestParam String name, @RequestParam String city, @RequestParam String state, @RequestParam String country, @RequestParam int page, @RequestParam int start, @RequestParam int limit) {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
 		CompanyApiRequest request = buildRequest(name, city, state, country, page, start, limit);
-		CompanyApiResponse response = companiesByCriteriaService.executeRequest(request);
+		CompanyApiResponse response = companiesByCriteriaService.processRequest(request);
 		jsonResponse.put("data", buildUiCompanies(response.getCompanies()));
 		jsonResponse.put("success", response.isSuccess());
 		return jsonResponse;
