@@ -8,6 +8,8 @@ import org.springframework.core.convert.ConversionService;
 
 import com.target.trak.system.dao.ReferenceDataDao;
 import com.target.trak.system.domain.ReferenceDataDomain;
+import com.target.trak.system.security.audit.AuditableEvent;
+import com.target.trak.system.security.audit.TargetTrakAuditEventCode;
 import com.target.trak.system.service.BaseTargetTrakService;
 import com.target.trak.system.service.TargetTrakService;
 import com.target.trak.system.service.dto.referencedata.ReferenceDataApiRequest;
@@ -24,8 +26,9 @@ public class GetReferenceDataByTypeServiceImpl extends BaseTargetTrakService imp
 
 	private ConversionService conversionService;
 
+	@AuditableEvent(auditableEventCode=TargetTrakAuditEventCode.GET_REFERENCE_DATA_BY_TYPE)
 	@Override
-	public ReferenceDataApiResponse executeRequest(final ReferenceDataApiRequest request) throws TargetTrakException {
+	public ReferenceDataApiResponse processRequest(final ReferenceDataApiRequest request) throws TargetTrakException {
 		ReferenceDataApiResponse response = new ReferenceDataApiResponse();
 		String referenceDataType = request.getReferenceDataDto().getType();
 		logger.info("Getting reference data by type: "+referenceDataType);

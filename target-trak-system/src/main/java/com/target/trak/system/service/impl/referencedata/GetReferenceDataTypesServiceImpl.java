@@ -8,6 +8,8 @@ import org.springframework.core.convert.ConversionService;
 
 import com.target.trak.system.dao.ReferenceDataDao;
 import com.target.trak.system.domain.ReferenceDataDomain;
+import com.target.trak.system.security.audit.AuditableEvent;
+import com.target.trak.system.security.audit.TargetTrakAuditEventCode;
 import com.target.trak.system.service.BaseTargetTrakService;
 import com.target.trak.system.service.TargetTrakService;
 import com.target.trak.system.service.dto.common.TargetTrakErrorTypeEnum;
@@ -25,8 +27,9 @@ public class GetReferenceDataTypesServiceImpl extends BaseTargetTrakService impl
 
 	private ConversionService conversionService;
 	
+	@AuditableEvent(auditableEventCode=TargetTrakAuditEventCode.GET_REFERENCE_DATA_TYPES)
 	@Override
-	public ReferenceDataApiResponse executeRequest(ReferenceDataApiRequest request) throws TargetTrakException {
+	public ReferenceDataApiResponse processRequest(final ReferenceDataApiRequest request) throws TargetTrakException {
 		ReferenceDataApiResponse response = new ReferenceDataApiResponse();
 		try {
 			List<ReferenceDataDomain> data = referenceDataDao.getReferenceDataTypes();

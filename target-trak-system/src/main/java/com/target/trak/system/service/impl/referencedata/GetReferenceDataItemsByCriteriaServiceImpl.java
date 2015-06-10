@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.target.trak.system.dao.ReferenceDataDao;
 import com.target.trak.system.domain.ReferenceDataDomain;
 import com.target.trak.system.domain.criteria.ReferenceDataSearchCriteria;
+import com.target.trak.system.security.audit.AuditableEvent;
+import com.target.trak.system.security.audit.TargetTrakAuditEventCode;
 import com.target.trak.system.service.BaseTargetTrakService;
 import com.target.trak.system.service.TargetTrakService;
 import com.target.trak.system.service.dto.common.TargetTrakErrorTypeEnum;
@@ -33,8 +35,9 @@ public class GetReferenceDataItemsByCriteriaServiceImpl extends BaseTargetTrakSe
 
 	private ReferenceDataValidatorImpl validator;
 
+	@AuditableEvent(auditableEventCode=TargetTrakAuditEventCode.SEARCH_REFERENCE_DATA_BY_CRITERIA)
 	@Override
-	public ReferenceDataApiResponse executeRequest(ReferenceDataApiRequest request) throws TargetTrakException {
+	public ReferenceDataApiResponse processRequest(ReferenceDataApiRequest request) throws TargetTrakException {
 		ReferenceDataApiResponse response = new ReferenceDataApiResponse();
 		ReferenceDataSearchCriteria criteria = conversionService.convert(request.getSearchCriteria(), ReferenceDataSearchCriteria.class);
 		try {

@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.target.trak.system.dao.ReferenceDataDao;
 import com.target.trak.system.domain.ReferenceDataDomain;
+import com.target.trak.system.security.audit.AuditableEvent;
+import com.target.trak.system.security.audit.TargetTrakAuditEventCode;
 import com.target.trak.system.service.BaseTargetTrakService;
 import com.target.trak.system.service.TargetTrakService;
 import com.target.trak.system.service.dto.common.TargetTrakErrorTypeEnum;
@@ -32,8 +34,9 @@ public class DeleteReferenceDataItemServiceImpl extends BaseTargetTrakService im
 
 	private ReferenceDataValidatorImpl validator;
 	
+	@AuditableEvent(auditableEventCode=TargetTrakAuditEventCode.DELETE_REFERENCE_DATA)
 	@Override
-	public ReferenceDataApiResponse executeRequest(ReferenceDataApiRequest request) throws TargetTrakException {
+	public ReferenceDataApiResponse processRequest(ReferenceDataApiRequest request) throws TargetTrakException {
 		ReferenceDataApiResponse response = new ReferenceDataApiResponse();
 		request.setRequestType(TargetTrakRequestTypeEnum.DELETE);
 		List<TargetTrakValidationError> validationErrors = validateRequest(request);
