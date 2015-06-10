@@ -25,6 +25,10 @@
 		<property name="companyQueries" ref="companyQueries" />
 	</bean>
 	
+	<bean id="contactQueryBuilder" class="com.target.trak.system.dao.builder.ContactQueryBuilder">
+		<property name="contactQueries" ref="contactQueries" />
+	</bean>
+	
 	<bean id="referenceDataDao" class="com.target.trak.system.dao.impl.ReferenceDataDaoImpl">
 		<constructor-arg ref="dwDataSource" />
 		<property name="referenceDataQueries" ref="referenceDataQueries" />
@@ -40,6 +44,7 @@
 	<bean id="contactDao" class="com.target.trak.system.dao.impl.ContactDaoImpl">
 		<constructor-arg ref="dwDataSource" />
 		<property name="contactQueries" ref="contactQueries" />
+		<property name="contactQueryBuilder" ref="contactQueryBuilder" />
 	</bean>
 
 </beans>

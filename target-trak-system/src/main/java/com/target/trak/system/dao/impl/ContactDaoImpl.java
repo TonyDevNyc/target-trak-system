@@ -15,6 +15,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import com.target.trak.system.dao.ContactDao;
+import com.target.trak.system.dao.builder.ContactQueryBuilder;
+import com.target.trak.system.domain.CompanyDomain;
 import com.target.trak.system.domain.ContactDomain;
 import com.target.trak.system.domain.criteria.ContactSearchCriteria;
 
@@ -25,6 +27,8 @@ public class ContactDaoImpl implements ContactDao {
 	private Properties contactQueries;
 
 	private NamedParameterJdbcTemplate contactTemplate;
+
+	private ContactQueryBuilder contactQueryBuilder;
 
 	public ContactDaoImpl(DataSource dataSource) {
 		contactTemplate = new NamedParameterJdbcTemplate(dataSource);
@@ -70,13 +74,14 @@ public class ContactDaoImpl implements ContactDao {
 	}
 
 	@Override
-	public List<ContactDomain> selectContactsByCriteria(ContactSearchCriteria criteria) {
-
-		return null;
+	public List<ContactDomain> selectContactsByCriteria(final ContactSearchCriteria criteria) {
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		String sql = contactQueryBuilder.buildPaginatedContactQueryByCriteria(criteria, params);
+		return contactTemplate.query(sql, params, new ContactRowMapper());
 	}
 
 	@Override
-	public ContactDomain updateContact(ContactDomain contact) {
+	public ContactDomain updateContact(final ContactDomain contact) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("contactType", contact.getContactType());
 		params.addValue("title", contact.getTitle());
@@ -99,9 +104,10 @@ public class ContactDaoImpl implements ContactDao {
 	}
 
 	@Override
-	public int selectContactsByCriteriaCount(ContactSearchCriteria criteria) {
-		
-		return 0;
+	public int selectContactsByCriteriaCount(final ContactSearchCriteria criteria) {
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		String sql = contactQueryBuilder.buildContactQueryByCriteriaCount(criteria, params);
+		return contactTemplate.queryForObject(sql, params, Integer.class);
 	}
 
 	private final class ContactRowMapper implements RowMapper<ContactDomain> {
@@ -123,6 +129,11 @@ public class ContactDaoImpl implements ContactDao {
 			domain.setCreatedTimestamp(rs.getTimestamp("created_ts"));
 			domain.setLastUpdatedBy(rs.getString("last_updated_by"));
 			domain.setLastUpdatedTimestamp(rs.getTimestamp("last_updated_ts"));
+
+			CompanyDomain company = new CompanyDomain();
+			company.setId(rs.getLong("company_id"));
+			company.setName(rs.getString("company_name"));
+			domain.setCompany(company);
 			return domain;
 		}
 	}
@@ -133,5 +144,9 @@ public class ContactDaoImpl implements ContactDao {
 
 	public void setContactTemplate(NamedParameterJdbcTemplate contactTemplate) {
 		this.contactTemplate = contactTemplate;
+	}
+
+	public void setContactQueryBuilder(ContactQueryBuilder contactQueryBuilder) {
+		this.contactQueryBuilder = contactQueryBuilder;
 	}
 }

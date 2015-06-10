@@ -18,19 +18,24 @@
 	     	WHERE id = :id
        ]]>
 	</entry>
-	<entry key="selectContactsByCriteriaCountSql">
+	<entry key="baseSelectContactsByCriteriaCountSql">
 	    <![CDATA[
-	     	SELECT COUNT(1) 
-	 		FROM target_trak_dw.contact 
-	 		WHERE 1 = 1
+	     	SELECT COUNT(1)
+			FROM target_trak_dw.contact ct 
+			INNER JOIN target_trak_dw.company com
+			ON ct.company_id = com.id
+			WHERE 1 = 1 
        ]]>
 	</entry>
-	<entry key="selectContactsByCriteriaSql">
+	<entry key="baseSelectContactsByCriteriaSql">
 	    <![CDATA[
-	     	SELECT id, contact_type, title, first_name, last_name, middle_initial, suffix, telephone_number, email_address, 
-	     	company_id, active_at_company, created_by, created_ts, last_updated_by, last_updated_ts 
-	     	FROM target_trak_dw.contact 
-	     	WHERE 1 = 1
+	     	select ct.id, ct.contact_type, ct.title, ct.first_name, ct.last_name, ct.middle_initial, ct.suffix, 
+			ct.telephone_number, ct.email_address, ct.active_at_company, ct.created_by, ct.created_ts, 
+			ct.last_updated_by, ct.last_updated_ts, com.id AS company_id, com.name as company_name 
+			FROM target_trak_dw.contact ct 
+			INNER JOIN target_trak_dw.company com 
+			ON ct.company_id = com.id 
+			WHERE 1 = 1 
        ]]>
 	</entry>
 	<entry key="updateContactSql">
@@ -48,5 +53,4 @@
 	     	WHERE id = :id
        ]]>
 	</entry>
-		
 </properties>

@@ -5,7 +5,7 @@ public class ContactSearchCriteria extends BaseSearchCriteria {
 	private String firstName;
 	private String lastName;
 	private String contactType;
-	private long companyId;
+	private Long companyId;
 
 	public String getFirstName() {
 		return firstName;
@@ -31,11 +31,11 @@ public class ContactSearchCriteria extends BaseSearchCriteria {
 		this.contactType = contactType;
 	}
 
-	public long getCompanyId() {
+	public Long getCompanyId() {
 		return companyId;
 	}
 
-	public void setCompanyId(long companyId) {
+	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
 	}
 }
