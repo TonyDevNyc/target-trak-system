@@ -29,7 +29,7 @@ public class UpdateReferenceDataItemController {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
 		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
 		request.setReferenceDataDto(buildReferenceDataDto(id, type, label, value, status));
-		ReferenceDataApiResponse response = updateReferenceDataService.executeRequest(request);
+		ReferenceDataApiResponse response = updateReferenceDataService.processRequest(request);
 		jsonResponse.put("success", response.isSuccess());
 		return jsonResponse;
 	}

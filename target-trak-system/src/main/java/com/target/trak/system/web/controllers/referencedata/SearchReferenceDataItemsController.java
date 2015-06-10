@@ -30,7 +30,7 @@ public class SearchReferenceDataItemsController {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
 		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
 		request.setSearchCriteria(buildCriteria(referenceDataType, status, page, start, limit));
-		ReferenceDataApiResponse response = referenceDataByCriteriaService.executeRequest(request);
+		ReferenceDataApiResponse response = referenceDataByCriteriaService.processRequest(request);
 		jsonResponse.put("data", buildReferenceDataModel(response.getReferenceDataList()));
 		jsonResponse.put("success", response.isSuccess());
 		jsonResponse.put("totalSize", response.getTotalSize());
@@ -43,7 +43,7 @@ public class SearchReferenceDataItemsController {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
 		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
 		request.setSearchCriteria(buildCriteria(null, null, page, start, limit));
-		ReferenceDataApiResponse response = referenceDataByCriteriaService.executeRequest(request);
+		ReferenceDataApiResponse response = referenceDataByCriteriaService.processRequest(request);
 		jsonResponse.put("data", buildReferenceDataModel(response.getReferenceDataList()));
 		jsonResponse.put("success", response.isSuccess());
 		jsonResponse.put("totalSize", response.getTotalSize());

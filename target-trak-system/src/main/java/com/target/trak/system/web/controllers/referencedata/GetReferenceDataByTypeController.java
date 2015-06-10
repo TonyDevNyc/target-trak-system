@@ -28,7 +28,7 @@ public class GetReferenceDataByTypeController {
 	Map<String, Object> getReferenceDataByType(@RequestParam String type, @RequestParam String label, @RequestParam String value) {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
 		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
-		ReferenceDataApiResponse response = referenceDataService.executeRequest(request);
+		ReferenceDataApiResponse response = referenceDataService.processRequest(request);
 		jsonResponse.put("success", response.isSuccess());
 		jsonResponse.put("data", buildReferenceDataModel(response.getReferenceDataList()));
 		return jsonResponse;

@@ -29,7 +29,7 @@ public class DeleteReferenceDataItemController {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
 		ReferenceDataApiRequest request = new ReferenceDataApiRequest();
 		request.setReferenceDataDto(buildReferenceDataDto(referenceDataId, null, null, null));
-		ReferenceDataApiResponse response = deleteReferenceDataService.executeRequest(request);
+		ReferenceDataApiResponse response = deleteReferenceDataService.processRequest(request);
 		jsonResponse.put("success", response.isSuccess());
 		return jsonResponse;
 	}

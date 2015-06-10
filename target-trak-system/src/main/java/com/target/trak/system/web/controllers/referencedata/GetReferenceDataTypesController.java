@@ -24,7 +24,7 @@ public class GetReferenceDataTypesController {
 	@RequestMapping(value = "/refdata/getReferenceDataTypes.json", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Map<String, Object> getReferenceDataTypes() {
 		Map<String, Object> jsonResponse = new HashMap<String, Object>();
-		ReferenceDataApiResponse response = referenceDataTypesService.executeRequest(null);
+		ReferenceDataApiResponse response = referenceDataTypesService.processRequest(null);
 		List<NameValuePair> list = convertToNameValuePairs(response.getReferenceDataList());
 		jsonResponse.put("referenceDataTypes", list);
 		jsonResponse.put("success", response.isSuccess());

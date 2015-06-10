@@ -30,7 +30,7 @@ public class GetReferenceDataStatusesController {
 		ReferenceDataDto dto = new ReferenceDataDto();
 		dto.setType(referenceDataType);
 		request.setReferenceDataDto(dto);
-		ReferenceDataApiResponse response = referenceDataService.executeRequest(request);
+		ReferenceDataApiResponse response = referenceDataService.processRequest(request);
 		jsonResponse.put("success", response.isSuccess());
 		jsonResponse.put("data", convertToNameValuePairs(response.getReferenceDataList()));
 		return jsonResponse;
