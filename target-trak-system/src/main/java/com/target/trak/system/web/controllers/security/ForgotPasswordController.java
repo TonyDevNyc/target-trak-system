@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.target.trak.system.security.dto.credentials.ForgotPasswordApiRequest;
-import com.target.trak.system.security.dto.credentials.ForgotPasswordApiResponse;
-import com.target.trak.system.security.exceptions.TargetTrakSecurityException;
-import com.target.trak.system.security.service.ForgotPasswordService;
+import com.target.trak.system.security.service.dto.forgotpw.ForgotPasswordApiRequest;
+import com.target.trak.system.security.service.dto.forgotpw.ForgotPasswordApiResponse;
+import com.target.trak.system.service.TargetTrakService;
 import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.web.forms.ForgotPasswordForm;
 
@@ -28,7 +27,7 @@ public class ForgotPasswordController {
 
 	private Logger logger = Logger.getLogger(getClass());
 
-	private ForgotPasswordService forgotPasswordService;
+	private TargetTrakService<ForgotPasswordApiRequest, ForgotPasswordApiResponse> forgotPasswordService;
 
 	@RequestMapping(value = "/forgotPassword.htm", method = RequestMethod.GET)
 	public ModelAndView showForgotPasswordScreen() {
@@ -38,19 +37,16 @@ public class ForgotPasswordController {
 	@RequestMapping(value = "/handleForgotPasswordEmail.htm", method = RequestMethod.POST)
 	public String handleForgottenPasswordEmail(@ModelAttribute("forgotPasswordForm") ForgotPasswordForm forgotPasswordForm, BindingResult result, ModelMap model, RedirectAttributes attributes) {
 		ForgotPasswordApiRequest request = new ForgotPasswordApiRequest();
+		logger.info("handling forgot password reset for user email: " + forgotPasswordForm.getEmail());
 		request.setEmail(forgotPasswordForm.getEmail());
 		String returnPage = null;
-
-		try {
-			ForgotPasswordApiResponse response = forgotPasswordService.handleForgotPassword(request);
-			if (response.isSuccess()) {
-				returnPage = FORGOT_PASSWORD_COMPLETE;
-			} else if (response.getErrors().size() > 0) {
-				bindValidationErrors(response.getErrors(), result);
-				returnPage = FORGOT_PASSWORD_PAGE;
-			}
-		} catch (TargetTrakSecurityException e) {
-			logger.error(e.getMessage(), e);
+		
+		ForgotPasswordApiResponse response = forgotPasswordService.processRequest(request);
+		if (response.isSuccess()) {
+			returnPage = FORGOT_PASSWORD_COMPLETE;
+		} 
+		else {
+			bindValidationErrors(response.getErrors(), result);
 			returnPage = FORGOT_PASSWORD_PAGE;
 		}
 		return returnPage;
@@ -62,7 +58,7 @@ public class ForgotPasswordController {
 		}
 	}
 
-	public void setForgotPasswordService(ForgotPasswordService forgotPasswordService) {
+	public void setForgotPasswordService(TargetTrakService<ForgotPasswordApiRequest, ForgotPasswordApiResponse> forgotPasswordService) {
 		this.forgotPasswordService = forgotPasswordService;
 	}
 }

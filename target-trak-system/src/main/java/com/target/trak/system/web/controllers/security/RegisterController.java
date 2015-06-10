@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.target.trak.system.security.dto.UserDto;
-import com.target.trak.system.security.dto.registration.RegistrationApiRequest;
-import com.target.trak.system.security.dto.registration.RegistrationApiResponse;
-import com.target.trak.system.security.exceptions.TargetTrakSecurityException;
-import com.target.trak.system.security.service.RegistrationService;
+import com.target.trak.system.security.service.dto.UserDto;
+import com.target.trak.system.security.service.dto.registration.RegistrationApiRequest;
+import com.target.trak.system.security.service.dto.registration.RegistrationApiResponse;
+import com.target.trak.system.service.TargetTrakService;
 import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.web.forms.RegistrationForm;
 
@@ -27,10 +26,10 @@ public class RegisterController {
 	private final static String REGISTER_PAGE = "registration";
 
 	private final static String REGISTRATION_COMPLETE_PAGE = "registrationComplete";
-	
+
 	private Logger logger = Logger.getLogger(getClass());
 
-	private RegistrationService registrationService;
+	private TargetTrakService<RegistrationApiRequest, RegistrationApiResponse> registrationService;
 
 	@RequestMapping(value = "/register.htm", method = RequestMethod.GET)
 	public ModelAndView showRegisterScreen() {
@@ -45,23 +44,17 @@ public class RegisterController {
 		RegistrationApiResponse response = null;
 		String returnPage = null;
 
-		try {
-			response = registrationService.registerUser(request);
-			if (response.isSuccess()) {
-				returnPage = REGISTRATION_COMPLETE_PAGE;
-			} 
-			else if (response.getErrors().size() > 0){
-				bindValidationErrors(response.getErrors(), result);
-				returnPage = REGISTER_PAGE;
-			}
-			
-		} catch (TargetTrakSecurityException e) {
-			logger.error(e.getMessage(), e);
+		response = registrationService.processRequest(request);
+		if (response.isSuccess()) {
+			returnPage = REGISTRATION_COMPLETE_PAGE;
+		} else {
+			logger.info("Error while processing registration of new user");
+			bindValidationErrors(response.getErrors(), result);
 			returnPage = REGISTER_PAGE;
 		}
 		return returnPage;
 	}
-	
+
 	private void bindValidationErrors(List<TargetTrakValidationError> validationErrors, final BindingResult result) {
 		for (TargetTrakValidationError validationError : validationErrors) {
 			result.rejectValue(validationError.getFieldName(), validationError.getErrorMessage());
@@ -82,7 +75,7 @@ public class RegisterController {
 		return user;
 	}
 
-	public void setRegistrationService(RegistrationService registrationService) {
+	public void setRegistrationService(TargetTrakService<RegistrationApiRequest, RegistrationApiResponse> registrationService) {
 		this.registrationService = registrationService;
 	}
 }
