@@ -4,8 +4,12 @@ public enum TargetTrakAuditEventCode {
 
 	CREATE_REFERENCE_DATA("Created Reference Data Item"),
 
-	READ_REFERENCE_DATA("Read Reference Data Items"),
+	SEARCH_REFERENCE_DATA_BY_CRITERIA("Searched Reference Data Items by Criteria"),
 
+	GET_REFERENCE_DATA_TYPES("Get Reference Data Types"),
+	
+	GET_REFERENCE_DATA_BY_TYPE("Get Reference Data by Type"),
+	
 	UPDATE_REFERENCE_DATA("Updated Reference Data Item"),
 
 	DELETE_REFERENCE_DATA("Deleted Reference Data Item"),
@@ -18,7 +22,15 @@ public enum TargetTrakAuditEventCode {
 
 	REGISTER_NEW_USER("New user registered into system"),
 
-	HANDLE_FORGOT_PASSWORD("User accessed handle forgot password");
+	HANDLE_FORGOT_PASSWORD("User accessed handle forgot password"),
+	
+	CREATE_COMPANY("Created Company"),
+	
+	SEARCH_COMPANY_BY_CRITERIA("Search Company by Criteria"),
+	
+	GET_COMPANY_BY_ID("Retrieve Company by Id"),
+	
+	UPDATE_COMPANY("Company Updated");
 
 	private final String description;
 
