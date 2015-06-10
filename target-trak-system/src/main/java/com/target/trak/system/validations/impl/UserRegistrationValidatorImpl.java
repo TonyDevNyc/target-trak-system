@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.target.trak.system.security.dto.UserDto;
-import com.target.trak.system.security.dto.registration.RegistrationApiRequest;
+import com.target.trak.system.security.service.dto.UserDto;
+import com.target.trak.system.security.service.dto.registration.RegistrationApiRequest;
 import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.validations.TargetTrakValidationException;
 import com.target.trak.system.validations.TargetTrakValidator;
