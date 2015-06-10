@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.target.trak.system.security.context.UserContext;
-import com.target.trak.system.security.dto.menu.MenuDto;
+import com.target.trak.system.security.service.dto.menu.MenuDto;
 import com.target.trak.system.web.views.ui.menu.ExtJsChildMenu;
 import com.target.trak.system.web.views.ui.menu.ExtJsMenuItem;
 import com.target.trak.system.web.views.ui.menu.ExtJsParentMenu;
