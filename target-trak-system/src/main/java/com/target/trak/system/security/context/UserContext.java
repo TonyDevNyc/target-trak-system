@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.security.core.Authentication;
 
 import com.target.trak.system.security.domain.TargetTrakRole;
-import com.target.trak.system.security.dto.UserDto;
+import com.target.trak.system.security.service.dto.UserDto;
 
 public interface UserContext {
 

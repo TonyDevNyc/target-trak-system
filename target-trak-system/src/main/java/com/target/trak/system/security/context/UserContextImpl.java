@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.target.trak.system.security.domain.TargetTrakRole;
 import com.target.trak.system.security.domain.TargetTrakUser;
-import com.target.trak.system.security.dto.UserDto;
+import com.target.trak.system.security.service.dto.UserDto;
 
 public class UserContextImpl implements UserContext {
 
