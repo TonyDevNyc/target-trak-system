@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.target.trak.system.dao.CompanyDao;
 import com.target.trak.system.domain.CompanyDomain;
+import com.target.trak.system.security.audit.AuditableEvent;
+import com.target.trak.system.security.audit.TargetTrakAuditEventCode;
 import com.target.trak.system.service.BaseTargetTrakService;
 import com.target.trak.system.service.TargetTrakService;
 import com.target.trak.system.service.dto.common.TargetTrakErrorTypeEnum;
@@ -31,8 +33,9 @@ public class GetCompanyServiceImpl extends BaseTargetTrakService implements Targ
 	
 	private ConversionService conversionService;
 	
+	@AuditableEvent(auditableEventCode=TargetTrakAuditEventCode.GET_COMPANY_BY_ID)
 	@Override
-	public CompanyApiResponse executeRequest(final CompanyApiRequest request) throws TargetTrakException {
+	public CompanyApiResponse processRequest(final CompanyApiRequest request) throws TargetTrakException {
 		CompanyApiResponse response = new CompanyApiResponse();
 		request.setRequestType(TargetTrakRequestTypeEnum.READ_BY_ID);
 		try {
