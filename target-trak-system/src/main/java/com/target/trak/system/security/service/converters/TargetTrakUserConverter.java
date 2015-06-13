@@ -19,7 +19,7 @@ public class TargetTrakUserConverter implements Converter<UserDto, TargetTrakUse
 		user.setFirstName(source.getFirstName());
 		user.setLastName(source.getLastName());
 		user.setEmail(source.getEmail());
-		user.setMobileNumber(source.getMobileNumber());
+		user.setMobileNumber(source.getTelephoneNumber());
 		user.setUsername(source.getUsername());
 
 		user.setPassword(encoder.encode(source.getPassword()));
