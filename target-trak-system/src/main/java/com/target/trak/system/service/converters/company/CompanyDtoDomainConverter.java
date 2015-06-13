@@ -1,11 +1,10 @@
 package com.target.trak.system.service.converters.company;
 
-import java.sql.Timestamp;
-
 import org.springframework.core.convert.converter.Converter;
 
 import com.target.trak.system.domain.CompanyDomain;
 import com.target.trak.system.service.dto.company.CompanyDto;
+import com.target.trak.system.util.DateUtil;
 
 public class CompanyDtoDomainConverter implements Converter<CompanyDto, CompanyDomain> {
 
@@ -21,17 +20,9 @@ public class CompanyDtoDomainConverter implements Converter<CompanyDto, CompanyD
 		domain.setCountry(dto.getCountry());
 		domain.setZipcode(dto.getZipcode());
 		domain.setCreatedBy(dto.getCreatedBy());
-		
-		if (dto.getCreateDateTime() != null) {
-			Timestamp createTimestamp = new Timestamp(dto.getCreateDateTime().getTimeInMillis());
-			domain.setCreatedTimestamp(createTimestamp);
-		}
+		domain.setCreatedTimestamp(DateUtil.convertCalendarToTimestamp(dto.getCreateDateTime()));
 		domain.setLastUpdatedBy(dto.getLastUpdatedBy());
-		
-		if (dto.getLastUpdatedDateTime() != null) {
-			Timestamp lastUpdateTimestamp = new Timestamp(dto.getLastUpdatedDateTime().getTimeInMillis());
-			domain.setLastUpdatedTimestamp(lastUpdateTimestamp);
-		}
+		domain.setLastUpdatedTimestamp(DateUtil.convertCalendarToTimestamp(dto.getLastUpdatedDateTime()));
 		return domain;
 	}
 
