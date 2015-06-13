@@ -83,6 +83,12 @@
 		<property name="conversionService" ref="conversionService" />
 	</bean>
 	
+	<bean id="createContactService" class="com.target.trak.system.service.impl.contact.CreateContactServiceImpl">
+		<property name="contactDao" ref="contactDao" />
+		<property name="conversionService" ref="conversionService" />
+		<property name="contactValidator" ref="contactValidator" />
+	</bean>
+	
 	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
 		<property name="converters">
 			<set>
@@ -97,6 +103,9 @@
 				<bean id="companyDomainDtoConverter" class="com.target.trak.system.service.converters.company.CompanyDomainDtoConverter" />
 				<bean id="companyDtoDomainConverter" class="com.target.trak.system.service.converters.company.CompanyDtoDomainConverter" />
 				<bean id="companyDataSearchCriteriaConverter" class="com.target.trak.system.service.converters.company.CompanySearchCriteriaConverter" />
+				<bean id="contactDtoDomainConverter" class="com.target.trak.system.service.converters.contact.ContactDtoToDomainConverter" />
+				<bean id="contactDomainDtoConverter" class="com.target.trak.system.service.converters.contact.ContactDomainToDtoConverter" />
+				<bean id="contactSearchCriteriaConverter" class="com.target.trak.system.service.converters.contact.ContactSearchCriteriaConverter" />
 			</set>
 		</property>
 	</bean>

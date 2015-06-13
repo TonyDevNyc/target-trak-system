@@ -9,18 +9,19 @@
 
 	<util:properties id="dwValidationProps" location="classpath:/properties/dw-validation-codes.properties" />
 	<util:properties id="validationProps" location="classpath:/properties/security-validation-codes.properties" />
+	<util:properties id="genericValidationProps" location="classpath:/properties/generic-validation-codes.properties" />
 	
 	<bean id="emailRules" class="com.target.trak.system.validations.rules.impl.EmailRulesImpl">
-		<property name="validationProps" ref="validationProps" />
+		<property name="genericValidationProps" ref="genericValidationProps" />
 		<property name="userDetailsDao" ref="userDetailsDao" />
 	</bean>
 
 	<bean id="firstNameRules" class="com.target.trak.system.validations.rules.impl.FirstNameRulesImpl">
-		<property name="validationProps" ref="validationProps" />
+		<property name="genericValidationProps" ref="genericValidationProps" />
 	</bean>
 	
 	<bean id="lastNameRules" class="com.target.trak.system.validations.rules.impl.LastNameRulesImpl">
-		<property name="validationProps" ref="validationProps" />
+		<property name="genericValidationProps" ref="genericValidationProps" />
 	</bean>
 	
 	<bean id="passwordRules" class="com.target.trak.system.validations.rules.impl.PasswordRulesImpl">
@@ -28,7 +29,7 @@
 	</bean>
 	
 	<bean id="phoneNumberRules" class="com.target.trak.system.validations.rules.impl.PhoneNumberRulesImpl">
-		<property name="validationProps" ref="validationProps" />
+		<property name="genericValidationProps" ref="genericValidationProps" />
 	</bean>
 	
 	<bean id="referenceDataRules" class="com.target.trak.system.validations.rules.impl.ReferenceDataRulesImpl">
@@ -72,4 +73,6 @@
 		<property name="emailRules" ref="emailRules" />
 	</bean>
 	
+	<bean id="contactValidator" class="com.target.trak.system.validations.impl.ContactValidatorImpl">
+	</bean>
 </beans>
