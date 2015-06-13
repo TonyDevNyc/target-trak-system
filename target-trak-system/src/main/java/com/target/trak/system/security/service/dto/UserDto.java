@@ -11,7 +11,7 @@ public class UserDto {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private String mobileNumber;
+	private String telephoneNumber;
 	private Calendar registrationDate;
 	private boolean enabled;
 	private List<RoleDto> roles;
@@ -56,12 +56,12 @@ public class UserDto {
 		this.email = email;
 	}
 
-	public String getMobileNumber() {
-		return mobileNumber;
+	public String getTelephoneNumber() {
+		return telephoneNumber;
 	}
 
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
+	public void setTelephoneNumber(String telephoneNumber) {
+		this.telephoneNumber = telephoneNumber;
 	}
 
 	public Calendar getRegistrationDate() {
