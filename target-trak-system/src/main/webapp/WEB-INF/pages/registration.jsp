@@ -30,8 +30,8 @@
 					</p>
 					<p class="remember_me">
 						<label>Mobile: <span class="registration-error-text">*</span>
-							<form:errors cssClass="registration-error-text" cssStyle="registration-error-text" path="mobileNumber" /> 
-							<form:input type="text" path="mobileNumber" />
+							<form:errors cssClass="registration-error-text" cssStyle="registration-error-text" path="telephoneNumber" /> 
+							<form:input type="text" path="telephoneNumber" />
 						</label>
 					</p>
 					<p class="remember_me">

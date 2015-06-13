@@ -67,7 +67,7 @@ public class RegisterController {
 		user.setEnabled(true);
 		user.setFirstName(registrationForm.getFirstName());
 		user.setLastName(registrationForm.getLastName());
-		user.setMobileNumber(registrationForm.getMobileNumber());
+		user.setTelephoneNumber(registrationForm.getTelephoneNumber());
 		user.setUsername(registrationForm.getUsername());
 		user.setPassword(registrationForm.getPassword());
 		user.setRepeatedPassword(registrationForm.getRepeatedPassword());
