@@ -48,13 +48,13 @@ public class UserRegistrationValidatorImpl implements TargetTrakValidator<Regist
 		errors.addAll(validateFirstName(userDto.getFirstName()));
 		errors.addAll(validateLastName(userDto.getLastName()));
 		errors.addAll(validateEmail(userDto.getEmail()));
-		errors.addAll(validateMobileNumber(userDto.getMobileNumber()));
+		errors.addAll(validateTelephoneNumber(userDto.getTelephoneNumber()));
 
 		errors.removeAll(Collections.singleton(null));
 		return errors;
 	}
 
-	private List<TargetTrakValidationError> validateMobileNumber(final String mobileNumber) {
+	private List<TargetTrakValidationError> validateTelephoneNumber(final String mobileNumber) {
 		List<TargetTrakValidationError> errors = new ArrayList<TargetTrakValidationError>();
 
 		TargetTrakValidationError error = phoneNumberRules.isPhoneNumberEmpty(mobileNumber);
