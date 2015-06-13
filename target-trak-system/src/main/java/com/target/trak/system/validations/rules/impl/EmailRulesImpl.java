@@ -11,23 +11,23 @@ import com.target.trak.system.validations.rules.EmailRules;
 
 public class EmailRulesImpl implements EmailRules {
 
-	private Properties validationProps;
+	private Properties genericValidationProps;
 	
 	private UserDetailsDao userDetailsDao;
 	
 	@Override
 	public TargetTrakValidationError isEmailEmpty(final String email) {
 		if (StringUtils.isEmpty(email)) {
-			return new TargetTrakValidationError("email", "EMAIL_013");
+			return new TargetTrakValidationError("email", genericValidationProps.getProperty("email.empty.error"));
 		}
 		return null;
 	}
 	
 	@Override
 	public TargetTrakValidationError isEmailValidLength(final String email) {
-		int maxLength = Integer.parseInt((String)validationProps.get("email.maxlength"));
+		int maxLength = Integer.parseInt((String) genericValidationProps.get("email.maxlength"));
 		if (email.length() > maxLength) {
-			return new TargetTrakValidationError("email", "EMAIL_014");
+			return new TargetTrakValidationError("email", genericValidationProps.getProperty("email.maxlength.error"));
 		}
 		return null;
 	}
@@ -36,7 +36,7 @@ public class EmailRulesImpl implements EmailRules {
 	public TargetTrakValidationError isEmailValid(final String email) {
 		EmailValidator validator = EmailValidator.getInstance();
 		if (!validator.isValid(email)) {
-			return new TargetTrakValidationError("email", "EMAIL_015");
+			return new TargetTrakValidationError("email", genericValidationProps.getProperty("email.valid.error"));
 		}
 		return null;
 	}
@@ -44,7 +44,7 @@ public class EmailRulesImpl implements EmailRules {
 	@Override
 	public TargetTrakValidationError emailAlreadyExists(final String email) {
 		if (userDetailsDao.getUserByEmail(email) != null) {
-			return new TargetTrakValidationError("email", "EMAIL_016");
+			return new TargetTrakValidationError("email", genericValidationProps.getProperty("email.exists.error"));
 		}
 		return null;
 	}
@@ -52,13 +52,13 @@ public class EmailRulesImpl implements EmailRules {
 	@Override
 	public TargetTrakValidationError isEmailRegistered(final String email) {
 		if (userDetailsDao.getUserByEmail(email) == null) {
-			return new TargetTrakValidationError("email", "EMAIL_017");
+			return new TargetTrakValidationError("email", genericValidationProps.getProperty("email.nonregistered.error"));
 		}
 		return null;
 	}
 
-	public void setValidationProps(Properties validationProps) {
-		this.validationProps = validationProps;
+	public void setGenericValidationProps(Properties genericValidationProps) {
+		this.genericValidationProps = genericValidationProps;
 	}
 
 	public void setUserDetailsDao(UserDetailsDao userDetailsDao) {

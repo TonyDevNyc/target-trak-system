@@ -9,35 +9,35 @@ import com.target.trak.system.validations.rules.PhoneNumberRules;
 
 public class PhoneNumberRulesImpl implements PhoneNumberRules {
 
-	private Properties validationProps;
+	private Properties genericValidationProps;
 
 	@Override
-	public TargetTrakValidationError isPhoneNumberEmpty(final String mobileNumber) {
-		if (StringUtils.isEmpty(mobileNumber)) {
-			return new TargetTrakValidationError("mobileNumber", "REGISTRATION_016");
+	public TargetTrakValidationError isPhoneNumberEmpty(final String telephoneNumber) {
+		if (StringUtils.isEmpty(telephoneNumber)) {
+			return new TargetTrakValidationError("telephoneNumber", genericValidationProps.getProperty("phoneNumber.empty.error"));
 		}
 		return null;
 	}
 
 	@Override
-	public TargetTrakValidationError isPhoneNumberValidLength(final String mobileNumber) throws IllegalArgumentException {
-		int maxLength = Integer.parseInt((String) validationProps.get("phonenumber.maxlength"));
-		if (mobileNumber.length() > maxLength) {
-			return new TargetTrakValidationError("mobileNumber", "REGISTRATION_017");
+	public TargetTrakValidationError isPhoneNumberValidLength(final String telephoneNumber) throws IllegalArgumentException {
+		int maxLength = Integer.parseInt((String) genericValidationProps.get("phonenumber.maxlength"));
+		if (telephoneNumber.length() > maxLength) {
+			return new TargetTrakValidationError("telephoneNumber", genericValidationProps.getProperty("phoneNumber.maxlength.error"));
 		}
 		return null;
 	}
 
 	@Override
-	public TargetTrakValidationError phoneContainsDigitsAndDashOnly(final String mobileNumber) throws IllegalArgumentException {
+	public TargetTrakValidationError phoneContainsDigitsAndDashOnly(final String telephoneNumber) throws IllegalArgumentException {
 		String regex = "^[0-9]\\d{2}-\\d{3}-\\d{4}$";
-		if (!mobileNumber.matches(regex)) {
-			return new TargetTrakValidationError("mobileNumber", "REGISTRATION_018");
+		if (!telephoneNumber.matches(regex)) {
+			return new TargetTrakValidationError("telephoneNumber", genericValidationProps.getProperty("phoneNumber.allowable.chars.error"));
 		}
 		return null;
 	}
 
-	public void setValidationProps(Properties validationProps) {
-		this.validationProps = validationProps;
+	public void setGenericValidationProps(Properties genericValidationProps) {
+		this.genericValidationProps = genericValidationProps;
 	}
 }
