@@ -40,7 +40,6 @@ public class GetCompaniesByCriteriaServiceImpl extends BaseTargetTrakService imp
 	@Override
 	public CompanyApiResponse processRequest(final CompanyApiRequest request) throws TargetTrakException {
 		CompanyApiResponse response = new CompanyApiResponse();
-		request.setRequestType(TargetTrakRequestTypeEnum.READ_PAGING);
 		List<TargetTrakValidationError> validationErrors = validateRequest(request);
 
 		if (!validationErrors.isEmpty()) {
@@ -68,6 +67,7 @@ public class GetCompaniesByCriteriaServiceImpl extends BaseTargetTrakService imp
 
 	@Override
 	public List<TargetTrakValidationError> validateRequest(final CompanyApiRequest request) throws TargetTrakException {
+		request.setRequestType(TargetTrakRequestTypeEnum.READ_PAGING);
 		List<TargetTrakValidationError> errors = new ArrayList<TargetTrakValidationError>();
 		try {
 			errors = validator.validate(request);
