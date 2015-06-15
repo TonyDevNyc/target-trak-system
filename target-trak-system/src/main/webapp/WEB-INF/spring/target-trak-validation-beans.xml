@@ -59,6 +59,10 @@
 		<property name="referenceDataDao" ref="referenceDataDao" />
 	</bean>
 	
+	<bean id="contactRules" class="com.target.trak.system.validations.rules.impl.ContactRulesImpl">
+		<property name="validationProps" ref="dwValidationProps" />
+	</bean>
+	
 	<bean id="companyValidator" class="com.target.trak.system.validations.impl.CompanyValidatorImpl">
 		<property name="companyRules" ref="companyRules" />
 		<property name="addressRules" ref="addressRules" />
@@ -74,5 +78,10 @@
 	</bean>
 	
 	<bean id="contactValidator" class="com.target.trak.system.validations.impl.ContactValidatorImpl">
+		<property name="firstNameRules" ref="firstNameRules" />
+		<property name="lastNameRules" ref="lastNameRules" />
+		<property name="emailRules" ref="emailRules" />
+		<property name="telephoneNumberRules" ref="phoneNumberRules" />
+		<property name="contactRules" ref="contactRules" />
 	</bean>
 </beans>

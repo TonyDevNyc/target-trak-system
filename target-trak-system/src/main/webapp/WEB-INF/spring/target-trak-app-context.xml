@@ -89,6 +89,18 @@
 		<property name="contactValidator" ref="contactValidator" />
 	</bean>
 	
+	<bean id="updateContactService" class="com.target.trak.system.service.impl.contact.UpdateContactServiceImpl">
+		<property name="contactDao" ref="contactDao" />
+		<property name="conversionService" ref="conversionService" />
+		<property name="contactValidator" ref="contactValidator" />
+	</bean>
+	
+	<bean id="getContactsByCriteriaService" class="com.target.trak.system.service.impl.contact.GetContactsByCriteriaServiceImpl">
+		<property name="contactDao" ref="contactDao" />
+		<property name="conversionService" ref="conversionService" />
+		<property name="contactValidator" ref="contactValidator" />
+	</bean>
+	
 	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
 		<property name="converters">
 			<set>
