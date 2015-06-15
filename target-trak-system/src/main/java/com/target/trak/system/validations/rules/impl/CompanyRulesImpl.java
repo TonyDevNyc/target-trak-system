@@ -13,6 +13,14 @@ public class CompanyRulesImpl implements CompanyRules {
 	private Properties validationProps;
 
 	@Override
+	public TargetTrakValidationError isCompanyIdEmpty(final Long companyId) {
+		if (companyId == null || companyId == 0L) {
+			return new TargetTrakValidationError("id", validationProps.getProperty("companyId.empty.error"));
+		}
+		return null;
+	}
+	
+	@Override
 	public TargetTrakValidationError isCompanyNameEmpty(final String companyName) {
 		if (StringUtils.isEmpty(companyName)) {
 			return new TargetTrakValidationError("name", validationProps.getProperty("companyName.empty.error"));
