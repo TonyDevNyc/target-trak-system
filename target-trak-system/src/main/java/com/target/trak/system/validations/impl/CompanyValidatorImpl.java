@@ -56,6 +56,7 @@ public class CompanyValidatorImpl implements TargetTrakValidator<CompanyApiReque
 	
 	private List<TargetTrakValidationError> validateUpdate(final CompanyDto companyDto) {
 		List<TargetTrakValidationError> errors = new ArrayList<TargetTrakValidationError>();
+		validateCompanyId(errors, companyDto.getId());
 		validateCompanyName(errors, companyDto.getName());
 		validateAddressLine1(errors, companyDto.getAddressLine1());
 		validateAddressLine2(errors, companyDto.getAddressLine2());
@@ -66,6 +67,11 @@ public class CompanyValidatorImpl implements TargetTrakValidator<CompanyApiReque
 		return errors;
 	}
 
+	private List<TargetTrakValidationError> validateCompanyId(final List<TargetTrakValidationError> errors, final Long companyId) {
+		errors.add(companyRules.isCompanyIdEmpty(companyId));
+		return errors;
+	}
+	
 	private List<TargetTrakValidationError> validateCompanyName(final List<TargetTrakValidationError> errors, final String companyName) {
 		TargetTrakValidationError error = companyRules.isCompanyNameEmpty(companyName);
 		if (error == null) {
