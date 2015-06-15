@@ -22,28 +22,28 @@ import com.target.trak.system.validations.TargetTrakValidationException;
 import com.target.trak.system.validations.TargetTrakValidator;
 
 @Transactional(value = "dwTransactionManager", propagation = Propagation.REQUIRED)
-public class CreateContactServiceImpl extends BaseTargetTrakService implements TargetTrakService<ContactApiRequest, ContactApiResponse> {
+public class UpdateContactServiceImpl extends BaseTargetTrakService implements TargetTrakService<ContactApiRequest, ContactApiResponse> {
 
 	private final Logger logger = Logger.getLogger(getClass());
-	
+
 	private ContactDao contactDao;
-	
+
 	private ConversionService conversionService;
-	
+
 	private TargetTrakValidator<ContactApiRequest> contactValidator;
-	
+
 	@Override
 	public ContactApiResponse processRequest(final ContactApiRequest request) throws TargetTrakException {
 		ContactApiResponse response = new ContactApiResponse();
 		List<TargetTrakValidationError> validationErrors = validateRequest(request);
-		
+
 		if (!validationErrors.isEmpty()) {
 			TargetTrakException exception = generateServiceException(response, validationErrors, TargetTrakErrorTypeEnum.VALIDATION, "A validation error has occurred. Please fix the errors below");
 			throw exception;
 		}
 
 		try {
-			ContactDomain domain = contactDao.insertContact(conversionService.convert(request.getContact(), ContactDomain.class));
+			ContactDomain domain = contactDao.updateContact(conversionService.convert(request.getContact(), ContactDomain.class));
 			response.setContact(conversionService.convert(domain, ContactDto.class));
 			response.setSuccess(Boolean.TRUE);
 		} catch (Throwable e) {
@@ -56,10 +56,10 @@ public class CreateContactServiceImpl extends BaseTargetTrakService implements T
 
 	@Override
 	public List<TargetTrakValidationError> validateRequest(final ContactApiRequest request) throws TargetTrakException {
-		request.setRequestType(TargetTrakRequestTypeEnum.CREATE);
+		request.setRequestType(TargetTrakRequestTypeEnum.UPDATE);
 		List<TargetTrakValidationError> validationErrors = null;
 		try {
-			validationErrors =  contactValidator.validate(request);
+			validationErrors = contactValidator.validate(request);
 		} catch (TargetTrakValidationException e) {
 			logger.error(e);
 		}

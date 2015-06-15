@@ -16,18 +16,6 @@ public interface ContactRules {
 	
 	public TargetTrakValidationError titleContainsAllowableChars(final String title);
 	
-	public TargetTrakValidationError isFirstNameEmpty(final String firstName);
-	
-	public TargetTrakValidationError isFirstNameValidLength(final String firstName);
-	
-	public TargetTrakValidationError firstNameContainsAllowableChars(final String firstName);
-	
-	public TargetTrakValidationError isLastNameEmpty(final String lastName);
-	
-	public TargetTrakValidationError isLastNameValidLength(final String lastName);
-	
-	public TargetTrakValidationError lastNameContainsAllowableChars(final String lastName);
-	
 	public TargetTrakValidationError isMiddleInitialValidLength(final String middleInitial);
 	
 	public TargetTrakValidationError middleInitialContainsAllowableChar(final String middleInitial);
@@ -36,19 +24,5 @@ public interface ContactRules {
 	
 	public TargetTrakValidationError suffixContainsAllowableChar(final String suffix);
 	
-	public TargetTrakValidationError isTelephoneEmpty(final String telephoneNumber);
-	
-	public TargetTrakValidationError isTelephoneValidLength(final String telephoneNumber);
-	
-	public TargetTrakValidationError telephoneContainsAllowableChars(final String telephoneNumber);
-	
-	public TargetTrakValidationError isEmailEmpty(final String email);
-	
-	public TargetTrakValidationError isEmailValidLength(final String email);
-	
-	public TargetTrakValidationError emailContainsAllowableChars(final String email);
-	
 	public TargetTrakValidationError isCompanyEmpty(final Long companyId);
-	
-	public TargetTrakValidationError isActiveAtCompanyEmpty(final boolean activeAtCompany);
 }

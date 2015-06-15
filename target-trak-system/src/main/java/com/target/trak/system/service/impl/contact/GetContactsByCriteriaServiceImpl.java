@@ -1,14 +1,14 @@
 package com.target.trak.system.service.impl.contact;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.target.trak.system.dao.ContactDao;
 import com.target.trak.system.domain.ContactDomain;
+import com.target.trak.system.domain.criteria.ContactSearchCriteria;
 import com.target.trak.system.service.BaseTargetTrakService;
 import com.target.trak.system.service.TargetTrakService;
 import com.target.trak.system.service.dto.common.TargetTrakErrorTypeEnum;
@@ -21,15 +21,14 @@ import com.target.trak.system.validations.TargetTrakValidationError;
 import com.target.trak.system.validations.TargetTrakValidationException;
 import com.target.trak.system.validations.TargetTrakValidator;
 
-@Transactional(value = "dwTransactionManager", propagation = Propagation.REQUIRED)
-public class CreateContactServiceImpl extends BaseTargetTrakService implements TargetTrakService<ContactApiRequest, ContactApiResponse> {
+public class GetContactsByCriteriaServiceImpl extends BaseTargetTrakService implements TargetTrakService<ContactApiRequest, ContactApiResponse>{
 
 	private final Logger logger = Logger.getLogger(getClass());
-	
+
 	private ContactDao contactDao;
-	
+
 	private ConversionService conversionService;
-	
+
 	private TargetTrakValidator<ContactApiRequest> contactValidator;
 	
 	@Override
@@ -41,22 +40,29 @@ public class CreateContactServiceImpl extends BaseTargetTrakService implements T
 			TargetTrakException exception = generateServiceException(response, validationErrors, TargetTrakErrorTypeEnum.VALIDATION, "A validation error has occurred. Please fix the errors below");
 			throw exception;
 		}
-
+		
 		try {
-			ContactDomain domain = contactDao.insertContact(conversionService.convert(request.getContact(), ContactDomain.class));
-			response.setContact(conversionService.convert(domain, ContactDto.class));
+			ContactSearchCriteria criteria = conversionService.convert(request.getContactSearchCriteria(), ContactSearchCriteria.class);
+			int totalSize = contactDao.selectContactsByCriteriaCount(criteria);
+			if (totalSize > 0) {
+				List<ContactDomain> contacts = contactDao.selectContactsByCriteria(criteria);
+				List<ContactDto> dtos = convertDomainList(contacts);
+				response.setContacts(dtos);
+			}
+			response.setTotalSize(totalSize);
 			response.setSuccess(Boolean.TRUE);
 		} catch (Throwable e) {
 			logger.error(e.getMessage(), e);
-			TargetTrakException exception = generateServiceException(response, validationErrors, TargetTrakErrorTypeEnum.ERROR, "An error has occurred trying to create Reference Data. <br /> If the error still occurs, contact your administrator");
+			TargetTrakException exception = generateServiceException(response, null, TargetTrakErrorTypeEnum.ERROR, "An error has occurred processing your request. <br /> If the error still occurs, contact your administrator");
 			throw exception;
 		}
+		
 		return response;
 	}
 
 	@Override
 	public List<TargetTrakValidationError> validateRequest(final ContactApiRequest request) throws TargetTrakException {
-		request.setRequestType(TargetTrakRequestTypeEnum.CREATE);
+		request.setRequestType(TargetTrakRequestTypeEnum.READ_PAGING);
 		List<TargetTrakValidationError> validationErrors = null;
 		try {
 			validationErrors =  contactValidator.validate(request);
@@ -64,6 +70,16 @@ public class CreateContactServiceImpl extends BaseTargetTrakService implements T
 			logger.error(e);
 		}
 		return validationErrors;
+	}
+	
+	private List<ContactDto> convertDomainList(List<ContactDomain> contacts) {
+		List<ContactDto> dtos = new ArrayList<ContactDto>();
+		if (contacts != null && !contacts.isEmpty()) {
+			for (ContactDomain contact : contacts) {
+				dtos.add(conversionService.convert(contact, ContactDto.class));
+			}
+		}
+		return dtos;
 	}
 
 	public void setContactDao(ContactDao contactDao) {
